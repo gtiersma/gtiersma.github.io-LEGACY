@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+
+<!--
+George Tiersma's Portfolio Website - HTML
+
+The code in this document is property of George Tiersma.
+
+Changelog:
+
+7/10/2019 - v0.1
+    -initial upload
+-->
+
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    
+    <!-- This import is pointless at this time, but will be needed in a future release
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    -->
+</head>
+
+<body>
+    
+    <div id="wrapper">
+    
+        <!-- Navigation bar -->
+        <header>
+            <ul id="nav">
+                <li><h5>Home</h5></li>
+                <li><h5>About</h5></li>
+                <li><h5>Projects</h5></li>
+                <li><h5>Skills</h5></li>
+            </ul>
+        </header>
+    
+        <!-- Introductory section -->
+        <div id="home">
+            
+            <h1 class="name" id="firstName">GEORGE</h1>
+            <h1 class="name" id="lastName">TIERSMA</h1>
+            <canvas id="nameBack"></canvas>
+
+            <img id="topGraphic" src="front.png" alt="Gazing into Cyber Space"></img>
+    
+            <h3 id="occupation">Software Developer - Digital Artist</h3>
+    
+            <button id="resumeButton">View Resume</button>
+        </div>
+    
+        <!-- Biographical section -->
+        <div id="about">
+            
+            <h1>ABOUT ME</h1>
+            <p>blah blah blah blah blah blah blah blah blah blah blah blah</p>
+            
+        </div>
+    
+        <!-- Project showcase -->
+        <div id="projects">
+            
+            <h1>PROJECTS</h1>
+            
+            <!-- This part will soon be pretty empty. I plan to utilize Javascript to construct most of this -->
+            <ul class="list">
+            
+                <li>
+                    <h2 class="showHide">+</h2>
+                    <h2>Computer Programming</h2>
+                    <div class="projectContent">
+                        <h4>Project Scaper (Title Pending)</h4>
+                        <div class="previous"></div>
+                        <img class="previewImage" src="modManager.png" alt="Project Scaper Screenshot"></img>
+                        <div class="next"></div>
+                        <p>Project Scaper allows graphic designers that have no 3D modeling experience to create 3D environments. It imports images designed by the user and uses the images as maps to generate the 3D shape.</p>
+                        <p>It is programmed in Java with the help of the JavaFX platform.</p>
+                        <p></p>
+                        <button>View on GitHub</button>
+                    </div>
+                </li>
+    
+                <li>
+                    <h2 class="showHide">+</h2>
+                    <h2>Graphic Design</h2>
+                    <div class="projectContent">
+                        <h3>History's Role for the Future</h3>
+                        <div class="previous"></div>
+                        <img class="previewImage" src="historysRole.png" alt="Composition Preview"></img>
+                        <div class="next"></div>
+                        <p>These compositions were created to contrast the effects that knowledge has on society through time. The top image shows history being studied and a good future on the wall. The bottom image displays history being ignored and a threatening future on the wall.</p>
+                        <p>They take place during the early Renaissance, while the pictures on the wall portray the what will come of future in perspective of the Renaissance, specifically the late 1800s and early 1900s.</p>
+                        <p>The compositions were created in Photoshop. They are composed of dozens of separate layers. The photos in the background were provided by the Library of Congress. The subject's face was created in Daz 3D, while her hair was painted directly in Photoshop and the armor was created from manipulated photos of a metal pen. All other elements were created from photos I shot.</p>
+                    </div>
+                </li>
+        
+            </ul>
+        </div>
+    
+        <!-- Skills section -->
+        <div id="skills">
+            <h1>TECHNICAL SKILLS</h1>
+        
+            <!-- This part will soon be pretty empty. I plan to utilize Javascript to construct most of this -->
+            <ul class="list">
+                <li>
+                    <h2 class="showHide">+</h2>
+                    <h2 class="skill">Graphic Design</h2>
+                    <div class="skillContent">
+                        <ul class="bulleted">
+                            <li><h4>Very familiar with Adobe Photoshop and Gimp</h4></li>
+                            <li><h4>Practices non-destructive design in image editors whenever possible</h4></li>
+                            <li><h4>Skilled with typography and logo design</h4></li>
+                            <li><h4>Skilled with user interface creation</h4></li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <h2 class="showHide">+</h2>
+                    <h2 class="skill">Computer Programming</h2>
+                </li>
+                <li>
+                    <h2 class="showHide">+</h2>
+                    <h2 class="skill">Web Development</h2>
+                </li>
+                <li>
+                    <h2 class="showHide">+</h2>
+                    <h2 class="skill">Computer Hardware</h2>
+                </li>
+                <li>
+                    <h2 class="showHide">+</h2>
+                    <h2 class="skill">Database Development</h2>
+                </li>
+            </ul>
+        
+            <h1>SOFT SKILLS</h1>
+        
+            <ul class="list">
+                <li>
+                    <h2 class="showHide">+</h2>
+                    <h2 class="skill">Teamwork</h2>
+                </li>
+                <li>
+                    <h2 class="showHide">+</h2>
+                    <h2 class="skill">Written Communication</h2>
+                </li>
+                <li>
+                    <h2 class="showHide">+</h2>
+                    <h2 class="skill">Organization</h2>
+                </li>
+                <li>
+                    <h2 class="showHide">+</h2>
+                    <h2 class="skill">Perseverance</h2>
+                </li>
+                <li>
+                    <h2 class="showHide">+</h2>
+                    <h2 class="skill">Troubleshooting</h2>
+                </li>
+            </ul>
+        
+        </div>
+
+        <footer>
+            <h6>Contact information can be found on the resume</h6>
+            <h6>Website created by George Tiersma</h6>
+        </footer>
+    
+    </div>
+    
+</body>
+
+</html>

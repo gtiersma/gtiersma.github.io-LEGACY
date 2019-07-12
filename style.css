@@ -1,0 +1,344 @@
+/*
+George Tiersma's Portfolio Website - CSS
+
+The code in this document is property of George Tiersma.
+
+Changelog:
+
+7/10/2019 - v0.1
+    -initial upload
+*/
+
+/*
+Each section below is sorted alphabetically.
+*/
+
+/*
+----- GENERAL ELEMENT TYPES -----
+*/
+
+body
+{
+    margin: 0;
+}
+
+button
+{
+    /* COLOR */
+    background-color: #FFFFFF;
+    color: #119911;
+    border: 2px solid #119911;
+    
+    /* POSITION */
+    text-align: center;
+    
+    /* SIZE */
+    font-size: 2.5vw;
+    height: 7vw;
+    width: 25vw;
+}
+
+footer
+{
+    /* COLOR */
+    background-color: #005500;
+    color: #FFFFFF;
+    
+    /* POSITION */
+    text-align: center;
+    padding: 1vw 0 1vw 0;
+}
+
+h2
+{
+    display: inline-block;
+}
+
+h4
+{
+    margin: 1vw;
+}
+
+
+
+/*
+----- CLASSES -----
+*/
+
+/* The bulleted list of facts for each skill */
+.bulleted
+{
+    list-style-type: square;
+}
+
+/* Lists of projects and skills */
+.list
+{
+    list-style-type: none;
+    padding-bottom: 15vh;
+}
+
+/* Each project or skill listed */
+.list li
+{
+    margin-right: 25px;
+}
+
+/* Top title text */
+.name
+{
+    /* FONT */
+    font-size: 10vw;
+    font-weight: 1000;
+    letter-spacing: -0.5vw;
+    
+    /* POSITION */
+    margin: 0;
+}
+
+/* Arrow button used to scroll to the next project */
+.next
+{
+    /* ARROW */
+    border-bottom: 10vh solid transparent;
+    border-left: 30px solid #119911; 
+    border-top: 10vh solid transparent;
+    margin-bottom: 20vh;
+    height: 0; 
+    width: 0; 
+    
+    /* POSITION */
+    display: inline-block;
+}
+
+/* Arrow button used to scroll to the previous project */
+.previous
+{
+    /* ARROW */
+    border-bottom: 10vh solid transparent;
+    border-right: 30px solid #119911; 
+    border-top: 10vh solid transparent;
+    margin-bottom: 20vh;
+    height: 0; 
+    width: 0; 
+    
+    /* POSITION */
+    display: inline-block;
+}
+
+/* Image of project */
+.previewImage
+{
+    /* BORDER */
+    border-color: #119911;
+    border-style: solid;
+    border-width: 5px;
+    
+    /* POSITION */
+    display: inline-block;
+    margin: 0 5vh 0 5vh;
+    
+    /* SIZE */
+    height: 60vh;
+}
+
+/* Div containing project elements that may be shown or hidden by the user (Feature not yet implemented) */
+.projectContent
+{
+    /* COLOR */
+    background-color: #EEEEEE;
+    
+    /* CORNERS */
+    border-radius: 25px;
+    
+    /* POSITION */
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px 10px 10px 10px;
+    text-align: center;
+    
+    /* SIZE */
+    width: 60vw;
+}
+
+/* Button used to show or hide the content of a project or skill (Feature not yet implemented) */
+.showHide
+{
+    /* CIRCLE */
+    border-radius: 50px;
+    
+    /* COLOR */
+    background-color: #119911;
+    color: #FFFFFF;
+    
+    /* POSITION */
+    display: inline-block;
+    margin: 0 15px 0 15px;
+    padding: 0 15px 0 15px;
+    
+    /* SIZE */
+    font-size: 36pt;
+}
+
+/* A skill in the list of skills */
+.skill
+{
+    margin: 0;
+}
+
+/* The list of facts relating to a particular skill that may be shown or hidden by the user (Feature not yet implemented) */
+.skillContent
+{
+    /* POSITION */
+    margin-left: auto;
+    margin-right: auto;
+    padding: 30px 10px 10px 10px;
+    
+    /* SIZE */
+    width: 60vw;
+}
+
+/*
+----- IDENTIFIERS -----
+*/
+
+/* The section of the website containing the biographical summary */
+#about
+{
+    /* COLOR */
+    background-color: #CCFFCC;
+    color: #005500;
+    
+    /* POSITION */
+    padding: 5vw 0 10vw 5vw;
+}
+
+/* The first name used in the title */
+#firstName
+{
+    padding: 100px 0 0 30vw;
+}
+
+/* The top, introductory part of the website */
+#home
+{
+    padding: 0 0 15vw 0;
+}
+
+/* The last name used in the title */
+#lastName
+{
+    position: relative;
+    padding: 0 0 50px 45vw;
+    top: -5vw;
+}
+
+/* The background graphic for the title text (Feature not yet implemented) */
+#nameBack
+{
+    position: absolute;
+}
+
+/* The navigation menu found at the top of the viewport */
+#nav
+{
+    /* COLOR */
+    background-color: #119911;
+    
+    /* FORMAT */
+    list-style-type: none;
+    
+    /* POSITION */
+    position: fixed;
+    text-align: center;
+    left: 0;
+    top: 0;
+    margin: 0; 
+    padding: 0;
+    z-index: 10;
+    
+    /* SIZE */
+    font-size: 24pt;
+    width: 100%;
+}
+
+/* Each option in the navigation menu */
+#nav li
+{
+    display: inline-block;
+    padding: 0;
+}
+
+/* The text of each option in the navigation menu */
+#nav li h5
+{
+    /* COLOR */
+    color: #FFFFFF;
+    
+    /* FONT */
+    font-family: "Arial", "Helvetica", "sans-serif";
+    
+    /* POSITION */
+    margin: 0;
+    padding: 20px;
+}
+
+/* The text below the title containing the occupation */
+#occupation
+{
+    /* FONT */
+    font-weight: 10;
+    
+    /* POSITION */
+    position: relative;
+    text-align: center;
+    top: 10vw;
+}
+
+/* The website sections containing the projects and skills */
+#projects, #skills
+{
+    padding: 5vw 0 10vw 5vw;
+}
+
+/* The button for viewing the resume */
+#resumeButton
+{
+    margin: 30vh 0 0 37.5vw;
+}
+
+/* The website section containing the skills */
+#skills
+{
+    background-color: #EEEEEE;
+    color: #005500;
+}
+
+/* Each skill in the lists */
+#skills ul li
+{
+    /* COLOR */
+    background-color: #FFFFFF;
+    
+    /* EDGES */
+    border-radius: 50px;
+    
+    /* POSITION */
+    margin-bottom: 10px;
+    padding: 5px 0 5px 0;
+}
+
+/* The background image behind the title */
+#topGraphic
+{
+    /* POSITION */
+    position: absolute;
+    top: 150px;
+    width: 80vw;
+    z-index: -10;
+}
+
+#wrapper
+{
+    font-family: "Arial", "Helvetica", "sans-serif";
+}

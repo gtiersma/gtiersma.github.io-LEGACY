@@ -1,0 +1,89 @@
+/* ---------------------------------------------------------------------- */
+/* Add table "CUSTOMERS"                                                  */
+/* ---------------------------------------------------------------------- */
+
+CREATE TABLE CUSTOMERS (
+    CUSTOMER_ID		LONG		NOT NULL,
+    LAST_NAME		VARCHAR(30)	NOT NULL,
+    FIRST_NAME    	VARCHAR(20)	NOT NULL,
+    STREET		VARCHAR(50)	NOT NULL,
+    CITY		VARCHAR(20)	NOT NULL,
+    STATE    		VARCHAR(2)	NOT NULL,
+    ZIP_CODE    	LONG		NOT NULL,
+    PHONE_NUMBER    	DOUBLE		NOT NULL,
+    CREDIT_CARD    	DOUBLE    	NOT NULL,
+
+    CONSTRAINT PK_CUSTOMERS PRIMARY KEY (CUSTOMER_ID)
+);
+
+/* ---------------------------------------------------------------------- */
+/* Add table "BICYCLES"                                                   */
+/* ---------------------------------------------------------------------- */
+
+CREATE TABLE BICYCLES (
+    GPS			DOUBLE    	NOT NULL,
+    MODEL		VARCHAR(20)    	NOT NULL,
+    TYPE		VARCHAR(20)    	NOT NULL,
+    COST		CURRENCY    	NOT NULL,
+    OUT_OF_SERVICE	YESNO    	NOT NULL,
+    COMMENT		VARCHAR(200)    NULL,
+
+    CONSTRAINT PK_BICYCLES PRIMARY KEY (GPS)
+);
+
+/* ---------------------------------------------------------------------- */
+/* Add table "STATIONS"                                                   */
+/* ---------------------------------------------------------------------- */
+
+CREATE TABLE STATIONS (
+    STATION_ID	LONG     	NOT NULL,
+    LOCATION	VARCHAR(20)     NOT NULL,
+
+    CONSTRAINT PK_STATIONS PRIMARY KEY (STATION_ID)
+);
+
+/* ---------------------------------------------------------------------- */
+/* Add table "PACKAGES"                                                   */
+/* ---------------------------------------------------------------------- */
+
+CREATE TABLE PACKAGES (
+    PACKAGE_ID	BYTE     	NOT NULL,
+    MAX_HOURS	LONG     	NOT NULL,
+    PRICE	CURRENCY     	NOT NULL,
+
+    CONSTRAINT PK_PACKAGES PRIMARY KEY (PACKAGE_ID)
+);
+
+/* ---------------------------------------------------------------------- */
+/* Add table "RENTALS"                                                    */
+/* ---------------------------------------------------------------------- */
+
+CREATE TABLE RENTALS (
+    RENTAL_ID		DOUBLE		NOT NULL,
+    DATE_TIME_OUT	DATETIME    	NOT NULL,
+    DATE_TIME_IN	DATETIME    	NULL,
+    CUSTOMER_ID		LONG    	NOT NULL,
+    STATION_OUT		LONG    	NOT NULL,
+    STATION_IN		LONG    	NULL,
+    GPS			DOUBLE    	NOT NULL,
+
+    CONSTRAINT PK_RENTALS PRIMARY KEY (RENTAL_ID),
+
+    /* Foreign Key Constraints
+
+    CONSTRAINT FK_PURCHASES 
+	FOREIGN KEY (CUSTOMER_ID)
+		REFERENCES CUSTOMERS (CUSTOMER_ID),
+
+    CONSTRAINT FK_PICK_UP
+	FOREIGN KEY (STATION_OUT)
+		REFERENCES STATIONS (STATION_ID),
+
+    CONSTRAINT FK_DROP_OFF
+	FOREIGN KEY (STATION_IN)
+		REFERENCES STATIONS (STATION_ID),
+
+    CONSTRAINT FK_IS_SOLD 
+	FOREIGN KEY (GPS)
+		REFERENCES BICYCLES (GPS)
+);

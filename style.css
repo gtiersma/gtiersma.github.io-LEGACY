@@ -29,7 +29,7 @@ button
     
     /* SIZE */
     font-size: 2.5vw;
-    height: 7vw;
+    height: 60px;
     width: 25vw;
 }
 
@@ -46,6 +46,7 @@ footer
 
 h2
 {
+    color: #004400;
     display: inline-block;
 }
 
@@ -91,36 +92,6 @@ h4
     margin: 0;
 }
 
-/* Arrow button used to scroll to the next project */
-.next
-{
-    /* ARROW */
-    border-bottom: 10vh solid transparent;
-    border-left: 30px solid #119911; 
-    border-top: 10vh solid transparent;
-    margin-bottom: 20vh;
-    height: 0; 
-    width: 0; 
-    
-    /* POSITION */
-    display: inline-block;
-}
-
-/* Arrow button used to scroll to the previous project */
-.previous
-{
-    /* ARROW */
-    border-bottom: 10vh solid transparent;
-    border-right: 30px solid #119911; 
-    border-top: 10vh solid transparent;
-    margin-bottom: 20vh;
-    height: 0; 
-    width: 0; 
-    
-    /* POSITION */
-    display: inline-block;
-}
-
 /* Image of project */
 .previewImage
 {
@@ -134,7 +105,7 @@ h4
     margin: 0 5vh 0 5vh;
     
     /* SIZE */
-    height: 60vh;
+    width: 50vw;
 }
 
 /* Div containing project elements that may be shown or hidden by the user (Feature not yet implemented) */
@@ -153,7 +124,7 @@ h4
     text-align: center;
     
     /* SIZE */
-    width: 60vw;
+    width: 80vw;
 }
 
 /* Button used to show or hide the content of a project or skill (Feature not yet implemented) */
@@ -168,7 +139,7 @@ h4
     
     /* POSITION */
     display: inline-block;
-    margin: 0 15px 0 15px;
+    margin: 0 30px 0 10px;
     padding: 0 15px 0 15px;
     
     /* SIZE */
@@ -203,7 +174,7 @@ h4
 {
     /* COLOR */
     background-color: #CCFFCC;
-    color: #005500;
+    color: #004400;
     
     /* POSITION */
     padding: 5vw 0 10vw 5vw;
@@ -294,6 +265,7 @@ h4
 /* The website sections containing the projects and skills */
 #projects, #skills
 {
+    color: #004400;
     padding: 5vw 0 10vw 5vw;
 }
 

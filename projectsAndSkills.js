@@ -4,7 +4,7 @@
 //
 // Controls the functionality of the projects and skills sections of the website
 //
-// This document is property of George Tiersma
+// This document is property of George Tiersma.
 // _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
 //  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
 
@@ -16,12 +16,12 @@
 //
 // name   -> The title of the project
 // image  -> The file name of the image used for the project
-// button -> The text for the button for the project. If given a blank string, the button is ommited for this project.
+// button -> The text for the button for the project. If given a blank string, the button is omitted for this project.
 // link   -> The webpage that the button will lead to
 // alt    -> The alternate text for the image
 // desc1  -> The first paragraph of the description
-// desc2  -> The second paragraph of the description. If given a blank string, the second paragraph is ommited. 
-// desc3  -> The third paragraph of the description. If given a blank string, the third paragraph is ommited. 
+// desc2  -> The second paragraph of the description. If given a blank string, the second paragraph is omitted. 
+// desc3  -> The third paragraph of the description. If given a blank string, the third paragraph is omitted. 
 //
 // All of the above variables should be strings.
 // _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
@@ -147,7 +147,7 @@ var graphics =
     ];
 
 // Array of project objects relating to database development
-var database = 
+var databases = 
     [
         new Project
         (
@@ -173,10 +173,8 @@ var database =
         )
     ];
 
-// The index of an array for a skill where the skill's title is contained
-const TITLE_INDEX = 0;
-// The index of an array for a skill where the skill's rating is contained
-const RATING_INDEX = 1;
+// Array of the array of projects
+var projects = [programs, graphics, databases];
 
 // The array of technical skills. Each skill is an array of its own, containing the skill's title, rating and bulleted facts for the skill.
 var hardSkills =
@@ -225,7 +223,7 @@ var hardSkills =
         ]
     ];
 
-// The array of soft skills. Each skill is an array of its own, containing the skill's title, rating and descripton for the skill.
+// The array of soft skills. Each skill is an array of its own, containing the skill's title, rating and description for the skill.
 var softSkills =
     [
         [
@@ -255,6 +253,9 @@ var softSkills =
         ]
     ];
 
+// The size in pixels of the arrow buttons used to browse the projects
+const ARROW_BUTTON_SIZE = window.innerWidth / 10;
+
 // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
 // 
 // Executes once the webpage is loaded
@@ -262,16 +263,96 @@ var softSkills =
 //  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
 $(document).ready( function()
 {
-    loadProject(0, 0);
-    loadProject(0, 1);
-    loadProject(0, 2);
+    // Keeps track of the indexes of the currently active projects. The first projects (0) are loaded initially.
+    var currentProjects = [0, 0, 0];
     
+    // Creates the arrow buttons for each project-viewer
+    createArrows(true);
+    createArrows(false);
+    
+    // Loads the initial projects into the DOM
+    for (var i = 0; i < currentProjects.length; i++)
+    {
+        loadProject(currentProjects[i], i);
+    }
+    
+    // The projects are hidden when the webpage is first loaded
     $(".projectContent").hide();
     
+    // Loads the skills into the DOM
     loadSkills(true);
     loadSkills(false);
     
+    // The skills are hidden as well
     $(".skillContent").hide();
+    
+    // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
+    // 
+    // Event listener for the arrow buttons to view the next project
+    // _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
+    //  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
+    $(".next").click(function()
+    {
+        // Get the index for the project type
+        var type = getType($(this).parent());
+        
+        // If there is another project after the one currently in view...
+        if ((currentProjects[type] + 1) < projects[type].length)
+        {
+            // ...set the current project to the next one.
+            currentProjects[type] = currentProjects[type] + 1;
+        }
+        // ...otherwise...
+        else
+        {
+            // ...set the current project to the first one.
+            currentProjects[type] = 0;
+        }
+        
+        // Load the next project into the DOM
+        loadProject(currentProjects[type], type);
+        
+        // Center the arrow buttons with the height of the project's preview image after waiting a short time. If the function was to not sleep here, the arrows will usually be centered with the previous image. The function must wait for the new image to update, and then center the buttons.
+        sleep(100).then(() =>
+        {
+            centerArrow($(this));
+            centerArrow($(this).siblings(".previous"));
+        });
+    });
+    
+    // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
+    // 
+    // Event listener for the arrow buttons to view the previous project
+    // _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
+    //  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
+    $(".previous").click(function()
+    {
+        // Get the index for the project type
+        var type = getType($(this).parent());
+        
+        // If there is a project before the one currently in view...
+        if (currentProjects[type] > 0)
+        {
+            // ...set the current project to the previous one.
+            currentProjects[type] = currentProjects[type] - 1;
+        }
+        // ...otherwise...
+        else
+        {
+            // ...set the current project to the last one.
+            currentProjects[type] = projects[type].length - 1;
+        }
+            
+        // Load the previous project into the DOM
+        loadProject(currentProjects[type], type);
+        
+        // Center the arrow buttons with the height of the project's preview image after waiting a short time. If the function was to not sleep here, the arrows will usually be centered with the last image in view. The function must wait for the new image to update, and then center the buttons.
+        sleep(100).then(() =>
+        {
+            centerArrow($(this));
+            centerArrow($(this).siblings(".next"));
+        });
+    });
 
     // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
     // 
@@ -288,6 +369,9 @@ $(document).ready( function()
             $(this).siblings(".skillContent").show();
             // Switch it to a "-" button
             $(this).text("-");
+            
+            centerArrow($(this).siblings(".projectContent").children(".next"));
+            centerArrow($(this).siblings(".projectContent").children(".previous"));
         }
         // ...otherwise, it must be a "-" button...
         else
@@ -303,39 +387,136 @@ $(document).ready( function()
 
 // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
 // 
+// Centers an arrow button with the preview image
+//
+// arrow -> jQuery DOM Element -> The arrow button to be centered
+// _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
+//  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
+function centerArrow(arrow)
+{
+    var imageHeight = arrow.siblings(".previewImage").height();
+    
+    // In order for the button to be centered, its bottom margin must be adjusted to the result of this calculation.
+    var bottomMargin = (imageHeight / 2) - (ARROW_BUTTON_SIZE / 2);
+    
+    arrow.css("margin-bottom", bottomMargin);
+}
+
+// _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
+// 
+// Creates the arrow buttons for the projects
+//
+// next -> Boolean -> If true, the "next" buttons will be created. If false, the "previous" buttons will be created.
+// _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
+//  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
+function createArrows(next)
+{
+    // Array of svg elements to be used as the buttons
+    var arrows;
+    
+    // Array of numbers used in the arrow's coordinates that vary depending on whether the "next or "previous" buttons are being created
+    var variablePoints;
+    
+    // If the "next" buttons are being created...
+    if (next)
+    {
+        // ...get the correct svg elements and varying points.
+        arrows = $(".next");
+        variablePoints = [3, 8];
+    }
+    // ...otherwise, if the "previous" buttons are being created...
+    else
+    {         
+        // ...get these other ones.
+        arrows = $(".previous");
+        variablePoints = [7, 2];
+    }
+    
+    // 1% of the screen width. Polygons in SVG cannot be created with "%" or "vw" units for some reason, so the conversion of "px" to "%" is handled programatically.
+    var centScreenWidth = window.innerWidth / 100;
+    
+    // Points used to create the arrow shape
+    var arrowPoints =
+        (variablePoints[0] * centScreenWidth) + "," + (4 * centScreenWidth) + " " +
+        (5 * centScreenWidth) + "," +                 (4 * centScreenWidth) + " " +
+        (5 * centScreenWidth) + "," +                 (3 * centScreenWidth) + " " +
+        (variablePoints[1] * centScreenWidth) + "," + (5 * centScreenWidth) + " " +
+        (5 * centScreenWidth) + "," +                 (7 * centScreenWidth) + " " +
+        (5 * centScreenWidth) + "," +                 (6 * centScreenWidth) + " " +
+        (variablePoints[0] * centScreenWidth) + "," + (6 * centScreenWidth);
+    
+    var container = $(".projectContent");
+    
+    // The circle surrounding the arrow. Unlike polygons, circles can be created with "vw" units through CSS.
+    var crcl = $("<circle/>");
+    crcl.css("cx", "5vw");
+    crcl.css("cy", "5vw");
+    crcl.css("r", "4.5vw");
+    crcl.css("stroke", "#119911");
+    crcl.css("stroke-width", "3");
+    crcl.css("fill-opacity", "0");
+    
+    // Construct the arrow
+    var arrow = $("<polygon/>").attr("points", arrowPoints);
+    arrow.css("fill", "#119911");
+    
+    // Set the size of the button
+    arrows.css("width", ARROW_BUTTON_SIZE);
+    arrows.css("height", ARROW_BUTTON_SIZE);
+    
+    // Add the shapes to the SVG element
+    arrows.append(crcl);
+    arrows.append(arrow);
+    
+    // This is necessary for the arrow buttons to be displayed correctly.
+    container.html(container.html());
+}
+
+// _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
+// 
+// Returns the index of the projects array of the type of project that the given container element of a project's content belongs to.
+//
+// controlsParent -> jQuery DOM Element -> Container of elements of which the index is being returned for.
+// _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
+//  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
+function getType(controlsParent)
+{
+    // Index of projects array that the container element belongs to
+    var type;
+    
+    // For each type of project...
+    for (var i = 0; i < projects.length; i++)
+    {
+        // ...if the title in given container is the same title of the project of this type...
+        if (controlsParent.children("h3").text() === $(".projectContent").eq(i).children("h3").text())
+        {
+            // ...the correct type has been found.
+            type = i;
+            // Exit the loop
+            i = projects.length;
+        }
+    }
+    
+    return type;
+}
+    
+// _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
+// 
 // Loads a project into the webpage
 //
 // Note: This function does NOT show the project content if the project is hidden.
 //
-// index -> Integer -> The index of the project in the projects array
-// type  -> Integer ->Zero-based indicator of the type of project
+// indexToLoad -> Number -> The index of the project to be loaded
+// type  -> Number -> The index of the type of project to be loaded
 // _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
 //  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
-function loadProject(index, type)
+function loadProject(indexToLoad, type)
 {
-    // Get the div containing the project information from the DOM
-    var projectContainer = $(".projectContent").eq(type);
-    // Reference variable to the project that is being loaded
-    var project;
+    // Get the project to be loaded from the projects array
+    var project = projects[type][indexToLoad];
     
-    // If the given project type is 0...
-    if (type === 0)
-    {
-        // ...it's a programming project being loaded.
-        project = programs[index];
-    }
-    // ...otherwise, if it's a 1...
-    else if (type === 1)
-    {
-        // ...it's a graphical project.
-        project = graphics[index];
-    }
-    // ...otherwise, it must be a 2...
-    else
-    {
-        // ...so it would be a database project.
-        project = database[index];
-    }
+    // Get the correct container to hold the projects array
+    var projectContainer = $(".projectContent").eq(type);
     
     // Load the project title
     projectContainer.children("h3").text(project.getName);
@@ -406,25 +587,26 @@ function loadSkills(hard)
     // Reference variable to the array of skills to be loaded
     var sklls;
     
+    // The ul element to contain the technical skills
+    var skillContainer;
+    
     // If the technical skills are being loaded...
     if (hard)
     {
-        // ...get the ul element to contain the technical skills.
-        var skillContainer = $("#skills .list").eq(0);
-        
+        // ...get the ones for technical skills.
+        skillContainer = $("#skills .list").eq(0);
         sklls = hardSkills;
     }
     // ...otherwise...
     else
     {
-        // ...get the ul element to contain the technical skills.
-        var skillContainer = $("#skills .list").eq(1);
-        
+        // ...get the other ones.
+        skillContainer = $("#skills .list").eq(1);
         sklls = softSkills;
     }
     
     // For each skill to be loaded...
-    for (i = 0; i < sklls.length; i++)
+    for (var i = 0; i < sklls.length; i++)
     {
         // ...create a list item to store the skill's elements.
         var listItem = $("<li></li>");
@@ -434,7 +616,7 @@ function loadSkills(hard)
         showHide.attr("class", "showHide");
         
         // Title of the skill
-        var title = $("<h2></h2>").text(sklls[i][TITLE_INDEX]);
+        var title = $("<h2></h2>").text(sklls[i][0]);
         title.attr("class", "skill");
         
         // Container for the skill's facts
@@ -449,7 +631,7 @@ function loadSkills(hard)
             facts = $("<ul></ul>").attr("class", "bulleted");
         
             // For each fact...
-            for (j = RATING_INDEX + 1; j < sklls[i].length; j++)
+            for (var j = 2; j < sklls[i].length; j++)
             {
                 // ...place it inside a list item.
                 var fact = $("<li><h4></h4></li>").text(sklls[i][j]);
@@ -461,7 +643,7 @@ function loadSkills(hard)
         else
         {
             // ...place the soft skill's facts in the form of a paragraph.
-            facts = $("<p></p>").text(sklls[i][RATING_INDEX + 1]);
+            facts = $("<p></p>").text(sklls[i][2]);
         }
         
         // Put the skill's content together
@@ -471,4 +653,17 @@ function loadSkills(hard)
         // Load it into the DOM
         skillContainer.append(listItem);
     }
+}
+
+// _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
+// 
+// Javascript does not included a built in method to hault execution, so a user-defined method to do so is defined here.
+//
+// time -> Number -> The number of milliseconds that execution should pause
+// _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
+//  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
+
+function sleep (time)
+{
+  return new Promise((resolve) => setTimeout(resolve, time));
 }

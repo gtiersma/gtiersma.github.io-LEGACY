@@ -353,7 +353,7 @@ $(document).ready( function()
             centerArrow($(this).siblings(".next"));
         });
     });
-
+    
     // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
     // 
     // Event listener for the buttons used to show or hide the content relating to a project or skill

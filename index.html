@@ -22,6 +22,11 @@ Changelog:
     -arrow buttons are operational
     -arrow buttons are always centered with the project preview
     -minor bug fixes and improvements
+
+7/30/2019 - v0.5
+    -navigation menu buttons are operational
+    -added the "about me" biography
+    -minor bug fixes and improvements
 -->
 
 <html>
@@ -30,6 +35,7 @@ Changelog:
     <link rel="stylesheet" type="text/css" href="style.css">
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="main.js"></script>
     <script src="projectsAndSkills.js"></script>
 </head>
 
@@ -40,10 +46,10 @@ Changelog:
         <!-- Navigation bar -->
         <header>
             <ul id="nav">
-                <li><h5>Home</h5></li>
-                <li><h5>About</h5></li>
-                <li><h5>Projects</h5></li>
-                <li><h5>Skills</h5></li>
+                <li id="navHome"><h5>Home</h5></li>
+                <li id="navAbout"><h5>About</h5></li>
+                <li id="navProjects"><h5>Projects</h5></li>
+                <li id="navSkills"><h5>Skills</h5></li>
             </ul>
         </header>
     
@@ -65,7 +71,7 @@ Changelog:
         <div id="about">
             
             <h1>ABOUT ME</h1>
-            <p>blah blah blah blah blah blah blah blah blah blah blah blah</p>
+            <p>I am a new computer programmer and graphic designer who is ready to enter the tech workforce. Although I may not have much work experience, I enjoy designing software and digital artwork with my free time. I also recently graduated from Chemeketa Community College with an Associates of Computer Science. I learned a wide variety of tech skills there, however my specific focus was centered on learning computer programming. Have a look at my projects and skills below to see what I can do.</p>
             
         </div>
     
@@ -97,9 +103,9 @@ Changelog:
                     <h2>Graphic Design</h2>
                     <div class="projectContent">
                         <h3></h3>
-                        <div class="previous"></div>
+                        <svg class="previous"></svg>
                         <img class="previewImage"></img>
-                        <div class="next"></div>
+                        <svg class="next"></svg>
                         <p></p>
                         <p></p>
                         <p></p>
@@ -112,9 +118,9 @@ Changelog:
                     <h2>Database</h2>
                     <div class="projectContent">
                         <h3></h3>
-                        <div class="previous"></div>
+                        <svg class="previous"></svg>
                         <img class="previewImage"></img>
-                        <div class="next"></div>
+                        <svg class="next"></svg>
                         <p></p>
                         <p></p>
                         <p></p>

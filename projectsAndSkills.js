@@ -311,13 +311,6 @@ $(document).ready( function()
         
         // Load the next project into the DOM
         loadProject(currentProjects[type], type);
-        
-        // Center the arrow buttons with the height of the project's preview image after waiting a short time. If the function was to not sleep here, the arrows will usually be centered with the previous image. The function must wait for the new image to update, and then center the buttons.
-        sleep(100).then(() =>
-        {
-            centerArrow($(this));
-            centerArrow($(this).siblings(".previous"));
-        });
     });
     
     // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
@@ -345,13 +338,6 @@ $(document).ready( function()
             
         // Load the previous project into the DOM
         loadProject(currentProjects[type], type);
-        
-        // Center the arrow buttons with the height of the project's preview image after waiting a short time. If the function was to not sleep here, the arrows will usually be centered with the last image in view. The function must wait for the new image to update, and then center the buttons.
-        sleep(100).then(() =>
-        {
-            centerArrow($(this));
-            centerArrow($(this).siblings(".next"));
-        });
     });
     
     // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
@@ -361,29 +347,154 @@ $(document).ready( function()
     //  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
     $(".showHide").click(function()
     {
+        // The DOM container that performs a fade effect when shown or hidden
+        var fadeContainer;
+        // The DOM container that flattens when minimized
+        var shrinkContainer;
+        
+        // If this button is for a project...
+        if ($(this).siblings(".projectContent").length === 1)
+        {
+            // ...the "projectContent" container performs both the fade and shrink effect.
+            fadeContainer = $(this).siblings(".projectContent");
+            shrinkContainer = $(this).siblings(".projectContent");
+        }
+        // ...otherwise, if it's for a skill...
+        else
+        {
+            // ...the "skillContent" container performs the fade effect.
+            fadeContainer = $(this).siblings(".skillContent");
+            // The list item performs the shrink effect.
+            shrinkContainer = $(this).parent();
+        }
+        
         // If the button clicked is a "+" button...
         if ($(this).text() == "+")
         {
-            // ...show the content it was hiding.
-            $(this).siblings(".projectContent").show();
-            $(this).siblings(".skillContent").show();
+            // ...show the content.
+            fadeContainer.show();
+            
+            // This container must also be opac before the height can be retrieved. This line also begins the fade animation
+            fadeContainer.css("opacity", "1");
+            
+            // Resize the container, allowing for the shrink animation
+            adjustForShrink(shrinkContainer);
+            
             // Switch it to a "-" button
             $(this).text("-");
             
-            centerArrow($(this).siblings(".projectContent").children(".next"));
-            centerArrow($(this).siblings(".projectContent").children(".previous"));
+            // If this is for a project...
+            if (fadeContainer.hasClass("projectContent"))
+            {
+                // ...ensure that the "next" and "previous" buttons are centered with the project preview image.
+                centerArrow(fadeContainer.children(".next"));
+                centerArrow(fadeContainer.children(".previous"));
+            }
         }
         // ...otherwise, it must be a "-" button...
         else
         {
-            // ...show the content it was hiding.
-            $(this).siblings(".projectContent").hide();
-            $(this).siblings(".skillContent").hide();
+            // If this is for a skill...
+            if (fadeContainer.hasClass("skillContent"))
+            {
+                // ...shrink the container's height so that the show/hide button and the skill title are still visible.
+                shrinkContainer.css("height", ($(this).height() + 10) + "px");
+            }
+            // ...otherwise, it must be for a project...
+            else
+            {
+                // Shrink the container's height completely
+                shrinkContainer.css("height", 0);
+            }
+            
+            // Fade this container out
+            fadeContainer.css("opacity", "0");
+            
+            // When the animations are approximately done...
+            sleep(1000).then(() =>
+            {
+                // ...hide the content.
+                fadeContainer.hide();
+            });
+            
             // Switch it to a "+" button
             $(this).text("+");
         }
     });
+    
+    // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
+    // 
+    // Animates the show/hide button when hovered upon
+    // _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
+    //  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
+    $(".showHide").hover(function()
+    {
+        $(this).css("box-shadow", "3px 3px #000000");
+        $(this).css("text-shadow", "3px 3px #000000");
+    },
+    function()
+    {
+        $(this).css("box-shadow", "5px 5px #000000");
+        $(this).css("text-shadow", "0 0");
+    });
+    
+    // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
+    // 
+    // Animates the arrow buttons when hovered upon
+    // _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
+    //  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
+    $(".arrowCircle, polygon").hover(function()
+    {
+        // The SVG element
+        var svg = $(this).parent();
+        
+        svg.children(".arrowCircle").css("stroke-width", 0);
+        svg.children(".arrowCircle").css("opacity", 0);
+        svg.children(".arrowShadow").css("stroke-width", 0);
+    },
+    function()
+    {
+        var svg = $(this).parent();
+        
+        svg.children(".arrowCircle").css("stroke-width", 3);
+        svg.children(".arrowCircle").css("opacity", 1);
+        svg.children(".arrowShadow").css("stroke-width", 3);
+    });
+    
+    // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
+    // 
+    // Animates the arrow buttons when clicked
+    // _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
+    //  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
+    $(".arrowCircle, polygon").on("mousedown", function()
+    {
+        $(this).parent().children("polygon").css("fill", "#FFFFFF");
+    });
+    $(".arrowCircle, polygon").on("mouseup", function()
+    {
+        $(this).parent().children("polygon").css("fill", "#119911");
+    });
 });
+
+// _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
+// 
+// Automatically adjusts a given element's height while allowing it to have a vertically shrinking transition animation.
+// Commonly used by the div containers in the webpage that can be shown/hidden.
+//
+// elmnt -> jQuery DOM Element -> The element to be automatically resized
+// _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
+//  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
+function adjustForShrink(elmnt)
+{
+    // Automatically resizes the element. However, if the property was left to this value, it would not perform a shrink animation.
+    elmnt.css("height", "auto");
+            
+    // Get the height in pixels of the automatically-sized element
+    height = elmnt.height();
+            
+    // Set the element's height to the number of pixels of it's height. Since this property is now no longer set to "auto", the element can perform a vertically-shrinking animation.
+    elmnt.css("height", height + "px");
+}
 
 // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
 // 
@@ -449,12 +560,23 @@ function createArrows(next)
     
     // The circle surrounding the arrow. Unlike polygons, circles can be created with "vw" units through CSS.
     var crcl = $("<circle/>");
+    crcl.addClass("arrowCircle");
     crcl.css("cx", "5vw");
     crcl.css("cy", "5vw");
     crcl.css("r", "4.5vw");
     crcl.css("stroke", "#119911");
     crcl.css("stroke-width", "3");
     crcl.css("fill-opacity", "0");
+    
+    // The circle's shadow
+    var circleShadow = $("<circle/>");
+    circleShadow.addClass("arrowShadow");
+    circleShadow.css("cx", "5.1vw");
+    circleShadow.css("cy", "5.1vw");
+    circleShadow.css("r", "4.5vw");
+    circleShadow.css("stroke", "#000000");
+    circleShadow.css("stroke-width", "3");
+    circleShadow.css("fill-opacity", "0");
     
     // Construct the arrow
     var arrow = $("<polygon/>").attr("points", arrowPoints);
@@ -465,6 +587,7 @@ function createArrows(next)
     arrows.css("height", ARROW_BUTTON_SIZE);
     
     // Add the shapes to the SVG element
+    arrows.append(circleShadow);
     arrows.append(crcl);
     arrows.append(arrow);
     
@@ -499,7 +622,44 @@ function getType(controlsParent)
     
     return type;
 }
+
+// _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
+// 
+// Transitions a given project preview image into the provided image element
+//
+// imagePreview -> jQuery DOM Image Element -> Element to display image of project preview
+// imageName -> String -> File name of the image
+// imageAlt -> String -> Alternate text for image
+// _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
+//  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
+function loadPreview(imagePreview, imageName, imageAlt)
+{
+    // Make the current preview image fade out
+    imagePreview.css("opacity", "0");
     
+    // After the image approximately becomes completely invisible...
+    sleep(1000).then(() =>
+    {
+        // ...change the preview image.
+        imagePreview.attr("src", imageName);
+        // Fade the new preview image in
+        imagePreview.css("opacity", "1");
+        
+        // Wait a little to ensure that the new image has been completely loaded
+        sleep(100).then(() =>
+        {
+            // Resizes the container to fit the new image and content
+            adjustForShrink(imagePreview.parent());
+            
+            // Center the arrow buttons with the height of the project's preview image.
+            centerArrow(imagePreview.siblings(".next"));
+            centerArrow(imagePreview.siblings(".previous"));
+        });
+    });
+    
+    imagePreview.attr("alt", imageAlt);
+}
+
 // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
 // 
 // Loads a project into the webpage
@@ -522,24 +682,31 @@ function loadProject(indexToLoad, type)
     projectContainer.children("h3").text(project.getName);
     
     // Load the project image
-    projectContainer.children(".previewImage").attr("src", project.getImage);
-    projectContainer.children(".previewImage").attr("alt", project.getAlt);
+    loadPreview(projectContainer.children(".previewImage"), project.getImage, project.getAlt);
+    
+    // Get the view project button
+    var bttn = projectContainer.children(".buttonContainer").children("button");
     
     // If the project should have a button...
     if (project.getButton !== "")
     {
         // ...show the button if it is hidden.
-        projectContainer.children("button").show();
+        bttn.show();
+        // Show the button's animation div. Even though it is "shown", it remains hidden on the button and doesn't show itself until the mouse is hovered over it.
+        bttn.siblings(".buttonAnimation").show();
         // Get the button's text
-        projectContainer.children("button").text(project.getButton);
-        // Get the button's destination link
-        projectContainer.children("button").attr("onclick", "location.href='" + project.getLink + "'");
+        bttn.text(project.getButton);
+        // Get the button's URL
+        bttn.attr("onclick", "location.href='" + project.getLink + "'");
+        // Set up the click event listener. The reason why the listener is placed on the button's animation instead of the button itself is because the button animation always seems to be positioned on top of the button, even when its z-index is changed in CSS.
+        bttn.siblings(".buttonAnimation").attr("onclick", "location.href='" + project.getLink + "'");
     }
     // ...otherwise...
     else
     {
-        // ...hide the button if it is not hidden.
-        projectContainer.children("button").hide();
+        // ...hide the button and the animation if it is not already hidden.
+        bttn.hide();
+        bttn.siblings(".buttonAnimation").hide();
     }
     
     // Get the first description paragraph
@@ -662,7 +829,6 @@ function loadSkills(hard)
 // time -> Number -> The number of milliseconds that execution should pause
 // _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
 //  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
-
 function sleep (time)
 {
   return new Promise((resolve) => setTimeout(resolve, time));

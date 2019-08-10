@@ -24,13 +24,21 @@ button
     color: #119911;
     border: 2px solid #119911;
     
+    /* CURSOR */
+    cursor: pointer;
+    
     /* POSITION */
     text-align: center;
     
     /* SIZE */
     font-size: 2.5vw;
     height: 60px;
-    width: 25vw;
+    width: 30vw;
+}
+
+circle
+{
+    transition: all 1s linear;
 }
 
 footer
@@ -55,16 +63,56 @@ h4
     margin: 1vw;
 }
 
+svg
+{
+    cursor: pointer;
+}
 
 
 /*
 ----- CLASSES -----
 */
 
+/* A button that contains a word(s)*/
+.textButton
+{
+    left: 25vw;
+    position: absolute;
+}
+
 /* The bulleted list of facts for each skill */
 .bulleted
 {
     list-style-type: square;
+}
+
+/* The div that animates when a textButton is hovered over by the cursor */
+.buttonAnimation
+{
+    /* ANIMATION */
+    transition: all 1s linear;
+    
+    /* CURSOR */
+    cursor: pointer;
+    
+    /* COLOR */
+    border: 0 solid #119911;
+    
+    /* POSITION */
+    left: 25vw;
+    position: absolute;
+    top: 0;
+    
+    /* SIZE */
+    height: 60px;
+    width: 30vw;
+}
+
+/* The div that contains a textButton and its animated div */
+.buttonContainer
+{
+    margin-bottom: 100px;
+    position: relative;
 }
 
 /* Lists of projects and skills */
@@ -92,9 +140,18 @@ h4
     margin: 0;
 }
 
-/* Image of project */
+/* Arrow buttons for browsing through the projects */
+.next, .previous
+{
+    transition: all 1s linear;
+}
+
+/* Image of the project */
 .previewImage
 {
+    /* ANIMATION */
+    transition: opacity 1s linear;
+    
     /* BORDER */
     border-color: #119911;
     border-style: solid;
@@ -108,9 +165,14 @@ h4
     width: 50vw;
 }
 
-/* Div containing project elements that may be shown or hidden by the user (Feature not yet implemented) */
+/* Div containing project elements that may be shown or hidden by the user */
 .projectContent
 {
+    /* ANIMATION */
+    height: 0;
+    opacity: 0;
+    transition: all 1s linear;
+    
     /* COLOR */
     background-color: #EEEEEE;
     
@@ -127,9 +189,13 @@ h4
     width: 80vw;
 }
 
-/* Button used to show or hide the content of a project or skill (Feature not yet implemented) */
+/* Button used to show or hide the content of a project or skill */
 .showHide
 {
+    /* ANIMATION */
+    box-shadow: 5px 5px #000000;
+    transition: all 0.5s linear;
+    
     /* CIRCLE */
     border-radius: 50px;
     
@@ -139,7 +205,7 @@ h4
     
     /* POSITION */
     display: inline-block;
-    margin: 0 30px 0 10px;
+    margin: 0 30px 5px 10px;
     padding: 0 15px 0 15px;
     
     /* SIZE */
@@ -153,9 +219,13 @@ h4
     margin: 0;
 }
 
-/* The list of facts relating to a particular skill that may be shown or hidden by the user (Feature not yet implemented) */
+/* The list of facts relating to a particular skill that may be shown or hidden by the user */
 .skillContent
 {
+    /* ANIMATION */
+    opacity: 0;
+    transition: opacity 1s linear;
+    
     /* POSITION */
     margin-left: auto;
     margin-right: auto;
@@ -210,8 +280,11 @@ h4
 /* The navigation menu found at the top of the viewport */
 #nav
 {
+    /* ANIMATION */
+    transition: background 3s linear;
+    
     /* COLOR */
-    background-color: #119911;
+    background-color: #AAFFAAEE;
     
     /* FORMAT */
     list-style-type: none;
@@ -221,46 +294,57 @@ h4
     text-align: center;
     left: 0;
     top: 0;
-    margin: 0; 
+    margin: 0 0 10px 0; 
     padding: 0;
     z-index: 10;
     
     /* SIZE */
-    font-size: 24pt;
+    font-size: 18pt;
     width: 100%;
 }
 
 /* Each option in the navigation menu */
 #nav li
 {
+    /* CURSOR */
+    cursor: pointer;
+    
+    /* POSITION */
     display: inline-block;
-    padding: 0;
+    margin: 10px 0 10px 0;
+    padding: 10px 0 10px 0;
 }
 
 /* The text of each option in the navigation menu */
 #nav li h5
 {
-    /* COLOR */
-    color: #FFFFFF;
-    
     /* FONT */
     font-family: "Arial", "Helvetica", "sans-serif";
     
+    /* COLOR */
+    color: #119911;
+    
     /* POSITION */
-    margin: 0;
-    padding: 20px;
+    margin: 0 10px 0 10px;
+    padding: 0 10px 0 10px;
 }
 
 /* The text below the title containing the occupation */
 #occupation
 {
+    /* ANIMATION */
+    border-bottom: 3px solid #119911;
+    border-width: 0;
+    transition: border 0.5s linear;
+    
     /* FONT */
     font-weight: 10;
     
     /* POSITION */
+    margin-bottom: 30vh;
     position: relative;
     text-align: center;
-    top: 10vw;
+    top: 20vh;
 }
 
 /* The website sections containing the projects and skills */
@@ -273,7 +357,7 @@ h4
 /* The button for viewing the resume */
 #resumeButton
 {
-    margin: 30vh 0 0 37.5vw;
+    left: 35vw;
 }
 
 /* The website section containing the skills */
@@ -286,6 +370,9 @@ h4
 /* Each skill in the lists */
 #skills ul li
 {
+    /* ANIMATION */
+    transition: all 1s linear;
+    
     /* COLOR */
     background-color: #FFFFFF;
     

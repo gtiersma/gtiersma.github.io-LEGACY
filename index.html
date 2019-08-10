@@ -27,6 +27,13 @@ Changelog:
     -navigation menu buttons are operational
     -added the "about me" biography
     -minor bug fixes and improvements
+
+8/10/2019 - v0.6
+    -navigation menu is animated
+    -buttons are animated
+    -transitions created for project images
+    -cursor changes when hovering a link or button
+    -minor bug fixes and improvements
 -->
 
 <html>
@@ -35,8 +42,8 @@ Changelog:
     <link rel="stylesheet" type="text/css" href="style.css">
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="main.js"></script>
     <script src="projectsAndSkills.js"></script>
+    <script src="main.js"></script>
 </head>
 
 <body>
@@ -58,13 +65,18 @@ Changelog:
             
             <h1 class="name" id="firstName">GEORGE</h1>
             <h1 class="name" id="lastName">TIERSMA</h1>
+            <!-- Animated background for name -->
             <canvas id="nameBack"></canvas>
 
             <img id="topGraphic" src="front.png" alt="Gazing into Cyber Space"></img>
     
             <h3 id="occupation">Software Developer - Digital Artist</h3>
     
-            <button id="resumeButton">View Resume</button>
+            <!-- Container is required for button animation -->
+            <div class="buttonContainer">
+                <button class="textButton" id="resumeButton">View Resume</button>
+                <div class="buttonAnimation" id="resumeButton"></div>
+            </div>
         </div>
     
         <!-- Biographical section -->
@@ -82,6 +94,7 @@ Changelog:
             
             <ul class="list">
             
+                <!-- HTML contains only the templates for the projects -->
                 <!-- List item for each project -->
                 <li>
                     <button class="showHide">+</button>
@@ -94,7 +107,10 @@ Changelog:
                         <p></p>
                         <p></p>
                         <p></p>
-                        <button></button>
+                        <div class="buttonContainer">
+                            <button class="textButton"></button>
+                            <div class="buttonAnimation"></div>
+                        </div>
                     </div>
                 </li>
     
@@ -109,7 +125,10 @@ Changelog:
                         <p></p>
                         <p></p>
                         <p></p>
-                        <button></button>
+                        <div class="buttonContainer">
+                            <button class="textButton"></button>
+                            <div class="buttonAnimation"></div>
+                        </div>
                     </div>
                 </li>
     
@@ -124,7 +143,10 @@ Changelog:
                         <p></p>
                         <p></p>
                         <p></p>
-                        <button></button>
+                        <div class="buttonContainer">
+                            <button class="textButton"></button>
+                            <div class="buttonAnimation"></div>
+                        </div>
                     </div>
                 </li>
         

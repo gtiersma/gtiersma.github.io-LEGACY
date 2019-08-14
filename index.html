@@ -34,11 +34,17 @@ Changelog:
     -transitions created for project images
     -cursor changes when hovering a link or button
     -minor bug fixes and improvements
+
+8/13/2019 - v0.61
+    -skills have a graphic showing their rating
+    -minor bug fixes and improvements
 -->
 
-<html>
+<html lang="en">
 
 <head>
+    <title>George Tiersma's Portfolio</title>
+    
     <link rel="stylesheet" type="text/css" href="style.css">
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -68,14 +74,14 @@ Changelog:
             <!-- Animated background for name -->
             <canvas id="nameBack"></canvas>
 
-            <img id="topGraphic" src="front.png" alt="Gazing into Cyber Space"></img>
+            <img id="topGraphic" src="front.png" alt="Gazing into Cyber Space">
     
             <h3 id="occupation">Software Developer - Digital Artist</h3>
     
             <!-- Container is required for button animation -->
             <div class="buttonContainer">
-                <button class="textButton" id="resumeButton">View Resume</button>
-                <div class="buttonAnimation" id="resumeButton"></div>
+                <button id="textButton" class="resumeButton">View Resume</button>
+                <div id="buttonAnimation" class="resumeButton"></div>
             </div>
         </div>
     
@@ -102,14 +108,14 @@ Changelog:
                     <div class="projectContent">
                         <h3></h3>
                         <svg class="previous"></svg>
-                        <img class="previewImage"></img>
+                        <img class="previewImage">
                         <svg class="next"></svg>
                         <p></p>
                         <p></p>
                         <p></p>
                         <div class="buttonContainer">
-                            <button class="textButton"></button>
-                            <div class="buttonAnimation"></div>
+                            <button id="textButton" class="projectButton"></button>
+                            <div id="buttonAnimation" class="projectButton"></div>
                         </div>
                     </div>
                 </li>
@@ -120,14 +126,14 @@ Changelog:
                     <div class="projectContent">
                         <h3></h3>
                         <svg class="previous"></svg>
-                        <img class="previewImage"></img>
+                        <img class="previewImage">
                         <svg class="next"></svg>
                         <p></p>
                         <p></p>
                         <p></p>
                         <div class="buttonContainer">
-                            <button class="textButton"></button>
-                            <div class="buttonAnimation"></div>
+                            <button id="textButton" class="projectButton"></button>
+                            <div id="buttonAnimation" class="projectButton"></div>
                         </div>
                     </div>
                 </li>
@@ -138,14 +144,14 @@ Changelog:
                     <div class="projectContent">
                         <h3></h3>
                         <svg class="previous"></svg>
-                        <img class="previewImage"></img>
+                        <img class="previewImage">
                         <svg class="next"></svg>
                         <p></p>
                         <p></p>
                         <p></p>
                         <div class="buttonContainer">
-                            <button class="textButton"></button>
-                            <div class="buttonAnimation"></div>
+                            <button id="textButton" class="projectButton"></button>
+                            <div id="buttonAnimation" class="projectButton"></div>
                         </div>
                     </div>
                 </li>

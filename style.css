@@ -73,39 +73,10 @@ svg
 ----- CLASSES -----
 */
 
-/* A button that contains a word(s)*/
-.textButton
-{
-    left: 25vw;
-    position: absolute;
-}
-
 /* The bulleted list of facts for each skill */
 .bulleted
 {
     list-style-type: square;
-}
-
-/* The div that animates when a textButton is hovered over by the cursor */
-.buttonAnimation
-{
-    /* ANIMATION */
-    transition: all 1s linear;
-    
-    /* CURSOR */
-    cursor: pointer;
-    
-    /* COLOR */
-    border: 0 solid #119911;
-    
-    /* POSITION */
-    left: 25vw;
-    position: absolute;
-    top: 0;
-    
-    /* SIZE */
-    height: 60px;
-    width: 30vw;
 }
 
 /* The div that contains a textButton and its animated div */
@@ -165,6 +136,12 @@ svg
     width: 50vw;
 }
 
+/* Button used to view/download a project */
+.projectButton
+{
+    left: 25vw;
+}
+
 /* Div containing project elements that may be shown or hidden by the user */
 .projectContent
 {
@@ -189,6 +166,24 @@ svg
     width: 80vw;
 }
 
+/* Container for a skill rating's graphic */
+.ratingContainer
+{
+    /* POSITION */
+    display: inline-block;
+    float: right;
+    
+    /* SIZE */
+    height: 50px;
+    width: 300px;
+}
+
+/* The button for viewing the resume */
+.resumeButton
+{
+    left: 35vw;
+}
+
 /* Button used to show or hide the content of a project or skill */
 .showHide
 {
@@ -204,7 +199,6 @@ svg
     color: #FFFFFF;
     
     /* POSITION */
-    display: inline-block;
     margin: 0 30px 5px 10px;
     padding: 0 15px 0 15px;
     
@@ -235,6 +229,32 @@ svg
     width: 60vw;
 }
 
+/* The background behind each star graphic in a skill's rating */
+.starBack
+{
+    position: absolute;
+}
+
+/* The container for a star graphic and its background for a skill's rating */
+.starContainer
+{
+    /* POSITION */
+    display: inline-block;
+    margin: auto 3px auto 3px;
+    position: relative;
+    
+    /* SIZE */
+    height: 50px;
+    width: 50px;
+}
+
+/* The star graphic for the skill's ratings */
+.starFront
+{
+    position: absolute;
+    z-index: 1;
+}
+
 /*
 ----- IDENTIFIERS -----
 */
@@ -249,6 +269,27 @@ svg
     /* POSITION */
     padding: 5vw 5vw 10vw 5vw;
     line-height: 150%;
+}
+
+/* The div that animates when a textButton is hovered over by the cursor */
+#buttonAnimation
+{
+    /* ANIMATION */
+    transition: all 1s linear;
+    
+    /* CURSOR */
+    cursor: pointer;
+    
+    /* COLOR */
+    border: 0 solid #119911;
+    
+    /* POSITION */
+    position: absolute;
+    top: 0;
+    
+    /* SIZE */
+    height: 60px;
+    width: 30vw;
 }
 
 /* The first name used in the title */
@@ -354,12 +395,6 @@ svg
     padding: 5vw 0 10vw 5vw;
 }
 
-/* The button for viewing the resume */
-#resumeButton
-{
-    left: 35vw;
-}
-
 /* The website section containing the skills */
 #skills
 {
@@ -382,6 +417,12 @@ svg
     /* POSITION */
     margin-bottom: 10px;
     padding: 5px 0 5px 0;
+}
+
+/* A button that contains a word(s)*/
+#textButton
+{
+    position: absolute;
 }
 
 /* The background image behind the title */

@@ -20,10 +20,10 @@ $(document).ready( function()
     // |#| |#| |#| |#| |#| |#| |#| |#| |#| |#| |#| |#|
     //
     // Listener for the button's animation for when a cursor is hovered over the button.
-    // The reason why the listener is placed on the button's animation instead of the button itself is because the button animation always seems to be positioned on top of the button, even when its z-index is changed in CSS.
+    // The reason why the listener is placed on the button's animation as well as the button itself is because the button animation seems to be positioned on top of the button in some instances. Changing its z-index in CSS does not seem to change the order for some reason.
     //
     // |#| |#| |#| |#| |#| |#| |#| |#| |#| |#| |#| |#|
-    $(".buttonAnimation").hover( function()
+    $("#buttonAnimation, #textButton").hover( function()
     {
         $(this).siblings("button").css("background-color", "#CCFFCC");
         
@@ -34,7 +34,7 @@ $(document).ready( function()
         $(this).css("width", "60vw");
         
         // The resume button's animated div needs to transition to a slightly different relative position than the other buttons in order to be centered.
-        if ($(this).attr("id") === "resumeButton")
+        if ($(this).attr("class") === "resumeButton")
         {
             $(this).css("left", "20vw");
         }
@@ -53,7 +53,7 @@ $(document).ready( function()
         $(this).css("top", "0");
         $(this).css("width", "30vw");
         
-        if ($(this).attr("id") === "resumeButton")
+        if ($(this).attr("class") === "resumeButton")
         {
             $(this).css("left", "35vw");
         }

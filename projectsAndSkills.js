@@ -261,6 +261,7 @@ const ARROW_BUTTON_SIZE = window.innerWidth / 10;
 // Executes once the webpage is loaded
 // _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
 //  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
+(function($){
 $(document).ready( function()
 {
     // Keeps track of the indexes of the currently active projects. The first projects (0) are loaded initially.
@@ -490,7 +491,7 @@ function adjustForShrink(elmnt)
     elmnt.css("height", "auto");
             
     // Get the height in pixels of the automatically-sized element
-    height = elmnt.height();
+    var height = elmnt.height();
             
     // Set the element's height to the number of pixels of it's height. Since this property is now no longer set to "auto", the element can perform a vertically-shrinking animation.
     elmnt.css("height", height + "px");
@@ -597,6 +598,162 @@ function createArrows(next)
 
 // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
 // 
+// Creates and returns a container of the graphics for a skill's rating
+//
+// rating -> Number -> A number that must be 0-10 that represents how strong the skill is
+// _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
+//  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
+function getRatingGraphic(rating)
+{
+    // A decrementing counter for the rating
+    var rtng = rating;
+    
+    // The container to contain the graphic
+    var container = $("<div></div>");
+    container.addClass("ratingContainer");
+    
+    // For each spot a star could be placed...
+    for (var i = 0; i < 5; i++)
+    {
+        // Div to contain a single star's graphic
+        var singleStarContainer = $("<div></div>");
+        // The background behind a star's graphic
+        var starBack = getHexagonGraphic(0);
+        // The star's graphic
+        var star = $("<svg></svg>");
+        
+        // If the rating counter has yet to reach 1...
+        if (rtng > 1)
+        {
+            // ...get a graphic for a full star.
+            star = getHexagonGraphic(2);
+        }
+        // ...otherwise, if the rating counter has reached exactly 1...
+        else if (rtng === 1)
+        {
+            // ...get a half of a star.
+            star = getHexagonGraphic(1);
+        }
+        
+        singleStarContainer.addClass("starContainer");
+        starBack.addClass("starBack");
+        star.addClass("starFront");
+        
+        singleStarContainer.append(starBack, star);
+        
+        container.append(singleStarContainer);
+        
+        // Decrement rating for next star. 1 is a half of a star. 2 is a full star, so 2 is decremented.
+        rtng = rtng - 2;
+    }
+    
+    // This is necessary for the rating graphic to be displayed correctly.
+    container.html(container.html());
+    
+    return container;
+}
+
+// _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
+// 
+// Creates and returns a graphic for a skill rating
+//
+// full -> Number -> How full the star in the hexagon graphic should be. 2 will return a full star. 1 will return a half of a star. 0 will return the background hexagon with no star.
+// _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
+//  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
+function getHexagonGraphic(full)
+{
+    var hexagonPoints =
+        "10,5 " +
+        "40,5 " +
+        "50,25 " +
+        "40,45 " +
+        "10,45 " +
+        "0,25";
+    
+    // The SVG element to contain all of this
+    var graphic = $("<svg></svg>");
+    
+    var hexagon = $("<polygon/>");
+    var star = $("<polygon/>");
+    hexagon.addClass("starHexagon");
+    star.addClass("star");
+    
+    // If there should be no star...
+    if (full === 0)
+    {
+        // ...only a grey hexagon is created.
+        hexagon.css("fill", "#CCCCCC");
+    }
+    // ...otherwise, if it should be a half of a star...
+    else if (full === 1)
+    {
+        // ...modify the hexagon's points to create a half of a hexagon.
+        hexagonPoints = hexagonPoints.replace(
+            "40,5 50,25 40,45",
+            "30,5 30,45");
+        hexagon.css("fill", "#119911");
+        // Get a half of a star
+        star = getStarGraphic(false);
+    }
+    // ...otherwise, it should be a full star.
+    else
+    {
+        // Get a full hexagon and a star
+        hexagon.css("fill", "#119911");
+        star = getStarGraphic(true);
+    }
+    
+    hexagon.attr("points", hexagonPoints);
+    
+    graphic.css("width", 50);
+    graphic.css("height", 50);
+    
+    graphic.append(hexagon, star);
+    
+    return graphic;
+}
+
+// _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
+// 
+// Creates and returns a star for a skill rating's graphic
+//
+// full -> Boolean -> Whether or not a full or a half of a star is to be created
+// _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
+//  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
+function getStarGraphic(full)
+{
+    var starPoints =
+        "0,20 " +
+        "18,15 " +
+        "25,0 " +
+        "33,15 " +
+        "50,20 " +
+        "38,30 " +
+        "40,50 " +
+        "25,40 " +
+        "10,50 " +
+        "13,30";
+    
+    var star = $("<polygon/>");
+    
+    star.css("fill", "#CCFFCC");
+    
+    // If the star being created is to be a half of a star...
+    if (!full)
+    {
+        // ...remove some points from the star to remove the right half.
+        starPoints = starPoints.replace(
+            "33,15 50,20 38,30 40,50",
+            "");
+    }
+    
+    star.attr("points", starPoints);
+    
+    return star;
+}
+
+// _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
+// 
 // Returns the index of the projects array of the type of project that the given container element of a project's content belongs to.
 //
 // controlsParent -> jQuery DOM Element -> Container of elements of which the index is being returned for.
@@ -693,20 +850,20 @@ function loadProject(indexToLoad, type)
         // ...show the button if it is hidden.
         bttn.show();
         // Show the button's animation div. Even though it is "shown", it remains hidden on the button and doesn't show itself until the mouse is hovered over it.
-        bttn.siblings(".buttonAnimation").show();
+        bttn.siblings("#buttonAnimation").show();
         // Get the button's text
         bttn.text(project.getButton);
         // Get the button's URL
         bttn.attr("onclick", "location.href='" + project.getLink + "'");
         // Set up the click event listener. The reason why the listener is placed on the button's animation instead of the button itself is because the button animation always seems to be positioned on top of the button, even when its z-index is changed in CSS.
-        bttn.siblings(".buttonAnimation").attr("onclick", "location.href='" + project.getLink + "'");
+        bttn.siblings("#buttonAnimation").attr("onclick", "location.href='" + project.getLink + "'");
     }
     // ...otherwise...
     else
     {
         // ...hide the button and the animation if it is not already hidden.
         bttn.hide();
-        bttn.siblings(".buttonAnimation").hide();
+        bttn.siblings("#buttonAnimation").hide();
     }
     
     // Get the first description paragraph
@@ -786,6 +943,8 @@ function loadSkills(hard)
         var title = $("<h2></h2>").text(sklls[i][0]);
         title.attr("class", "skill");
         
+        var rating = getRatingGraphic(sklls[i][1]);
+        
         // Container for the skill's facts
         var content = $("<div></div>").attr("class", "skillContent");
         
@@ -815,7 +974,7 @@ function loadSkills(hard)
         
         // Put the skill's content together
         content.append(facts);
-        listItem.append(showHide, title, content);
+        listItem.append(showHide, title, rating, content);
         
         // Load it into the DOM
         skillContainer.append(listItem);
@@ -831,5 +990,6 @@ function loadSkills(hard)
 //  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
 function sleep (time)
 {
-  return new Promise((resolve) => setTimeout(resolve, time));
+    return new Promise((resolve) => setTimeout(resolve, time));
 }
+})(jQuery);

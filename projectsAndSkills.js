@@ -262,6 +262,7 @@ const ARROW_BUTTON_SIZE = window.innerWidth / 10;
 // _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
 //  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
 (function($){
+
 $(document).ready( function()
 {
     // Keeps track of the indexes of the currently active projects. The first projects (0) are loaded initially.
@@ -475,6 +476,55 @@ $(document).ready( function()
     {
         $(this).parent().children("polygon").css("fill", "#119911");
     });
+    
+    // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
+    // 
+    // Performs actions when the viewport is scrolled.
+    // More specifically, this listener animates the skill rating graphics when they come in or go out of view.
+    // _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
+    //  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
+    $(window).on("scroll", function()
+    {
+        // The "y" position of the top of the viewport and the bottom of the viewport
+        var viewportTop = $(this).scrollTop();
+        var viewportBottom = $(this).scrollTop() + $(this).height();
+        
+        // Each container for the skill ratings
+        var skillRatings = $(".ratingContainer");
+        
+        // For each rating...
+        for (var i = 0; i < skillRatings.length; i++)
+        {
+            // A boolean of whether or not the animation should be reversed or not
+            var reverseAnimate;
+            
+            // The "y" position of the rating graphic
+            var skillPosition = skillRatings.eq(i).offset().top;
+            
+            // The number of stars in the rating graphic.
+            var starsAmount = getAmountOfStars(i);
+            
+            // If the skill graphic is currently in the viewport...
+            if (skillPosition > viewportTop && skillPosition < viewportBottom)
+            {
+                // ...the animation should not be reversed.
+                reverseAnimate = false;
+            }
+            // ...otherwise...
+            else
+            {
+                // ...it should be reversed.
+                reverseAnimate = true;
+            }
+    
+            // For each star graphic in the skill's rating...
+            for (var j = 0; j < starsAmount; j++)
+            {
+                // ...animate it.
+                animateStar(reverseAnimate, i, j);
+            }
+        }
+    });
 });
 
 // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
@@ -495,6 +545,52 @@ function adjustForShrink(elmnt)
             
     // Set the element's height to the number of pixels of it's height. Since this property is now no longer set to "auto", the element can perform a vertically-shrinking animation.
     elmnt.css("height", height + "px");
+}
+
+// _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
+// 
+// Animates a star graphic either into view or out of view
+//
+// reverse -> Boolean -> Whether or not the animation should be reversed
+// skillIndex -> Number -> The zero-based number of which skill the star being animated belongs too (ordered by position in the DOM)
+// starIndex -> Number -> The zero-based number of which star in the rating graphic should be animated (ordered by position from left to right)
+// _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
+//  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
+function animateStar(reverse, skillIndex, starIndex)
+{
+    // The SVG graphic containing the star with the hexagon behind it
+    var svg = document.getElementsByClassName("ratingContainer")[skillIndex].children[starIndex].children[1];
+        
+    // If the animation is to be reversed...
+    if (reverse)
+    {
+        // ...horizontally squish the hexagon.
+        svg.children[0].style.transform = "scaleX(0)";
+        
+        // For the star and each shadow on it...
+        for (var i = 1; i < svg.children.length; i++)
+        {
+            // ...animate it out of view.
+            svg.children[i].style.transform = "rotate(180deg) scale(0.5) translate(0, 0)";
+        }
+    }
+    // ...otherwise...
+    else
+    {
+        // ...wait a little, allowing the stars to animate into view sequentially, then...
+        sleep(500 * starIndex).then(() =>
+        {
+            // ...horizontally stretch the hexagon into shape.
+            svg.children[0].style.transform = "scaleX(1.0)";
+            
+            // For the star and each shadow on it...
+            for (var i = 1; i < svg.children.length; i++)
+            {
+                // ...animate it into view.
+                svg.children[i].style.transform = "rotate(0) scale(0.8) translate(5px, 5px)";
+            }
+        }); 
+    }
 }
 
 // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
@@ -598,6 +694,111 @@ function createArrows(next)
 
 // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
 // 
+// Gets the number of stars that should appear in the rating graphic.
+// NOTE: Half stars are counted as 1 star in this function.
+//
+// index -> Number -> The zero-based number of which skill the number of stars should be checked for (ordered by placement in the DOM)
+// _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
+//  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
+function getAmountOfStars(index)
+{
+    var numStars = 0;
+    
+    // The first 5 indexes are hard skills. The rest are soft skills.
+    if (index < 5)
+    {
+        numStars = Math.ceil(hardSkills[index][1] / 2);
+    }
+    else
+    {
+        // The number of hard skills is subtracted from the index to get the index into the correct range.
+        numStars = Math.ceil(softSkills[index - 5][1] / 2);
+    }
+    
+    return numStars;
+}
+
+// _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
+// 
+// Creates and returns a graphic for a skill rating
+//
+// full -> Number -> How full the star in the hexagon graphic should be. 2 will return a full star. 1 will return a half of a star. 0 will return the background hexagon with no star.
+// _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
+//  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
+function getHexagonGraphic(full)
+{
+    var hexagonPoints =
+        "10,5 " +
+        "40,5 " +
+        "50,25 " +
+        "40,45 " +
+        "10,45 " +
+        "0,25";
+    
+    // The SVG element to contain the whole graphic
+    var graphic = $("<svg></svg>");
+    
+    var hexagon = $("<polygon/>");
+    var star = $("<polygon/>");
+    
+    // If there should be no star...
+    if (full === 0)
+    {
+        // ...only a grey hexagon is created.
+        hexagon.css("fill", "#EEEEEE");
+        
+        hexagon.addClass("starHexagonBack");
+    }
+    // ...otherwise, if it should be a half of a star...
+    else if (full === 1)
+    {
+        // ...modify the hexagon's points to create a half of a hexagon.
+        hexagonPoints = hexagonPoints.replace(
+            "40,5 50,25 40,45",
+            "25,5 25,45");
+        hexagon.css("fill", "#119911");
+        
+        hexagon.addClass("starHexagonFront");
+        
+        // Get a half of a star
+        star = getStarGraphic(false);
+        starShading = getStarShading(false);
+    }
+    // ...otherwise, it should be a full star.
+    else
+    {
+        // Get a full hexagon and a star
+        hexagon.css("fill", "#119911");
+        
+        hexagon.addClass("starHexagonFront");
+        
+        star = getStarGraphic(true);
+        starShading = getStarShading(true);
+    }
+    
+    hexagon.attr("points", hexagonPoints);
+    
+    graphic.append(hexagon);
+    
+    // If there is a star in the graphic...
+    if (full !== 0)
+    {
+        // ...add the star to the graphic.
+        graphic.append(star);
+        
+        // For each shadow on the star...
+        for (var i = 0; i < starShading.length; i++)
+        {
+            // ...add it as well.
+            graphic.append(starShading[i]);
+        }
+    }
+    
+    return graphic;
+}
+
+// _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
+// 
 // Creates and returns a container of the graphics for a skill's rating
 //
 // rating -> Number -> A number that must be 0-10 that represents how strong the skill is
@@ -655,66 +856,6 @@ function getRatingGraphic(rating)
 
 // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
 // 
-// Creates and returns a graphic for a skill rating
-//
-// full -> Number -> How full the star in the hexagon graphic should be. 2 will return a full star. 1 will return a half of a star. 0 will return the background hexagon with no star.
-// _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
-//  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
-function getHexagonGraphic(full)
-{
-    var hexagonPoints =
-        "10,5 " +
-        "40,5 " +
-        "50,25 " +
-        "40,45 " +
-        "10,45 " +
-        "0,25";
-    
-    // The SVG element to contain all of this
-    var graphic = $("<svg></svg>");
-    
-    var hexagon = $("<polygon/>");
-    var star = $("<polygon/>");
-    hexagon.addClass("starHexagon");
-    star.addClass("star");
-    
-    // If there should be no star...
-    if (full === 0)
-    {
-        // ...only a grey hexagon is created.
-        hexagon.css("fill", "#CCCCCC");
-    }
-    // ...otherwise, if it should be a half of a star...
-    else if (full === 1)
-    {
-        // ...modify the hexagon's points to create a half of a hexagon.
-        hexagonPoints = hexagonPoints.replace(
-            "40,5 50,25 40,45",
-            "30,5 30,45");
-        hexagon.css("fill", "#119911");
-        // Get a half of a star
-        star = getStarGraphic(false);
-    }
-    // ...otherwise, it should be a full star.
-    else
-    {
-        // Get a full hexagon and a star
-        hexagon.css("fill", "#119911");
-        star = getStarGraphic(true);
-    }
-    
-    hexagon.attr("points", hexagonPoints);
-    
-    graphic.css("width", 50);
-    graphic.css("height", 50);
-    
-    graphic.append(hexagon, star);
-    
-    return graphic;
-}
-
-// _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
-// 
 // Creates and returns a star for a skill rating's graphic
 //
 // full -> Boolean -> Whether or not a full or a half of a star is to be created
@@ -747,11 +888,46 @@ function getStarGraphic(full)
             "");
     }
     
+    star.addClass("star");
     star.attr("points", starPoints);
     
     return star;
 }
 
+// _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
+// 
+// Creates and returns the shadow graphic for a star
+//
+// full -> Boolean -> Whether or not the shadow is being created for a full star
+// _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
+//  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
+function getStarShading(full)
+{
+    // The points for each shadow
+    var starShading =
+        ["25,0 25,25 33,15",
+        "50,20 25,25 40,50 38,30",
+        "25,40 25,25 10,50",
+        "13,30 25,25 0,20"];
+    
+    var shadows = [$("<polygon/>"), $("<polygon/>"), $("<polygon/>"), $("<polygon/>")];
+    
+    // For each shadow...
+    for (var i = 0; i < shadows.length; i++)
+    {
+        //...a half of a star should not have the first 2 shadows, so as long as that is not the case...
+        if (full || i > 1)
+        {
+            // ...prepare the polygon.
+            shadows[i].css("fill", "#66CC66");
+            shadows[i].addClass("star");
+            shadows[i].attr("points", starShading[i]);
+        }
+    }
+    
+    return shadows;
+}
+    
 // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
 // 
 // Returns the index of the projects array of the type of project that the given container element of a project's content belongs to.
@@ -992,4 +1168,5 @@ function sleep (time)
 {
     return new Promise((resolve) => setTimeout(resolve, time));
 }
+
 })(jQuery);

@@ -63,11 +63,6 @@ h4
     margin: 1vw;
 }
 
-svg
-{
-    cursor: pointer;
-}
-
 
 /*
 ----- CLASSES -----
@@ -114,6 +109,7 @@ svg
 /* Arrow buttons for browsing through the projects */
 .next, .previous
 {
+    cursor: pointer;
     transition: all 1s linear;
 }
 
@@ -172,6 +168,7 @@ svg
     /* POSITION */
     display: inline-block;
     float: right;
+    margin-top: 5px;
     
     /* SIZE */
     height: 50px;
@@ -229,6 +226,13 @@ svg
     width: 60vw;
 }
 
+/* The star polygon used in a rating graphic (including the shading)*/
+.star
+{
+    transform: rotate(180deg) scale(0.8) translate(5px, 5px);
+    transition: transform 0.5s linear;
+}
+
 /* The background behind each star graphic in a skill's rating */
 .starBack
 {
@@ -253,6 +257,13 @@ svg
 {
     position: absolute;
     z-index: 1;
+}
+
+/* The hexagon graphic that is placed behind a star graphic in a skill's rating */
+.starHexagonFront
+{
+    transform: scaleX(0);
+    transition: transform 0.5s linear;
 }
 
 /*

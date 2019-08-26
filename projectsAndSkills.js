@@ -253,9 +253,6 @@ var softSkills =
         ]
     ];
 
-// The size in pixels of the arrow buttons used to browse the projects
-const ARROW_BUTTON_SIZE = window.innerWidth / 10;
-
 // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
 // 
 // Executes once the webpage is loaded
@@ -525,6 +522,27 @@ $(document).ready( function()
             }
         }
     });
+    
+    // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
+    // 
+    // Enlarges a project image to fit the viewport, covering the webpage and fixes it to the viewport. If the image is already enlarged, it is shrunk back to its original size and position.
+    // _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
+    //  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
+    $(".previewImage").click(function()
+    {
+        // If the webpage is darkened (which would mean an image is currently enlarged)...
+        if ($("#darkBackground").length)
+        {
+            // ...shrink it back.
+            hideEnlargedPreview($(this));
+        }
+        // ...otherwise...
+        else
+        {
+            // ...enlarge it.
+            showEnlargedPreview($(this));
+        }
+    });
 });
 
 // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
@@ -605,7 +623,7 @@ function centerArrow(arrow)
     var imageHeight = arrow.siblings(".previewImage").height();
     
     // In order for the button to be centered, its bottom margin must be adjusted to the result of this calculation.
-    var bottomMargin = (imageHeight / 2) - (ARROW_BUTTON_SIZE / 2);
+    var bottomMargin = (imageHeight / 2) - ((window.innerWidth / 10) / 2);
     
     arrow.css("margin-bottom", bottomMargin);
 }
@@ -680,8 +698,8 @@ function createArrows(next)
     arrow.css("fill", "#119911");
     
     // Set the size of the button
-    arrows.css("width", ARROW_BUTTON_SIZE);
-    arrows.css("height", ARROW_BUTTON_SIZE);
+    arrows.css("width", window.innerWidth / 10);
+    arrows.css("height", window.innerWidth / 10);
     
     // Add the shapes to the SVG element
     arrows.append(circleShadow);
@@ -955,6 +973,38 @@ function getType(controlsParent)
     
     return type;
 }
+    
+// _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
+// 
+// Repositions and resizes a project's preview image to its original state. Executed when the user chose to enlarge the image by clicking it and now wishes to revert it back.
+//
+// controlsParent -> jQuery DOM Element -> Container of elements of which the index is being returned for.
+// _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
+//  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
+function hideEnlargedPreview(imagePreview)
+{
+    // Fade the preview image out
+    imagePreview.css("opacity", 0);
+    
+    // After the preview has faded out...
+    sleep(1000).then(() =>
+    {
+        // ...return its CSS properties to their original state.
+        imagePreview.css("display", "inline-block");
+        imagePreview.css("left", "0");
+        imagePreview.css("top", "0");
+        imagePreview.css("height", "auto");
+        imagePreview.css("width", "50vw");
+        imagePreview.css("margin", "0 5vh 0 5vh");
+        imagePreview.css("opacity", 1);
+        imagePreview.css("position", "inherit");
+        imagePreview.css("z-index", "0");
+            
+        // Remove the dark background and the close button
+        imagePreview.siblings("#darkBackground").remove();
+        imagePreview.siblings("#close").remove();
+    });
+}
 
 // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
 // 
@@ -974,7 +1024,7 @@ function loadPreview(imagePreview, imageName, imageAlt)
     sleep(1000).then(() =>
     {
         // ...change the preview image.
-        imagePreview.attr("src", imageName);
+        imagePreview.attr("src", "previews/" + imageName);
         // Fade the new preview image in
         imagePreview.css("opacity", "1");
         
@@ -1030,7 +1080,7 @@ function loadProject(indexToLoad, type)
         // Get the button's text
         bttn.text(project.getButton);
         // Get the button's URL
-        bttn.attr("onclick", "location.href='" + project.getLink + "'");
+        bttn.attr("onclick", "location.href='downloads/" + project.getLink + "'");
         // Set up the click event listener. The reason why the listener is placed on the button's animation instead of the button itself is because the button animation always seems to be positioned on top of the button, even when its z-index is changed in CSS.
         bttn.siblings("#buttonAnimation").attr("onclick", "location.href='" + project.getLink + "'");
     }
@@ -1155,6 +1205,92 @@ function loadSkills(hard)
         // Load it into the DOM
         skillContainer.append(listItem);
     }
+}
+
+// _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
+// 
+// Enlarges a project's preview image to fit the viewport and fixes it to the viewport. Used to give the user a closer view of the image at the expense of covering the webpage.
+//
+// imagePreview -> jQuery DOM Element -> A project's preview image
+// _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
+//  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
+function showEnlargedPreview(imagePreview)
+{
+    // Percentage that the image must grow to fit the viewport horizontally
+    var widthIncrease = 0.9 - (imagePreview.width() / $(window).width());
+    // Percentage that the image must grow to fit the viewport vertically
+    var heightIncrease = 0.9 - (imagePreview.height() / $(window).height());
+    
+    // Disable the image's fade transition
+    imagePreview.css("transition", "opacity 0s linear");
+    // Make the image invisible
+    imagePreview.css("opacity", 0);
+    
+    imagePreview.css("display", "initial");
+    imagePreview.css("left", "50%");
+    imagePreview.css("top", "50%");
+    imagePreview.css("position", "fixed");
+    imagePreview.css("z-index", "20");
+            
+    // If the image has less room to grow horizontally than vertically...
+    if (widthIncrease < heightIncrease)
+    {
+        // ...fit the image to the left and right sides of the viewport.
+        imagePreview.css("height", "auto");
+        imagePreview.css("width", "90vw");
+        imagePreview.css("margin", "-" + (imagePreview.height() / 2) + "px 0 0 -45vw");
+    }
+    // ...otherwise...
+    else
+    {
+        // ...fit the image to the top and bottom sides of the viewport.
+        imagePreview.css("height", "90vh");
+        imagePreview.css("width", "auto");
+        imagePreview.css("margin", "-45vh 0 0 -" + (imagePreview.width() / 2) + "px");
+    }
+    
+    // Re-enable the fading transition
+    imagePreview.css("transition", "opacity 1s linear");
+    
+    // Give a little time for the transition to fully re-enable itself
+    sleep(100).then(() =>
+    {
+        // Fade the image in
+        imagePreview.css("opacity", 1);
+    });
+    
+    // Create a div to darken the background behind the image to give all attention to the preview image
+    var darkenBackground = $("<div></div>");
+    darkenBackground.attr("id", "darkBackground");
+    
+    // Create a close button
+    var closeButton = $("<button></button>");
+    closeButton.text("X");
+    closeButton.attr("id", "close");
+            
+    // Add these elements to the DOM
+    imagePreview.parent().append(darkenBackground, closeButton);
+    
+    // These event listeners must exist here instead of the load method with the others. The close button does not exist when the load method is executed, therefore these event listeners would not be assigned to the button if they were placed in the load method.
+    
+    // When the close button is clicked...
+    $("#close").click(function()
+    {
+        // ...return the image to it's normal state.
+        hideEnlargedPreview($(this).siblings(".previewImage"));
+    });
+    
+    // Animate the close button's colors when hovered
+    $("#close").hover(function()
+    {
+        $(this).css("border-width", 0);
+        $(this).css("background-color", "#FFFFFF");
+    },
+    function()
+    {
+        $(this).css("border-width", "3px");
+        $(this).css("background-color", "#00000000");
+    });
 }
 
 // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_

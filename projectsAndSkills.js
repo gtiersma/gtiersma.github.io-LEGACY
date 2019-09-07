@@ -253,13 +253,14 @@ var softSkills =
         ]
     ];
 
+(function($)
+{
+
 // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
 // 
 // Executes once the webpage is loaded
 // _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
 //  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
-(function($){
-
 $(document).ready( function()
 {
     // Keeps track of the indexes of the currently active projects. The first projects (0) are loaded initially.

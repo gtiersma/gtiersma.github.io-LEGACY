@@ -48,6 +48,13 @@ Changelog:
     -project preview images can be resized to cover the viewport when clicked
     -project preview images are animated when resized
     -minor bug fixes and improvements
+
+9/7/2019 - v0.64
+	-website's title restructured in the form of an internal svg markup
+	-texture added to title text
+	-title text is animated
+    -minor bug fixes and improvements
+
 -->
 
 <html lang="en">
@@ -60,6 +67,7 @@ Changelog:
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="projectsAndSkills.js"></script>
     <script src="main.js"></script>
+    <script src="title.js"></script>
 </head>
 
 <body>
@@ -79,10 +87,37 @@ Changelog:
         <!-- Introductory section -->
         <div id="home">
             
-            <h1 class="name" id="firstName">GEORGE</h1>
-            <h1 class="name" id="lastName">TIERSMA</h1>
-            <!-- Animated background for name -->
-            <canvas id="nameBack"></canvas>
+            <svg id="nameGraphic">
+                
+                <defs>
+                    <!-- Used to blur the light in the text -->
+                    <filter id="blur">
+                        <feGaussianBlur in="SourceGraphic" stdDeviation="100" />
+                    </filter>
+                    
+                    <!-- Pattern of hexagon shapes for text -->
+                    <pattern id="hexagonPattern" patternUnits="userSpaceOnUse">
+                    </pattern>
+                    <!-- The light animation for the text. The CSS "transition" property does not seem to function on SVG elements that have been constructed in JavaScript, so a pool of circles is created here which JavaScript pulls from as needed for background lights in the text. It is given an x offset of 300 to make the animation seamless in the text. -->
+                    <pattern id="nameLights" patternUnits="userSpaceOnUse" x="300">
+                        <circle class="titleLight" active="false"/>
+                        <circle class="titleLight" active="false"/>
+                        <circle class="titleLight" active="false"/>
+                        <circle class="titleLight" active="false"/>
+                        <circle class="titleLight" active="false"/>
+                    </pattern>
+                </defs>
+                
+                <!-- There are 3 layers for the title text. The bottom text is completely black. The middle layer is filled with the animated lights. The top text layer is the black, hexagonal pattern -->
+                <text class="name">
+                    <tspan class="firstName nameLayer1">GEORGE</tspan>
+                    <tspan class="lastName nameLayer1">TIERSMA</tspan>
+                    <tspan class="firstName nameLayer2">GEORGE</tspan>
+                    <tspan class="lastName nameLayer2">TIERSMA</tspan>
+                    <tspan class="firstName nameLayer3">GEORGE</tspan>
+                    <tspan class="lastName nameLayer3">TIERSMA</tspan>
+                </text>
+            </svg>
 
             <img id="topGraphic" src="front.png" alt="Gazing into Cyber Space">
     
@@ -93,6 +128,7 @@ Changelog:
                 <button id="textButton" class="resumeButton">View Resume</button>
                 <div id="buttonAnimation" class="resumeButton"></div>
             </div>
+            
         </div>
     
         <!-- Biographical section -->

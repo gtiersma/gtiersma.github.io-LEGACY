@@ -99,11 +99,20 @@ h4
 {
     /* FONT */
     font-size: 10vw;
-    font-weight: 1000;
+    font-weight: 900;
     letter-spacing: -0.5vw;
-    
-    /* POSITION */
-    margin: 0;
+}
+
+/* The layer of the title text containing the animated lights */
+.nameLayer2
+{
+    fill: url(#nameLights);
+}
+
+/* The layer of the title text containing the hexagons */
+.nameLayer3
+{
+    fill: url(#hexagonPattern);
 }
 
 /* Arrow buttons for browsing through the projects */
@@ -269,6 +278,13 @@ h4
     transition: transform 0.5s linear;
 }
 
+/* An animated light in the title text */
+.titleLight
+{
+    filter: url(#blur);
+    opacity: 0;
+}
+
 /*
 ----- IDENTIFIERS -----
 */
@@ -356,30 +372,17 @@ h4
     width: 100vw;
 }
 
-/* The first name used in the title */
-#firstName
-{
-    padding: 100px 0 0 30vw;
-}
-
 /* The top, introductory part of the website */
 #home
 {
     padding: 0 0 15vw 0;
 }
 
-/* The last name used in the title */
-#lastName
+/* The SVG graphic containing the website's title text */
+#nameGraphic
 {
-    position: relative;
-    padding: 0 0 50px 45vw;
-    top: -5vw;
-}
-
-/* The background graphic for the title text (Feature not yet implemented) */
-#nameBack
-{
-    position: absolute;
+    height: 60vh;
+    width: 100vw;
 }
 
 /* The navigation menu found at the top of the viewport */

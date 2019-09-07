@@ -10,6 +10,9 @@
 
 
 
+(function($)
+{
+
 // |#| |#| |#| |#| |#| |#| |#| |#| |#| |#| |#| |#|
 //
 // Executes once the webpage is loaded
@@ -129,3 +132,5 @@ function goToElement(elmnt)
         behavior: "smooth",
     });
 }
+
+})(jQuery);

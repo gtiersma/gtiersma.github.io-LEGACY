@@ -9,6 +9,10 @@ Each section below is sorted alphabetically.
 */
 
 /*
+Note: "opacity: 0.99" is commonly used in this document to bring an element to the front of the stacking order.
+*/
+
+/*
 ----- GENERAL ELEMENT TYPES -----
 */
 
@@ -44,12 +48,16 @@ circle
 footer
 {
     /* COLOR */
-    background-color: #005500;
     color: #FFFFFF;
     
     /* POSITION */
-    text-align: center;
     padding: 1vw 0 1vw 0;
+    text-align: center;
+}
+
+h1
+{
+    opacity: 0.99;
 }
 
 h2
@@ -63,6 +71,16 @@ h4
     margin: 1vw;
 }
 
+h6
+{
+    position: relative;
+}
+
+p
+{
+    position: relative;
+    z-index: 50;
+}
 
 /*
 ----- CLASSES -----
@@ -81,6 +99,21 @@ h4
     position: relative;
 }
 
+/* The SVG graphic that is used to divide sections of the website */
+.divider
+{
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+}
+
+/* Contains the section divider element */
+.dividerContainer
+{
+    margin-bottom: -1vh;
+    position: relative;
+}
+
 /* Lists of projects and skills */
 .list
 {
@@ -92,6 +125,8 @@ h4
 .list li
 {
     margin: 5vh 25px 0 0;
+    position: relative;
+    z-index: 1;
 }
 
 /* Top title text */
@@ -375,6 +410,7 @@ h4
 /* The top, introductory part of the website */
 #home
 {
+    opacity: 0.99;
     padding: 0 0 15vw 0;
 }
 
@@ -455,8 +491,8 @@ h4
     top: 20vh;
 }
 
-/* The website sections containing the projects and skills */
-#projects, #skills
+/* The website sections containing the projects */
+#projects
 {
     color: #004400;
     padding: 5vw 0 10vw 5vw;
@@ -467,6 +503,7 @@ h4
 {
     background-color: #EEEEEE;
     color: #005500;
+    padding: 5vw 0 10vw 5vw;
 }
 
 /* Each skill in the lists */
@@ -499,7 +536,7 @@ h4
     position: absolute;
     top: 150px;
     width: 80vw;
-    z-index: -10;
+    z-index: -5;
 }
 
 #wrapper

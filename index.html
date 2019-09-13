@@ -55,6 +55,9 @@ Changelog:
 	-title text is animated
     -minor bug fixes and improvements
 
+9/12/2019 - v0.65
+    -hexagon vector graphics created as dividers for the website's sections
+    -minor bug fixes and improvements
 -->
 
 <html lang="en">
@@ -83,6 +86,11 @@ Changelog:
                 <li id="navSkills"><h5>Skills</h5></li>
             </ul>
         </header>
+        
+        <!-- This is the divider for the "home" and "about" sections. It is positioned in the DOM before the home section instead of after it to allow for a proper stacking order. -->
+        <div class="dividerContainer">
+            <svg class="divider"></svg>
+        </div>
     
         <!-- Introductory section -->
         <div id="home">
@@ -137,6 +145,10 @@ Changelog:
             <h1>ABOUT ME</h1>
             <p>I am a new computer programmer and graphic designer who is ready to enter the tech workforce. Although I may not have much work experience, I enjoy designing software and digital artwork with my free time. I also recently graduated from Chemeketa Community College with an Associates of Computer Science. I learned a wide variety of tech skills there, however my specific focus was centered on learning computer programming. Have a look at my projects and skills below to see what I can do.</p>
             
+        </div>
+        
+        <div class="dividerContainer">
+            <svg class="divider"></svg>
         </div>
     
         <!-- Project showcase -->
@@ -204,6 +216,10 @@ Changelog:
         
             </ul>
         </div>
+        
+        <div class="dividerContainer">
+            <svg class="divider"></svg>
+        </div>
     
         <!-- Skills section -->
         <!-- The HTML structure for the skills is generated programmatically in JavaScript. -->
@@ -218,6 +234,10 @@ Changelog:
             <ul class="list">
             </ul>
         
+        </div>
+        
+        <div class="dividerContainer">
+            <svg class="divider"></svg>
         </div>
 
         <footer>

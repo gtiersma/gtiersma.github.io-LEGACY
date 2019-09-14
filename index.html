@@ -58,6 +58,11 @@ Changelog:
 9/12/2019 - v0.65
     -hexagon vector graphics created as dividers for the website's sections
     -minor bug fixes and improvements
+
+9/14/2019 - v0.7
+    -added alternative text where needed
+    -webpage is navigatable with the tab key
+    -minor bug fixes and improvements
 -->
 
 <html lang="en">
@@ -80,10 +85,10 @@ Changelog:
         <!-- Navigation bar -->
         <header>
             <ul id="nav">
-                <li id="navHome"><h5>Home</h5></li>
-                <li id="navAbout"><h5>About</h5></li>
-                <li id="navProjects"><h5>Projects</h5></li>
-                <li id="navSkills"><h5>Skills</h5></li>
+                <li id="navHome" tabindex="1"><h5>Home</h5></li>
+                <li id="navAbout" tabindex="2"><h5>About</h5></li>
+                <li id="navProjects" tabindex="3"><h5>Projects</h5></li>
+                <li id="navSkills" tabindex="4"><h5>Skills</h5></li>
             </ul>
         </header>
         
@@ -95,7 +100,9 @@ Changelog:
         <!-- Introductory section -->
         <div id="home">
             
-            <svg id="nameGraphic">
+            <svg id="nameGraphic" aria-labelledby="nameAlt" role="img">
+                
+                <title id="nameAlt">George Tiersma</title>
                 
                 <defs>
                     <!-- Used to blur the light in the text -->
@@ -127,7 +134,7 @@ Changelog:
                 </text>
             </svg>
 
-            <img id="topGraphic" src="front.png" alt="Gazing into Cyber Space">
+            <img id="topGraphic" src="front.png" alt="Gazing into Cyber Space graphic">
     
             <h3 id="occupation">Software Developer - Digital Artist</h3>
     
@@ -161,13 +168,17 @@ Changelog:
                 <!-- HTML contains only the templates for the projects -->
                 <!-- List item for each project -->
                 <li>
-                    <button class="showHide">+</button>
+                    <button class="showHide" alt="Show Content">+</button>
                     <h2>Computer Programming</h2>
                     <div class="projectContent">
                         <h3></h3>
-                        <svg class="previous"></svg>
+                        <svg class="previous" aria-labelledby="previousAlt" role="img">
+                            <title id="previousAlt">View Previous Project</title>
+                        </svg>
                         <img class="previewImage">
-                        <svg class="next"></svg>
+                        <svg class="next" aria-labelledby="nextAlt" role="img">
+                            <title id="nextAlt">View Next Project</title>
+                        </svg>
                         <p></p>
                         <p></p>
                         <p></p>
@@ -179,13 +190,17 @@ Changelog:
                 </li>
     
                 <li>
-                    <button class="showHide">+</button>
+                    <button class="showHide" alt="Show Content">+</button>
                     <h2>Graphic Design</h2>
                     <div class="projectContent">
                         <h3></h3>
-                        <svg class="previous"></svg>
+                        <svg class="previous" aria-labelledby="previousAlt" role="img">
+                            <title id="previousAlt">View Previous Project</title>
+                        </svg>
                         <img class="previewImage">
-                        <svg class="next"></svg>
+                        <svg class="next" aria-labelledby="nextAlt" role="img">
+                            <title id="nextAlt">View Next Project</title>
+                        </svg>
                         <p></p>
                         <p></p>
                         <p></p>
@@ -197,13 +212,17 @@ Changelog:
                 </li>
     
                 <li>
-                    <button class="showHide">+</button>
+                    <button class="showHide" alt="Show Content">+</button>
                     <h2>Database</h2>
                     <div class="projectContent">
                         <h3></h3>
-                        <svg class="previous"></svg>
+                        <svg class="previous" aria-labelledby="previousAlt" role="img">
+                            <title id="previousAlt">View Previous Project</title>
+                        </svg>
                         <img class="previewImage">
-                        <svg class="next"></svg>
+                        <svg class="next" aria-labelledby="nextAlt" role="img">
+                            <title id="nextAlt">View Next Project</title>
+                        </svg>
                         <p></p>
                         <p></p>
                         <p></p>

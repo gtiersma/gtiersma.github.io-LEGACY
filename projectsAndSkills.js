@@ -286,9 +286,56 @@ $(document).ready( function()
     // The skills are hidden as well
     $(".skillContent").hide();
     
+    
+
+    
+    
     // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
     // 
-    // Event listener for the arrow buttons to view the next project
+    // EVENT LISTENERS (sorted by class/id)
+    // _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
+    //  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
+    
+    // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
+    // 
+    // Animates the arrow buttons when hovered upon
+    // _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
+    //  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
+    $(".arrowCircle, polygon").hover(function()
+    {
+        // The SVG element
+        var svg = $(this).parent();
+        
+        svg.children(".arrowCircle").css("stroke-width", 0);
+        svg.children(".arrowCircle").css("opacity", 0);
+        svg.children(".arrowShadow").css("stroke-width", 0);
+    },
+    function()
+    {
+        var svg = $(this).parent();
+        
+        svg.children(".arrowCircle").css("stroke-width", 3);
+        svg.children(".arrowCircle").css("opacity", 1);
+        svg.children(".arrowShadow").css("stroke-width", 3);
+    });
+    
+    // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
+    // 
+    // Animates the arrow buttons when clicked
+    // _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
+    //  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
+    $(".arrowCircle, polygon").on("mousedown", function()
+    {
+        $(this).parent().children("polygon").css("fill", "#FFFFFF");
+    });
+    $(".arrowCircle, polygon").on("mouseup", function()
+    {
+        $(this).parent().children("polygon").css("fill", "#119911");
+    });
+    
+    // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
+    // 
+    // Displays the next project when the "next" button is clicked
     // _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
     //  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
     $(".next").click(function()
@@ -315,7 +362,28 @@ $(document).ready( function()
     
     // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
     // 
-    // Event listener for the arrow buttons to view the previous project
+    // Enlarges a project image to fit the viewport, covering the webpage and fixes it to the viewport. If the image is already enlarged, it is shrunk back to its original size and position.
+    // _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
+    //  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
+    $(".previewImage").click(function()
+    {
+        // If the webpage is darkened (which would mean an image is currently enlarged)...
+        if ($("#darkBackground").length)
+        {
+            // ...shrink it back.
+            hideEnlargedPreview($(this));
+        }
+        // ...otherwise...
+        else
+        {
+            // ...enlarge it.
+            showEnlargedPreview($(this));
+        }
+    });
+    
+    // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
+    // 
+    // Displays the previous project when the "previous" button is clicked
     // _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
     //  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
     $(".previous").click(function()
@@ -342,7 +410,7 @@ $(document).ready( function()
     
     // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
     // 
-    // Event listener for the buttons used to show or hide the content relating to a project or skill
+    // Shows or hides the content related to a project or skill for when the show/hide button is clicked.
     // _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
     //  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
     $(".showHide").click(function()
@@ -382,6 +450,7 @@ $(document).ready( function()
             
             // Switch it to a "-" button
             $(this).text("-");
+            $(this).attr("alt", "Hide Content");
             
             // If this is for a project...
             if (fadeContainer.hasClass("projectContent"))
@@ -419,6 +488,7 @@ $(document).ready( function()
             
             // Switch it to a "+" button
             $(this).text("+");
+            $(this).attr("alt", "Show Content");
         }
     });
     
@@ -436,43 +506,6 @@ $(document).ready( function()
     {
         $(this).css("box-shadow", "5px 5px #000000");
         $(this).css("text-shadow", "0 0");
-    });
-    
-    // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
-    // 
-    // Animates the arrow buttons when hovered upon
-    // _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
-    //  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
-    $(".arrowCircle, polygon").hover(function()
-    {
-        // The SVG element
-        var svg = $(this).parent();
-        
-        svg.children(".arrowCircle").css("stroke-width", 0);
-        svg.children(".arrowCircle").css("opacity", 0);
-        svg.children(".arrowShadow").css("stroke-width", 0);
-    },
-    function()
-    {
-        var svg = $(this).parent();
-        
-        svg.children(".arrowCircle").css("stroke-width", 3);
-        svg.children(".arrowCircle").css("opacity", 1);
-        svg.children(".arrowShadow").css("stroke-width", 3);
-    });
-    
-    // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
-    // 
-    // Animates the arrow buttons when clicked
-    // _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
-    //  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
-    $(".arrowCircle, polygon").on("mousedown", function()
-    {
-        $(this).parent().children("polygon").css("fill", "#FFFFFF");
-    });
-    $(".arrowCircle, polygon").on("mouseup", function()
-    {
-        $(this).parent().children("polygon").css("fill", "#119911");
     });
     
     // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
@@ -523,29 +556,18 @@ $(document).ready( function()
             }
         }
     });
-    
-    // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
-    // 
-    // Enlarges a project image to fit the viewport, covering the webpage and fixes it to the viewport. If the image is already enlarged, it is shrunk back to its original size and position.
-    // _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
-    //  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
-    $(".previewImage").click(function()
-    {
-        // If the webpage is darkened (which would mean an image is currently enlarged)...
-        if ($("#darkBackground").length)
-        {
-            // ...shrink it back.
-            hideEnlargedPreview($(this));
-        }
-        // ...otherwise...
-        else
-        {
-            // ...enlarge it.
-            showEnlargedPreview($(this));
-        }
-    });
 });
-
+    
+    
+    
+    
+    
+// _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
+// 
+// FUNCTIONS (sorted alphabetically)
+// _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
+//  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
+    
 // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
 // 
 // Automatically adjusts a given element's height while allowing it to have a vertically shrinking transition animation.
@@ -828,9 +850,10 @@ function getRatingGraphic(rating)
     // A decrementing counter for the rating
     var rtng = rating;
     
-    // The container to contain the graphic
+    // The container for the graphic
     var container = $("<div></div>");
     container.addClass("ratingContainer");
+    container.attr("alt", "Self-Evaluated Rating: " + rating);
     
     // For each spot a star could be placed...
     for (var i = 0; i < 5; i++)
@@ -915,7 +938,7 @@ function getStarGraphic(full)
 
 // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
 // 
-// Creates and returns the shadow graphic for a star
+// Creates and returns the shading graphic for a star
 //
 // full -> Boolean -> Whether or not the shadow is being created for a full star
 // _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
@@ -1268,6 +1291,7 @@ function showEnlargedPreview(imagePreview)
     var closeButton = $("<button></button>");
     closeButton.text("X");
     closeButton.attr("id", "close");
+    closeButton.attr("alt", "Close Image Preview");
             
     // Add these elements to the DOM
     imagePreview.parent().append(darkenBackground, closeButton);

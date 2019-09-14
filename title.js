@@ -36,6 +36,16 @@ $(document).ready( function()
     setInterval(lightEffect, MIN_LIGHT_DELAY, MIN_LIGHT_DELAY);
 });
 
+    
+    
+    
+    
+//###::::::###::::::###::::::###::::::###::::::###
+//
+// FUNCTIONS (sorted alphabetically)
+//
+//###::::::###::::::###::::::###::::::###::::::###
+    
 //###::::::###::::::###::::::###::::::###::::::###
 //
 // Creates a polygon SVG element of a hexagon
@@ -304,13 +314,13 @@ function prepareTitleText(layerIndex)
     lastName.attr("y", 45 * viewportHeightPercent);
 }
 
-// _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
+//###::::::###::::::###::::::###::::::###::::::###
 // 
 // Javascript does not included a built in method to hault execution, so a user-defined method to do so is defined here.
 //
 // time -> Number -> The number of milliseconds that execution should pause
-// _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
-//  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
+//
+//###::::::###::::::###::::::###::::::###::::::###
 function sleep (time)
 {
     return new Promise((resolve) => setTimeout(resolve, time));

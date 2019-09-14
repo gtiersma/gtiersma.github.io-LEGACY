@@ -29,9 +29,19 @@ $(document).ready( function()
     createDivider3(HEXAGON_SIZE);
     createDivider4(HEXAGON_SIZE);
     
+    
+    
+    
+
     // |#| |#| |#| |#| |#| |#| |#| |#| |#| |#| |#| |#|
     //
-    // Listener for the button's animation for when a cursor is hovered over the button.
+    // EVENT LISTENERS (sorted by class/ID name)
+    //
+    // |#| |#| |#| |#| |#| |#| |#| |#| |#| |#| |#| |#|
+    
+    // |#| |#| |#| |#| |#| |#| |#| |#| |#| |#| |#| |#|
+    //
+    // Animates a standard button when hovered upon.
     // The reason why the listener is placed on the button's animation as well as the button itself is because the button animation seems to be positioned on top of the button in some instances. Changing its z-index in CSS does not seem to change the order for some reason.
     //
     // |#| |#| |#| |#| |#| |#| |#| |#| |#| |#| |#| |#|
@@ -75,11 +85,36 @@ $(document).ready( function()
         }
     });
     
-    // Event listeners for the navigation menu links
-    $("#navHome").click( function(){ goToElement($("#home")); });
-    $("#navAbout").click( function(){ goToElement($("#about")); });
-    $("#navProjects").click( function(){ goToElement($("#projects")); });
-    $("#navSkills").click( function(){ goToElement($("#skills")); });
+    // |#| |#| |#| |#| |#| |#| |#| |#| |#| |#| |#| |#|
+    //
+    // Scrolls the viewport to the correct section when the user uses the tab key to focus an option on the navigation menu and then presses the enter key to select it.
+    //
+    // |#| |#| |#| |#| |#| |#| |#| |#| |#| |#| |#| |#|
+    $(document).keypress( function()
+    {
+        // If the enter key has been pressed...
+        if (event.keyCode == 13)
+        {
+            // ...and the tab focus is on a navigation menu element...
+            if ($(document.activeElement).attr("id") === "navHome")
+            {
+                // ...go to that section.
+                goToElement($("#home"));
+            }
+            if ($(document.activeElement).attr("id") === "navAbout")
+            {
+                goToElement($("#about"));
+            }
+            if ($(document.activeElement).attr("id") === "navProjects")
+            {
+                goToElement($("#projects"));
+            }
+            if ($(document.activeElement).attr("id") === "navSkills")
+            {
+                goToElement($("#skills"));
+            }
+        }
+    });
     
     // |#| |#| |#| |#| |#| |#| |#| |#| |#| |#| |#| |#|
     //
@@ -121,7 +156,23 @@ $(document).ready( function()
             borderBottomWidth: 0
         }, 500);
     });
+    
+    // Event listeners for the navigation menu links
+    $("#navAbout").click( function(){ goToElement($("#about")); });
+    $("#navHome").click( function(){ goToElement($("#home")); });
+    $("#navProjects").click( function(){ goToElement($("#projects")); });
+    $("#navSkills").click( function(){ goToElement($("#skills")); });
 });
+    
+    
+    
+    
+
+// |#| |#| |#| |#| |#| |#| |#| |#| |#| |#| |#| |#|
+//
+// FUNCTIONS (sorted alphabetically)
+//
+// |#| |#| |#| |#| |#| |#| |#| |#| |#| |#| |#| |#|
 
 // |#| |#| |#| |#| |#| |#| |#| |#| |#| |#| |#| |#|
 //

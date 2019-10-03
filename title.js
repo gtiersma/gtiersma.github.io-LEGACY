@@ -12,7 +12,45 @@
 
 (function($)
 {
+    
+//###::::::###::::::###::::::###::::::###::::::###
+//
+// GLOBAL CONSTANTS
+//
+// All of these are used in the light animation effect. To optimize performance, these are declared outside of the "lightEffect" repeated method.
+//
+//###::::::###::::::###::::::###::::::###::::::###
+    
+    // The least and most amount of time (in milliseconds) to wait before possibly animating another light
+    const MIN_LIGHT_DELAY = 2000;
+    const MAX_LIGHT_DELAY = 3000;
+    
+    // The least and most bright the light can be. Each value should be below 256. 0 is black. 255 is white.
+    const MIN_LIGHT_BRIGHTNESS = 63;
+    const MAX_LIGHT_BRIGHTNESS = 255;
+    
+    // The least and most saturation that the light may have. Each value should be below 256. 0 is colorless. 255 is neon.
+    const MIN_LIGHT_SATURATION = 127;
+    const MAX_LIGHT_SATURATION = 255;
+    
+    // The least and most amount of time (in milliseconds) that a light may animate before it disappears. This includes both the time that the light grows and shrinks.
+    const MIN_LIGHT_LIFE = 1000;
+    const MAX_LIGHT_LIFE = 5000;
+        
+    // The smallest and largest size that a light can grow to be in pixels.
+    const MIN_LIGHT_SIZE = 50;
+    const MAX_LIGHT_SIZE = 700;
+    
+    // The most lights that can be animating at the same time. This should be equal to the number of circle elements in the light pattern in the DOM. That number cannot be retrieved from the DOM at this point due to the fact that the DOM has not yet been rendered at this point in time. This variable also must be declared here rather than in the "lightEffect" method to help maintain optimal performance.
+    var MAX_LIGHTS = 5;
+    
+    // Used to keep track of which circle elements are currently in animation and which are currently inactive
+    var activeLights = Array(MAX_LIGHTS).fill(false);
 
+    // Will stop the light animation if something is going wrong
+    var abortAnimation = false;
+    
+    
 //###::::::###::::::###::::::###::::::###::::::###
 //
 // Executes once the webpage is loaded
@@ -20,11 +58,9 @@
 //###::::::###::::::###::::::###::::::###::::::###
 $(document).ready( function()
 {
-    // The least amount of time in milliseconds that there should be between the creation of 2 lights in the text
-    const MIN_LIGHT_DELAY = 500;
-    
     // For each layer of the title text...
-    for (var i = 0; i < $(".firstName").length; i++)
+    var numberOfLayers = $(".firstName").length;
+    for (var i = 0; i < numberOfLayers; i++)
     {
         // ...set it up correctly.
         prepareTitleText(i);
@@ -32,8 +68,11 @@ $(document).ready( function()
     
     preparePatterns();
     
-    // Possibly create a new light in the text each time the given amount of time passes
-    setInterval(lightEffect, MIN_LIGHT_DELAY, MIN_LIGHT_DELAY);
+    // The light effect only seems to function properly in Chrome
+    if (navigator.userAgent.search("Chrome") >= 0)
+    {
+        lightEffect();
+    }
 });
 
     
@@ -45,6 +84,47 @@ $(document).ready( function()
 // FUNCTIONS (sorted alphabetically)
 //
 //###::::::###::::::###::::::###::::::###::::::###
+    
+//###::::::###::::::###::::::###::::::###::::::###
+//
+// Animates a light animate
+//
+// light -> jQuery DOM SVG Circle Element -> The element to be used as the light
+// animationLength -> Number -> The amount of time (in milliseconds) that it should take for the light to grow or shrink
+// size -> Number -> The size in pixels that the light will grow to
+//
+//###::::::###::::::###::::::###::::::###::::::###
+function animateLight(light, animationLength, size)
+{
+    // The time at which the animation begins
+    var startTime = new Date();
+    
+    // A very short pause must exist for the CSS transition property to begin working
+    sleep(100).then(() =>
+    {
+        // Begin scaling the light to size
+        light.css("transform", "scale(1) translate(0, 0)");
+        light.css("opacity", "1.0");
+        
+        // Once the light has reached its full size and opacity...
+        sleep(animationLength).then(() =>
+        {
+            // ...shrink it back.
+            light.css("transform", "scale(0.1) translate(" + size + "px, " + size + ")");
+            light.css("opacity", "0");
+            
+            // The time at which the light finishes growing to its maximum size
+            var middleTime = new Date();
+            
+            // If the time it took to grow is unreasonably longer than it should be...
+            if (((middleTime - startTime) / animationLength) > 1.2)
+            {
+                // ...something is wrong. End the animation. This is used to prevent the animation from running in case of incredibly high CPU usage (which can happen in some versions of FireFox), a memory leak (which can happen in older versions of Chrome) or if the computer lacks the available resources.
+                abortAnimation = true;
+            }
+        });
+    });
+}
     
 //###::::::###::::::###::::::###::::::###::::::###
 //
@@ -80,36 +160,6 @@ function getHexagon(size, spacing, xOffset, yOffset)
 
 //###::::::###::::::###::::::###::::::###::::::###
 //
-// Gets a circle element for a light from the pool of circles in the light pattern. It will return an undefined variable if all of the circles in the pool are currently in use.
-//
-//###::::::###::::::###::::::###::::::###::::::###
-function getLight()
-{
-    // The circle element to be returned
-    var light;
-    
-    var lightPattern = $("#nameLights");
-    
-    // For each circle in the pool...
-    for (var i = 0; i < lightPattern.children().length; i++)
-    {
-        // ...if the circle is not currently in use...
-        if (lightPattern.children().eq(i).attr("active") === "false")
-        {
-            // ...set it to be active.
-            lightPattern.children().eq(i).attr("active", "true");
-            // Get it
-            light = lightPattern.children().eq(i);
-            // Exit the loop
-            i = lightPattern.children().length + 1;
-        }
-    }
-    
-    return light;
-}
-
-//###::::::###::::::###::::::###::::::###::::::###
-//
 // Gets a random, whole number between the values provided
 //
 // min -> Number -> The smallest possible value to be returned
@@ -131,18 +181,15 @@ function getRandomNumber(min, max)
 //###::::::###::::::###::::::###::::::###::::::###
 function getShadeOfGreen(brightness, saturation)
 {
-    var red = brightness;
-    
     var green = brightness + saturation;
+    
     // Each color value cannot exceed 255
     if (green > 255)
     {
         green = 255;
     }
     
-    var blue = brightness;
-    
-    var color = "rgb(" + red + ", " + green + ", " + blue + ")";
+    var color = "rgb(" + brightness + ", " + green + ", " + brightness + ")";
     
     return color;
 }
@@ -151,92 +198,90 @@ function getShadeOfGreen(brightness, saturation)
 //
 // May create a light for the title's text effect if certain conditions within this method are met.
 //
-// minDelay -> Number -> The least amount of time that should exist before another light appears
-//
 //###::::::###::::::###::::::###::::::###::::::###
-function lightEffect(minDelay)
+function lightEffect()
 {
-    // The most amount of time that should exist before another light appears
-    const MAX_DELAY = 5000;
-    
-    // Gets a number to determine whether or not this function should create a light or if it is still too early
-    var wait = getRandomNumber(0, MAX_DELAY / minDelay);
-    
-    // If the random number retrieved is less than 2, a light should be created now.
-    if (wait < 2)
-    {
-        // Get a circle element for a light from the pool of circles
-        var light = getLight();
-        
-        // If a light was not returned...
-        if (light == undefined)
+    // After waiting a random amount of time...
+    sleep(getRandomNumber(MIN_LIGHT_DELAY, MAX_LIGHT_DELAY)).then(() =>
+	{
+        // ...as long as there are no problems with the animation...
+        if (!abortAnimation)
         {
-            // ...all of the circles in the pool must currently be in use, so another light will not be created.
-            return;
+            // ...begin possibly animating another light.
+            requestAnimationFrame(lightEffect);
         }
-        
-        const MIN_BRIGHTNESS = 0;
-        const MAX_BRIGHTNESS = 255;
+	});
     
-        const MIN_SATURATION = 127;
-        const MAX_SATURATION = 255;
+    // The circle element to be used as the light
+    var light;
     
-        // How long the light will be visible in milliseconds. This includes both the time taken for the light to brighten and dim.
-        const MIN_LIFE = 1000;
-        const MAX_LIFE = 5000;
+    // Determines which circle element is being used
+    var lightNumber;
         
-        // Size of the light in pixels
-        const MIN_SIZE = 10;
-        const MAX_SIZE = 500;
-        
-        var brightness = getRandomNumber(MIN_BRIGHTNESS, MAX_BRIGHTNESS);
-        var saturation = getRandomNumber(MIN_SATURATION, MAX_SATURATION);
-        var life = getRandomNumber(MIN_LIFE, MAX_LIFE);
-        var size = getRandomNumber(MIN_SIZE, MAX_SIZE);
-        
-        var color = getShadeOfGreen(brightness, saturation);
-        
-        // Gets a random position within the pattern
-        var x = getRandomNumber(0, ($(window).width() / 3) * 2);
-        var y = getRandomNumber(0, $(window).height() / 2);
-        
-        // The light spends half of its life growing and half shrinking
-        var animationLength = life / 2;
-        
-        light.attr("cx", x);
-        light.attr("cy", y);
-        light.attr("r", size);
-        light.attr("fill", color);
-        light.attr("filter", "blur");
-        
-        // A scaling animation of a light gives the appearance that the light is moving. A translating animation is given to counter the appearance of movement.
-        light.css("transform", "scale(0.1) translate(" + size + "px, " + size + ")");
-        
-        light.css("transition", "all " + animationLength + "ms linear");
-        
-        // A very short pause must exist for the CSS transition property to begin working
-        sleep(100).then(() =>
+    // Get a circle element for a light from the pool of circles
+    for (var i = 0; i < MAX_LIGHTS; i++)
+    {
+        // As long as the circle is not currently in use...
+        if (activeLights[i] === false)
         {
-            // Begin scaling the light to size
-            light.css("transform", "scale(1) translate(0, 0)");
-            light.css("opacity", "1.0");
-        
-            // Once the light has reached its full size and opacity...
-            sleep(animationLength).then(() =>
-            {
-                // ...shrink it back.
-                light.css("transform", "scale(0.1) translate(" + size + "px, " + size + ")");
-                light.css("opacity", "0");
+            // ...get it.
+            light = $(".titleLight").eq(i);
             
-                // Once the light is no longer visible...
-                sleep(animationLength).then(() =>
-                {
-                    // ...disactivate it to be used again later.
-                    light.attr("active", "false");
-                });
-            });
+            // Set it to being used
+            activeLights[i] = true;
+            
+            lightNumber = i;
+            
+            // Exit the loop
+            i = MAX_LIGHTS;
+        }
+    }
+        
+    // If a light was returned...
+    if (typeof light !== typeof undefined)
+    {
+        // The light spends half of its life growing and half shrinking
+        var animationLength = getRandomNumber(MIN_LIGHT_LIFE, MAX_LIGHT_LIFE) / 2;
+        
+        var size = getRandomNumber(MIN_LIGHT_SIZE, MAX_LIGHT_SIZE);
+        
+        prepareLight(light, animationLength, size);
+                
+        animateLight(light, animationLength, size);
+        
+        // Once the light has approximately finished animating...
+        sleep(animationLength * 2 + 100).then(() =>
+        {
+            // ...set it to being inactive.
+            activeLights[lightNumber] = false;
         });
     }
+}
+
+//###::::::###::::::###::::::###::::::###::::::###
+//
+// Prepares a light element to be animated
+//
+// light -> jQuery DOM SVG Circle Element -> The element to be used as a light
+// animationLength -> Number -> The amount of time (in milliseconds) that it should take for the light to grow or shrink
+// size -> Number -> The size in pixels that the light will grow to
+//
+//###::::::###::::::###::::::###::::::###::::::###
+function prepareLight(light, animationLength, size)
+{
+    var color = getShadeOfGreen(getRandomNumber(MIN_LIGHT_BRIGHTNESS, MAX_LIGHT_BRIGHTNESS),   getRandomNumber(MIN_LIGHT_SATURATION, MAX_LIGHT_SATURATION));
+    
+    // Get a random position approximately within the range of the title text
+    light.attr("cx", getRandomNumber(0, ($(window).width() / 3) * 2));
+    light.attr("cy", getRandomNumber(0, $(window).height() / 2));
+    
+    light.attr("r", size);
+    light.attr("fill", color);
+        
+    // A scaling animation of a light gives the appearance that the light is moving. A translating animation is given to counter the appearance of movement.
+    light.css("transform", "scale(0.1) translate(" + size + "px, " + size + ")");
+        
+    light.css("transition", "all " + animationLength + "ms linear");
 }
 
 //###::::::###::::::###::::::###::::::###::::::###
@@ -258,9 +303,6 @@ function preparePatterns()
     var unitWidth = (oneTenthSize * 16) + (SPACING * 2);
     var unitHeight = (oneTenthSize * 8) + (SPACING * 2);
     
-    // The position of the hexagon in the middle of a pattern segment
-    var neutralOffsetX = (oneTenthSize * 3) + SPACING;
-    var neutralOffsetY = (oneTenthSize * -1) + SPACING;
     // The x position of the hexagons on the right side of a pattern segment
     var positiveOffsetX = (oneTenthSize * 11) + (SPACING * 2);
     // The y position of the hexagons on the bottom of a pattern segment
@@ -281,7 +323,7 @@ function preparePatterns()
     lightBox.attr("height", $(window).height() / 2);
     
     // Create the hexagons for each pattern segment. There is 1 in the middle and 4 for each corner.
-    pattern.append(getHexagon(HEXAGON_SIZE, SPACING, neutralOffsetX, neutralOffsetY));
+    pattern.append(getHexagon(HEXAGON_SIZE, SPACING, (oneTenthSize * 3) + SPACING, (oneTenthSize * -1) + SPACING));
     pattern.append(getHexagon(HEXAGON_SIZE, SPACING, negativeOffsetX, negativeOffsetY));
     pattern.append(getHexagon(HEXAGON_SIZE, SPACING, positiveOffsetX, negativeOffsetY));
     pattern.append(getHexagon(HEXAGON_SIZE, SPACING, negativeOffsetX, positiveOffsetY));
@@ -307,10 +349,10 @@ function prepareTitleText(layerIndex)
     var firstName = $(".firstName").eq(layerIndex);
     var lastName = $(".lastName").eq(layerIndex);
     
-    firstName.attr("x", 40 * viewportWidthPercent);
+    firstName.attr("x", 35 * viewportWidthPercent);
     firstName.attr("y", 30 * viewportHeightPercent);
     
-    lastName.attr("x", 50 * viewportWidthPercent);
+    lastName.attr("x", 45 * viewportWidthPercent);
     lastName.attr("y", 45 * viewportHeightPercent);
 }
 

@@ -29,6 +29,11 @@ $(document).ready( function()
     createDivider3(HEXAGON_SIZE);
     createDivider4(HEXAGON_SIZE);
     
+    // The href attribute allows navigation from the navigation menu. However, functionality is provided here for a smooth-transitional navigation, so when this file runs, these attributes can be removed. These attributes are left in the HTML document for when the user is not or cannot use JavaScript.
+    $("#navHome").children("a").removeAttr("href");
+    $("#navAbout").children("a").removeAttr("href");
+    $("#navProjects").children("a").removeAttr("href");
+    $("#navSkills").children("a").removeAttr("href");
     
     
     
@@ -47,7 +52,7 @@ $(document).ready( function()
     // |#| |#| |#| |#| |#| |#| |#| |#| |#| |#| |#| |#|
     $("#buttonAnimation, #textButton").hover( function()
     {
-        $(this).siblings("button").css("background-color", "#CCFFCC");
+        $(this).siblings("button").css("background-color", "#CFC");
         
         $(this).css("border-width", "5px");
         $(this).css("height", "100px");
@@ -67,7 +72,7 @@ $(document).ready( function()
     },
     function()
     {
-        $(this).siblings("button").css("background-color", "#FFFFFF");
+        $(this).siblings("button").css("background-color", "#FFF");
         
         $(this).css("border-width", "0");
         $(this).css("height", "60px");
@@ -123,15 +128,16 @@ $(document).ready( function()
     // |#| |#| |#| |#| |#| |#| |#| |#| |#| |#| |#| |#|
     $("#nav").hover( function()
     {
-        $(this).css("background", "#FFFFFF");
+        $(this).css("background", "#FFF");
+        $(this).css("opacity", "1.0");
         
         // This helps keep the navigation bar from awkwardly growing and shrinking while the cursor is hovering over the menu options
         $(this).css("height", $(this).height());
     },
     function() 
     {
-        $(this).css("background", "#AAFFAAEE");
-        
+        $(this).css("background", "#9F9");
+        $(this).css("opacity", "0.9");
         
         // This helps keep the navigation bar from awkwardly growing and shrinking as well
         $(this).css("height", "auto");
@@ -142,9 +148,9 @@ $(document).ready( function()
     // Animations for when an option in the navigation menu is hovered-over by the cursor. Using a CSS transition property like the other animations does not seem to work, so the jQuery transition method used here is different.
     //
     // |#| |#| |#| |#| |#| |#| |#| |#| |#| |#| |#| |#|
-    $("#nav li h5").hover( function()
+    $("#nav li a").hover( function()
     {
-        $(this).css({border: "0 solid #119911"}).animate
+        $(this).css({border: "0 solid #060"}).animate
         ({
             borderBottomWidth: 3
         }, 500);
@@ -186,17 +192,18 @@ function createDivider1(hexagonSize)
     // Get the correct divider SVG element
     var svg = $(".divider").eq(0);
     
-    svg.css("top", "50vh");
+    // Positions the divider so that the bottom of it rests just about on the top of the "about" section
+    svg.css("top", ($("#about").offset().top - svg.height() + 50) + "px");
     
     // Covers the SVG element with a background color
     var background = $("<rect/>");
     background.attr("width", svg.width());
     background.attr("height", svg.height());
-    background.css("fill", "#FFFFFF");
+    background.css("fill", "#FFF");
     
     // A group of hexagons
     var hexagonChunk1 = $("<polygon/>");
-    hexagonChunk1.css("fill", "#CCFFCC");
+    hexagonChunk1.css("fill", "#CFC");
     
     hexagonChunk1.attr("points",
         0 + "," + (hexagonSize * 2) + " " +
@@ -207,7 +214,7 @@ function createDivider1(hexagonSize)
     
     // Another group of hexagons
     var hexagonChunk2 = $("<polygon/>");
-    hexagonChunk2.css("fill", "#CCFFCC");
+    hexagonChunk2.css("fill", "#CFC");
     
     hexagonChunk2.attr("points",
         (hexagonSize * 7.5) + "," + (hexagonSize * 3.5) + " " +
@@ -222,7 +229,7 @@ function createDivider1(hexagonSize)
         (hexagonSize * 7) + "," + (hexagonSize * 4));
     
     var hexagonChunk3 = $("<polygon/>");
-    hexagonChunk3.css("fill", "#CCFFCC");
+    hexagonChunk3.css("fill", "#CFC");
     
     hexagonChunk3.attr("points",
         0 + "," + (hexagonSize * 5) + " " +
@@ -284,7 +291,7 @@ function createDivider1(hexagonSize)
         0 + "," + svg.height());
     
     var hexagonChunk4 = $("<polygon/>");
-    hexagonChunk4.css("fill", "#FFFFFF");
+    hexagonChunk4.css("fill", "#FFF");
     
     hexagonChunk4.attr("points",
         (hexagonSize * 6) + "," + (hexagonSize * 6) + " " +
@@ -304,7 +311,7 @@ function createDivider1(hexagonSize)
         );
     
     var hexagonChunk5 = $("<polygon/>");
-    hexagonChunk5.css("fill", "#FFFFFF");
+    hexagonChunk5.css("fill", "#FFF");
     
     hexagonChunk5.attr("points",
         (hexagonSize * 10.5) + "," + (hexagonSize * 7.5) + " " +
@@ -340,12 +347,13 @@ function createDivider2(hexagonSize)
     svg.css("top", "-50vh");
     
     var background = $("<rect/>");
+    background.attr("y", svg.height() / 5)
     background.attr("width", svg.width());
-    background.attr("height", svg.height());
-    background.css("fill", "#CCFFCC");
+    background.attr("height", (svg.height() / 5) * 4);
+    background.css("fill", "#CFC");
     
     var hexagonChunk1 = $("<polygon/>");
-    hexagonChunk1.css("fill", "#FFFFFF");
+    hexagonChunk1.css("fill", "#FFF");
     
     hexagonChunk1.attr("points",
         (hexagonSize * 13.5) + "," + (hexagonSize * 1.5) + " " +
@@ -355,7 +363,7 @@ function createDivider2(hexagonSize)
         (hexagonSize * 13) + "," + (hexagonSize * 2));
     
     var hexagonChunk2 = $("<polygon/>");
-    hexagonChunk2.css("fill", "#FFFFFF");
+    hexagonChunk2.css("fill", "#FFF");
     
     hexagonChunk2.attr("points",
         (hexagonSize * 4.5) + "," + (hexagonSize * 2.5) + " " +
@@ -370,7 +378,7 @@ function createDivider2(hexagonSize)
         (hexagonSize * 4) + "," + (hexagonSize * 2));
     
     var hexagonChunk3 = $("<polygon/>");
-    hexagonChunk3.css("fill", "#FFFFFF");
+    hexagonChunk3.css("fill", "#FFF");
     
     hexagonChunk3.attr("points",
         0 + "," + (hexagonSize * 4) + " " +
@@ -382,7 +390,7 @@ function createDivider2(hexagonSize)
         0 + "," + (hexagonSize * 6));
     
     var hexagonChunk4 = $("<polygon/>");
-    hexagonChunk4.css("fill", "#FFFFFF");
+    hexagonChunk4.css("fill", "#FFF");
     
     hexagonChunk4.attr("points",
         (hexagonSize * 4.5) + "," + (hexagonSize * 4.5) + " " +
@@ -397,7 +405,7 @@ function createDivider2(hexagonSize)
         (hexagonSize * 4) + "," + (hexagonSize * 5));
     
     var hexagonChunk5 = $("<polygon/>");
-    hexagonChunk5.css("fill", "#FFFFFF");
+    hexagonChunk5.css("fill", "#FFF");
     
     hexagonChunk5.attr("points",
         0 + "," + (hexagonSize * 7) + " " +
@@ -443,10 +451,10 @@ function createDivider3(hexagonSize)
     var background = $("<rect/>");
     background.attr("width", svg.width());
     background.attr("height", svg.height());
-    background.css("fill", "#FFFFFF");
+    background.css("fill", "#FFF");
     
     var hexagonChunk1 = $("<polygon/>");
-    hexagonChunk1.css("fill", "#EEEEEE");
+    hexagonChunk1.css("fill", "#CCC");
     
     hexagonChunk1.attr("points",
         (hexagonSize * 7.5) + "," + (hexagonSize * 1.5) + " " +
@@ -457,7 +465,7 @@ function createDivider3(hexagonSize)
         (hexagonSize * 7) + "," + (hexagonSize * 2));
     
     var hexagonChunk2 = $("<polygon/>");
-    hexagonChunk2.css("fill", "#EEEEEE");
+    hexagonChunk2.css("fill", "#CCC");
     
     hexagonChunk2.attr("points",
         (hexagonSize * 10.5) + "," + (hexagonSize * 1.5) + " " +
@@ -472,7 +480,7 @@ function createDivider3(hexagonSize)
         (hexagonSize * 10) + "," + (hexagonSize * 2));
     
     var hexagonChunk3 = $("<polygon/>");
-    hexagonChunk3.css("fill", "#EEEEEE");
+    hexagonChunk3.css("fill", "#CCC");
     
     hexagonChunk3.attr("points",
         0 + "," + (hexagonSize * 3) + " " +
@@ -494,7 +502,7 @@ function createDivider3(hexagonSize)
         0 + "," + (hexagonSize * 4));
     
     var hexagonChunk4 = $("<polygon/>");
-    hexagonChunk4.css("fill", "#EEEEEE");
+    hexagonChunk4.css("fill", "#CCC");
     
     hexagonChunk4.attr("points",
         (hexagonSize * 7.5) + "," + (hexagonSize * 3.5) + " " +
@@ -505,7 +513,7 @@ function createDivider3(hexagonSize)
         (hexagonSize * 7) + "," + (hexagonSize * 4));
     
     var hexagonChunk5 = $("<polygon/>");
-    hexagonChunk5.css("fill", "#EEEEEE");
+    hexagonChunk5.css("fill", "#CCC");
     
     hexagonChunk5.attr("points",
         0 + "," + (hexagonSize * 6) + " " +
@@ -552,7 +560,7 @@ function createDivider3(hexagonSize)
         0 + "," + svg.height());
     
     var hexagonChunk6 = $("<polygon/>");
-    hexagonChunk6.css("fill", "#FFFFFF");
+    hexagonChunk6.css("fill", "#CCC");
     
     hexagonChunk6.attr("points",
         (hexagonSize * 12) + "," + (hexagonSize * 7) + " " +
@@ -577,15 +585,15 @@ function createDivider4(hexagonSize)
 {
     var svg = $(".divider").eq(3);
     
-    svg.css("top", "-75vh");
+    svg.css("top", "-100vh");
     
     var background = $("<rect/>");
     background.attr("width", svg.width());
     background.attr("height", svg.height());
-    background.css("fill", "#EEEEEE");
+    background.css("fill", "#CCC");
     
     var hexagonChunk1 = $("<polygon/>");
-    hexagonChunk1.css("fill", "#005500");
+    hexagonChunk1.css("fill", "#060");
     
     hexagonChunk1.attr("points",
         (hexagonSize * 1.5) + "," + (hexagonSize * 1.5) + " " +
@@ -604,7 +612,7 @@ function createDivider4(hexagonSize)
         hexagonSize + "," + (hexagonSize * 2));
     
     var hexagonChunk2 = $("<polygon/>");
-    hexagonChunk2.css("fill", "#005500");
+    hexagonChunk2.css("fill", "#060");
     
     hexagonChunk2.attr("points",
         (hexagonSize * 6) + "," + hexagonSize + " " +
@@ -615,7 +623,7 @@ function createDivider4(hexagonSize)
         (hexagonSize * 5.5) + "," + (hexagonSize * 1.5));
     
     var hexagonChunk3 = $("<polygon/>");
-    hexagonChunk3.css("fill", "#005500");
+    hexagonChunk3.css("fill", "#060");
     
     hexagonChunk3.attr("points",
         0 + "," + (hexagonSize * 6) + " " +
@@ -657,7 +665,7 @@ function createDivider4(hexagonSize)
         0 + "," + svg.height());
     
     var hexagonChunk4 = $("<polygon/>");
-    hexagonChunk4.css("fill", "#005500");
+    hexagonChunk4.css("fill", "#060");
     
     hexagonChunk4.attr("points",
         (hexagonSize * 10.5) + "," + (hexagonSize * 2.5) + " " +
@@ -672,7 +680,7 @@ function createDivider4(hexagonSize)
         (hexagonSize * 10) + "," + (hexagonSize * 3));
     
     var hexagonChunk5 = $("<polygon/>");
-    hexagonChunk5.css("fill", "#005500");
+    hexagonChunk5.css("fill", "#060");
     
     hexagonChunk5.attr("points",
         (hexagonSize * 4.5) + "," + (hexagonSize * 3.5) + " " +

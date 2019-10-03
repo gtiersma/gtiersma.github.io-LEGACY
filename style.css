@@ -9,7 +9,12 @@ Each section below is sorted alphabetically.
 */
 
 /*
-Note: "opacity: 0.99" is commonly used in this document to bring an element to the front of the stacking order.
+
+Notes:
+
+- "opacity: 0.99" is commonly used in this document to bring an element to the front of the stacking order.
+
+- Some properties are used twice for a given element: The first time with a "%" unit, the second with "vw" or "vh". This allows browsers that do not support "vw" or "vh" to fall back to "%".
 */
 
 /*
@@ -24,9 +29,9 @@ body
 button
 {
     /* COLOR */
-    background-color: #FFFFFF;
-    color: #119911;
-    border: 2px solid #119911;
+    background-color: #FFF;
+    border: 2px solid #060;
+    color: #060;
     
     /* CURSOR */
     cursor: pointer;
@@ -35,39 +40,50 @@ button
     text-align: center;
     
     /* SIZE */
-    font-size: 2.5vw;
+    font-size: 18pt;
     height: 60px;
-    width: 30vw;
+    width: 25%;
+    width: 25vw;
 }
 
 circle
 {
+    -webkit-transition: all 1s linear;
     transition: all 1s linear;
 }
 
 footer
 {
     /* COLOR */
-    color: #FFFFFF;
+    background-color: #060;
+    color: #FFF;
     
     /* POSITION */
+    padding: 1% 0 1% 0;
     padding: 1vw 0 1vw 0;
     text-align: center;
 }
 
 h1
 {
-    opacity: 0.99;
+    position: relative;
+    z-index: 1;
 }
 
 h2
 {
-    color: #004400;
+    color: #030;
     display: inline-block;
+}
+
+h3
+{
+    font-size: 24pt;
 }
 
 h4
 {
+    margin: 1%;
     margin: 1vw;
 }
 
@@ -79,7 +95,7 @@ h6
 p
 {
     position: relative;
-    z-index: 50;
+    z-index: 1;
 }
 
 /*
@@ -102,28 +118,39 @@ p
 /* The SVG graphic that is used to divide sections of the website */
 .divider
 {
+    /* SIZE */
+    height: 100%;
+    width: 100%;
     height: 100vh;
     width: 100vw;
+    
+    /* POSITION */
     position: absolute;
+    top: -100%;
+    top: -100vh;
 }
 
 /* Contains the section divider element */
 .dividerContainer
 {
+    margin-bottom: -1%;
     margin-bottom: -1vh;
     position: relative;
 }
 
-/* Lists of projects and skills */
-.list
+/* Lists of buttons to show or hide the content of projects or skills */
+.showButtonList
 {
     list-style-type: none;
+    padding-bottom: 15%;
     padding-bottom: 15vh;
 }
 
-/* Each project or skill listed */
-.list li
+/* List item element belonging to each show/hide button */
+.showButtonList li
 {
+    /* POSITION */
+    margin: 5% 25px 0 0;
     margin: 5vh 25px 0 0;
     position: relative;
     z-index: 1;
@@ -133,8 +160,10 @@ p
 .name
 {
     /* FONT */
+    font-size: 10%;
     font-size: 10vw;
     font-weight: 900;
+    letter-spacing: -0.5%;
     letter-spacing: -0.5vw;
 }
 
@@ -154,17 +183,40 @@ p
 .next, .previous
 {
     cursor: pointer;
+    -webkit-transition: all 1s linear;
     transition: all 1s linear;
+}
+
+/* Elements that are only shown if JavaScript fails to execute */
+.noJavaScript
+{
+    list-style-type: none;
+}
+
+/* Containers of data relating to a project that are shown if JavaScript fails to execute */
+.noJavaScript .projectContent
+{
+    /* COLOR */
+    opacity: 1.0;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    
+    /* POSITION */
+    margin-bottom: 1%;
+    margin-bottom: 1vh;
+    
+    /* SIZE */
+    height: auto;
 }
 
 /* Image of the project */
 .previewImage
 {
     /* ANIMATION */
+    -webkit-transition: opacity 1s linear;
     transition: opacity 1s linear;
     
     /* BORDER */
-    border-color: #119911;
+    border-color: #060;
     border-style: solid;
     border-width: 5px;
     
@@ -173,16 +225,24 @@ p
     
     /* POSITION */
     display: inline-block;
+    margin: 0 5% 0 5%;
     margin: 0 5vh 0 5vh;
     
     /* SIZE */
+    width: 50%;
     width: 50vw;
 }
 
 /* Button used to view/download a project */
 .projectButton
 {
+    /* POSITION */
+    left: 25%;
     left: 25vw;
+    
+    /* SIZE */
+    width: 30%;
+    width: 30vw;
 }
 
 /* Div containing project elements that may be shown or hidden by the user */
@@ -191,10 +251,11 @@ p
     /* ANIMATION */
     height: 0;
     opacity: 0;
+    -webkit-transition: all 1s linear;
     transition: all 1s linear;
     
     /* COLOR */
-    background-color: #EEEEEE;
+    background-color: #CCC;
     
     /* CORNERS */
     border-radius: 25px;
@@ -206,6 +267,7 @@ p
     text-align: center;
     
     /* SIZE */
+    width: 80%;
     width: 80vw;
 }
 
@@ -225,43 +287,60 @@ p
 /* The button for viewing the resume */
 .resumeButton
 {
+    /* POSITION */
+    left: 35%;
     left: 35vw;
+    
+    /* SIZE */
+    width: 30%;
+    width: 30vw;
 }
 
 /* Button used to show or hide the content of a project or skill */
 .showHide
 {
     /* ANIMATION */
-    box-shadow: 5px 5px #000000;
+    box-shadow: 5px 5px #000;
+    -webkit-transition: all 0.5s linear;
     transition: all 0.5s linear;
     
     /* CIRCLE */
     border-radius: 50px;
     
     /* COLOR */
-    background-color: #119911;
-    color: #FFFFFF;
+    background-color: #090;
+    color: #FFF;
     
     /* POSITION */
     margin: 0 30px 5px 10px;
-    padding: 0 15px 0 15px;
+    position: relative;
     
     /* SIZE */
-    font-size: 36pt;
     width: 60px;
+    
+    /* VISIBILITY */
+    visibility: hidden;
+}
+
+/* The + or - character within the show/hide buttons */
+.showHide span
+{
+    font-size: 36pt;
 }
 
 /* A skill in the list of skills */
 .skill
 {
     margin: 0;
+    position: absolute;
+    top: 3vh;
 }
 
 /* The list of facts relating to a particular skill that may be shown or hidden by the user */
 .skillContent
 {
     /* ANIMATION */
-    opacity: 0;
+    -webkit-transition: opacity 1s linear;
     transition: opacity 1s linear;
     
     /* POSITION */
@@ -270,14 +349,18 @@ p
     padding: 30px 10px 10px 10px;
     
     /* SIZE */
+    width: 60%;
     width: 60vw;
 }
 
-/* The star polygon used in a rating graphic (including the shading)*/
+/* The star polygon used in a rating graphic (including the shading) */
 .star
 {
+    /* ANIMATION */
     transform: rotate(180deg) scale(0.8) translate(5px, 5px);
     transition: transform 0.5s linear;
+    -webkit-transform: rotate(180deg) scale(0.8) translate(5px, 5px);
+    -webkit-transition: transform 0.5s linear;
 }
 
 /* The background behind each star graphic in a skill's rating */
@@ -309,15 +392,23 @@ p
 /* The hexagon graphic that is placed behind a star graphic in a skill's rating */
 .starHexagonFront
 {
+    /* ANIMATION */
     transform: scaleX(0);
     transition: transform 0.5s linear;
+    -webkit-transform: scaleX(0);
+    -webkit-transition: transform 0.5s linear;
 }
 
 /* An animated light in the title text */
 .titleLight
 {
-    filter: url(#blur);
+    /* COLOR */
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
     opacity: 0;
+    
+    /* FILTERS */
+    filter: url(#blur);
+    -webkit-filter: url(#blur);
 }
 
 /*
@@ -328,25 +419,27 @@ p
 #about
 {
     /* COLOR */
-    background-color: #CCFFCC;
-    color: #004400;
+    background-color: #CFC;
+    color: #030;
     
     /* POSITION */
-    padding: 5vw 5vw 10vw 5vw;
     line-height: 150%;
+    padding: 10% 5% 15% 5%;
+    padding: 10vh 5vw 15vh 5vw;
 }
 
 /* The div that animates when a textButton is hovered over by the cursor */
 #buttonAnimation
 {
     /* ANIMATION */
+    -webkit-transition: all 1s linear;
     transition: all 1s linear;
+    
+    /* COLOR */
+    border: 0 solid #090;
     
     /* CURSOR */
     cursor: pointer;
-    
-    /* COLOR */
-    border: 0 solid #119911;
     
     /* POSITION */
     position: absolute;
@@ -354,6 +447,7 @@ p
     
     /* SIZE */
     height: 60px;
+    width: 30%;
     width: 30vw;
 }
 
@@ -362,30 +456,36 @@ p
 {
     /* ANIMATION */
     transition: all 0.5s linear;
+    -webkit-transition: all 0.5s linear;
     
     /* BORDER */
-    border-color: #000000;
+    border-color: #000;
     border-radius: 50px;
     border-width: 3px;
     
     /* COLOR */
-    background-color: #00000000;
-    color: #000000;
+    background-color: #0000;
+    color: #000;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
     
     /* CURSOR */
     cursor: pointer;
     
     /* FONT */
-    font-size: 12pt;
+    font-size: 22pt;
     font-weight: 900;
     
     /* POSITION */
     position: fixed;
+    right: 5%;
+    top: 5%;
     right: 5vw;
     top: 5vh;
     z-index: 25;
     
     /* SIZE */
+    height: 5%;
+    width: 5%;
     height: 5vw;
     width: 5vw;
 }
@@ -393,8 +493,14 @@ p
 /* Div to darken the webpage behind a project preview when the preview is enlarged */
 #darkBackground
 {
+    /* ANIMATION */
+    transition: opacity 1s linear;
+    -webkit-transition: opacity 1s linear;
+    
     /* COLOR */
-    background-color: #00000088;
+    background-color: #000;
+    opacity: 0;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
     
     /* POSITION */
     left: 0;
@@ -403,20 +509,56 @@ p
     z-index: 15;
     
     /* SIZE */
+    height: 100%;
+    width: 100%;
     height: 100vh;
     width: 100vw;
+}
+
+/* The text of the first name in the title that is rendered if JavaScript does not run */
+#firstNameNoJS
+{
+    /* POSITION */
+    left: 40%;
+    top: 5%;
+    left: 40vw;
+    top: 5vh;
+    position: absolute;
 }
 
 /* The top, introductory part of the website */
 #home
 {
+    /* POSITION */
     opacity: 0.99;
+    padding: 0 0 15% 0;
     padding: 0 0 15vw 0;
+}
+
+/* The text of the last name in the title that is rendered if JavaScript does not run */
+#lastNameNoJS
+{
+    /* POSITION */
+    left: 50%;
+    top: 20%;
+    left: 50vw;
+    top: 20vh;
+    position: absolute;
+}
+
+/* The container of the text title elements (used when JavaScript does not run) */
+#nameNoJS
+{
+    font-size: 36pt;
+    font-weight: 900;
 }
 
 /* The SVG graphic containing the website's title text */
 #nameGraphic
 {
+    /* SIZE */
+    height: 60%;
+    width: 100%;
     height: 60vh;
     width: 100vw;
 }
@@ -425,10 +567,13 @@ p
 #nav
 {
     /* ANIMATION */
-    transition: background 3s linear;
+    -webkit-transition: all 3s linear;
+    transition: all 3s linear;
     
     /* COLOR */
-    background-color: #AAFFAAEE;
+    background-color: #9F9;
+    opacity: 0.9;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=90)";
     
     /* FORMAT */
     list-style-type: none;
@@ -440,7 +585,7 @@ p
     top: 0;
     margin: 0 0 10px 0; 
     padding: 0;
-    z-index: 10;
+    z-index: 20;
     
     /* SIZE */
     font-size: 18pt;
@@ -455,18 +600,22 @@ p
     
     /* POSITION */
     display: inline-block;
+    margin: 10% 0 10% 0;
+    padding: 10% 0 10% 0;
     margin: 10px 0 10px 0;
     padding: 10px 0 10px 0;
 }
 
 /* The text of each option in the navigation menu */
-#nav li h5
+#nav li a
 {
     /* FONT */
-    font-family: "Arial", "Helvetica", "sans-serif";
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-decoration: none;
     
     /* COLOR */
-    color: #119911;
+    color: #060;
     
     /* POSITION */
     margin: 0 10px 0 10px;
@@ -477,32 +626,48 @@ p
 #occupation
 {
     /* ANIMATION */
-    border-bottom: 3px solid #119911;
+    border-bottom: 3px solid #090;
     border-width: 0;
+    -webkit-transition: border 0.5s linear;
     transition: border 0.5s linear;
     
     /* FONT */
+    font-size: 24pt;
     font-weight: 10;
     
     /* POSITION */
-    margin-bottom: 30vh;
+    margin-bottom: 10%;
+    margin-bottom: 15vh;
+    margin-top: 10%;
+    margin-top: 25vh;
     position: relative;
     text-align: center;
-    top: 20vh;
 }
 
 /* The website sections containing the projects */
 #projects
 {
-    color: #004400;
+    color: #030;
+    padding: 5% 0 10% 5%;
     padding: 5vw 0 10vw 5vw;
+}
+
+/* The list of show/hide buttons for projects. */
+#projects .showButtonList
+{
+    height: 0;
+    visibility: hidden;
 }
 
 /* The website section containing the skills */
 #skills
 {
-    background-color: #EEEEEE;
-    color: #005500;
+    /* COLOR */
+    background-color: #CCC;
+    color: #030;
+    
+    /* POSITION */
+    padding: 5% 0 10% 5%;
     padding: 5vw 0 10vw 5vw;
 }
 
@@ -510,10 +675,11 @@ p
 #skills ul li
 {
     /* ANIMATION */
+    -webkit-transition: all 1s linear;
     transition: all 1s linear;
     
     /* COLOR */
-    background-color: #FFFFFF;
+    background-color: #FFF;
     
     /* EDGES */
     border-radius: 50px;
@@ -521,6 +687,7 @@ p
     /* POSITION */
     margin-bottom: 10px;
     padding: 5px 0 5px 0;
+    position: relative;
 }
 
 /* A button that contains a word(s)*/
@@ -535,6 +702,7 @@ p
     /* POSITION */
     position: absolute;
     top: 150px;
+    width: 80%;
     width: 80vw;
     z-index: -5;
 }

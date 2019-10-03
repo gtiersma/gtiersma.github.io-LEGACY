@@ -81,177 +81,19 @@ class Project
         }
     }
 
-// Array of project objects relating to programming
-var programs =
-    [
-        new Project
-        (
-            "Project Scaper (Title Pending)",
-            "",
-            "View on GitHub",
-            "",
-            "Project Scaper Screenshot",
-            "Project Scaper allows graphic designers that have no 3D modeling experience to create 3D environments. It imports images designed by the user and uses the images as maps to generate the 3D shape.",
-            "It is programmed in Java with the help of the JavaFX platform.",
-            ""
-        ),
-        new Project
-        (
-            "Stayton Animal Supply Excel Inventory Management System",
-            "",
-            "",
-            "",
-            "Screenshot of an inventory management system built in Excel",
-            "While working at Stayton Animal Supply, I was given the opportunity to design an inventory management system for the business to use, since the business wanted to become more computerized.",
-            "Coded in Visual Basic, it provided the basic necessities for managing products, such as creating, deleting, editing and searching for items. It was successfully used to calculate the business's product inventory at the end of the fiscal year. It was used for 1-2 months. Management was satisfied with the inventory system, however, they decided to deprecate the project because of a better opportunity to invest in a professional, server-based inventory system.",
-            "The code is not available online, however I can present it in person upon request."
-        ),
-        new Project
-        (
-            "Mod Manager",
-            "modManager.png",
-            "View on Game Banana",
-            "https://gamebanana.com/tools/6663",
-            "Mod Manager Screenshot",
-            "Mod Manager is a file manager allowing users of mods (modified video game files) to easily switch between them. It has received positive feedback from the mod community for the video game, Mario Kart 8.",
-            "It is programmed in Java with the help of the JavaFX platform. It also uses CSS to stylize the GUI.",
-            ""
-        )
-    ];
-
-// Array of project objects relating to graphic design
-var graphics = 
-    [
-        new Project
-        (
-            "History's Role for the Future",
-            "historysRole.png",
-            "",
-            "",
-            "Composition Preview",
-            "These compositions were created to contrast the effects that knowledge has on society through time. The top image shows history being studied and a good future on the wall. The bottom image displays history being ignored and a threatening future on the wall.",
-            "They take place during the early Renaissance, while the pictures on the wall portray the what will come of future in perspective of the Renaissance, specifically the late 1800s and early 1900s.",
-            "The compositions were created in Photoshop. They are composed of dozens of separate layers. The photos in the background were provided by the Library of Congress. The subject's face was created in Daz 3D, while her hair was painted directly in Photoshop and the armor was created from manipulated photos of a metal pen. All other elements were created from photos I shot."
-        ),
-        new Project
-        (
-            "Nature Rules",
-            "natureRules.jpg",
-            "",
-            "",
-            "Composition Preview",
-            'This is a Photo Illustration class exercise that is a personal recreation of a composition titled, "Nature Rules", created by the instructor, Bret Malley.' + " He supplied the artwork's source photography, which consisted of a basic photo of a city, a field, a mountain and a sky. I then completed the remaining work with Photoshop. A guide to follow was given, however I did quite a bit of work outside of the guide to enhance the shading, lighting and color.",
-            "",
-            ""
-        )
-    ];
-
-// Array of project objects relating to database development
-var databases = 
-    [
-        new Project
-        (
-            "Bicycle Rental Business ER Diagram",
-            "erd.png",
-            "View DDL Script",
-            "bicyclyDDL.txt",
-            "ER Diagram",
-            'As a project for a database class, I worked in a group with two other individuals to develop a database system for a fictional bicycle rental business. Our group name was the "Cyber Centurions".',
-            "The diagram was not directly designed by me, however I played a big part in discussing how the data should be organized to optimize the business's capabilities.",
-            "My team decided that I should be tasked with the creation of the database's SQL Data-Definition script. It was used to automate the creation of the entity tables within Access."
-        ),
-        new Project
-        (
-            "Bicycle Rental Business Access Database Form",
-            "databaseForm.png",
-            "Download Database File",
-            "bicycleDatabase.accdb",
-            "Screenshot of a form in Access",
-            "As a project for a database class, I worked in a group with two other individuals to develop a database system for a fictional bicycle rental business.",
-            "The database was implemented in Microsoft Access, complete with data-entry forms and reports that could be generated.",
-            "It was my job to design the database. I had a tight deadline to complete it, so this form was created in a rush, but I made certain that it had the necessities and was functional."
-        )
-    ];
+// Arrays of project objects
+var programs;
+var graphics;
+var databases;
 
 // Array of the array of projects
-var projects = [programs, graphics, databases];
+var projects;
 
-// The array of technical skills. Each skill is an array of its own, containing the skill's title, rating and bulleted facts for the skill.
-var hardSkills =
-    [
-        [
-            "Graphic Design",
-            8,
-            "Very familiar with Adobe Photoshop",
-            "Very familiar with Gimp",
-            "Practices non-destructive design in image editors whenever possible",
-            "Skilled in typography",
-            "Skilled in logo design",
-            "Skilled with user interface creation"
-        ],
-        [
-            "Computer Programming",
-            7,
-            "Familiar with Java, JavaScript, Visual Basic and Python",
-            "Somewhat familiar with C++",
-            "Knows how to use JavaFX with FXML",
-            "Understands object-oriented concepts such as inheritance and polymorphism",
-            "Prioritizes organizing code and documentation",
-            "Knows how to utilize multiple threads in code",
-            "Strong with mental mathematics",
-            "Usually fast at researching programming-related topics on the Internet"
-        ],
-        [
-            "Web Development",
-            7,
-            "Familiar with the HTML, CSS, JavaScript and XML languages",
-            "Understands the importance of progressive enhancement, responsive web design and accessibility",
-            "Separates structural code into HTML, UI code into CSS and functional code into Javascript"
-        ],
-        [
-            "Database Development",
-            6,
-            "Familiar with SQL",
-            "Familiar with Microsoft Access",
-            "Knows how to read and create ER Diagrams"
-        ],
-        [
-            "Computer Hardware",
-            5,
-            "Has successfully built a PC",
-            "Can diagnose many hardware-related issues"
-        ]
-    ];
+// Ratings for the technical skills
+var hardRatings = [8, 7, 7, 6, 5];
 
-// The array of soft skills. Each skill is an array of its own, containing the skill's title, rating and description for the skill.
-var softSkills =
-    [
-        [
-            "Teamwork",
-            9,
-            "When working in a team, I make a much higher priority of completing my share of the workload. Whenever a team member needs assistance and I am available to help, I take action to help. I do not allow my convictions and beliefs to hinder the progress of the team. Avoiding conflict in a team is much more important to me than being treated fairly."
-        ],
-        [
-            "Written Communication",
-            9,
-            "When writing (or typing) instructions or information, I spend extra time re-reading everything I wrote, and I usually re-write my sentences a few times to ensure that it is easy to understand. If I was to create a manual for some software, I would prioritize step-by-step instructions and complete sentences throughout. When programming, I document and explain any code that has even a slight possibility of being misunderstood by any skilled programmer (which makes up nearly all of the code I type)"
-        ],
-        [
-            "Perseverance",
-            8,
-            "Whenever I am given a task, I do not give up. Even if it takes hours of research, I do not stop searching for a solution. However, if it becomes apparent that a solution does not exist or that it is not worth the time required, I devise an alternative solution."
-        ],
-        [
-            "Organization",
-            7,
-            "Whether it is code and files on my computer or physical papers and documents, I make sure to place things where I can remember them and sort them when needed. Thanks to organization, I rarely lose anything, and I can quickly find what I need."
-        ],
-        [
-            "Troubleshooting",
-            7,
-            "If a computer is not working as it should, I can usually discover a solution for it rather quickly. While working at Stayton Animal Supply, I am the employee that is tasked with fixing any computer-related issues that arise. I also troubleshoot any PC issues that occur within my household as well."
-        ]
-    ];
+// Ratings for the social skills
+var softRatings = [9, 9, 8, 7, 7];
 
 (function($)
 {
@@ -263,6 +105,100 @@ var softSkills =
 //  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
 $(document).ready( function()
 {
+    // Gather the data of each project from the DOM and store them in the arrays
+    programs =
+    [
+        new Project
+        (
+            $(".projectContent").eq(0).children("h3").text(),
+            $(".projectContent").eq(0).children("img").attr("src"),
+            $(".projectContent").eq(0).children("a").children("button").text(),
+            $(".projectContent").eq(0).children("a").attr("href"),
+            $(".projectContent").eq(0).children("img").attr("alt"),
+            $(".projectContent").eq(0).children("p").eq(0).text(),
+            $(".projectContent").eq(0).children("p").eq(1).text(),
+            $(".projectContent").eq(0).children("p").eq(2).text()
+        ),
+        new Project
+        (
+            $(".projectContent").eq(1).children("h3").text(),
+            $(".projectContent").eq(1).children("img").attr("src"),
+            "",
+            "",
+            $(".projectContent").eq(1).children("img").attr("alt"),
+            $(".projectContent").eq(1).children("p").eq(0).text(),
+            $(".projectContent").eq(1).children("p").eq(1).text(),
+            $(".projectContent").eq(1).children("p").eq(2).text()
+        ),
+        new Project
+        (
+            $(".projectContent").eq(2).children("h3").text(),
+            $(".projectContent").eq(2).children("img").attr("src"),
+            $(".projectContent").eq(2).children("a").children("button").text(),
+            $(".projectContent").eq(2).children("a").attr("href"),
+            $(".projectContent").eq(2).children("img").attr("alt"),
+            $(".projectContent").eq(2).children("p").eq(0).text(),
+            $(".projectContent").eq(2).children("p").eq(1).text(),
+            $(".projectContent").eq(2).children("p").eq(2).text()
+        )
+    ];
+    graphics = 
+    [
+        new Project
+        (
+            $(".projectContent").eq(3).children("h3").text(),
+            $(".projectContent").eq(3).children("img").attr("src"),
+            "",
+            "",
+            $(".projectContent").eq(3).children("img").attr("alt"),
+            $(".projectContent").eq(3).children("p").eq(0).text(),
+            $(".projectContent").eq(3).children("p").eq(1).text(),
+            $(".projectContent").eq(3).children("p").eq(2).text()
+        ),
+        new Project
+        (
+            $(".projectContent").eq(4).children("h3").text(),
+            $(".projectContent").eq(4).children("img").attr("src"),
+            "",
+            "",
+            $(".projectContent").eq(4).children("img").attr("alt"),
+            $(".projectContent").eq(4).children("p").eq(0).text(),
+            $(".projectContent").eq(4).children("p").eq(1).text(),
+            $(".projectContent").eq(4).children("p").eq(2).text()
+        )
+    ];
+    databases = 
+    [
+        new Project
+        (
+            $(".projectContent").eq(5).children("h3").text(),
+            $(".projectContent").eq(5).children("img").attr("src"),
+            $(".projectContent").eq(5).children("a").children("button").text(),
+            $(".projectContent").eq(5).children("a").attr("href"),
+            $(".projectContent").eq(5).children("img").attr("alt"),
+            $(".projectContent").eq(5).children("p").eq(0).text(),
+            $(".projectContent").eq(5).children("p").eq(1).text(),
+            $(".projectContent").eq(5).children("p").eq(2).text()
+        ),
+        new Project
+        (
+            $(".projectContent").eq(6).children("h3").text(),
+            $(".projectContent").eq(6).children("img").attr("src"),
+            $(".projectContent").eq(6).children("a").children("button").text(),
+            $(".projectContent").eq(6).children("a").attr("href"),
+            $(".projectContent").eq(6).children("img").attr("alt"),
+            $(".projectContent").eq(6).children("p").eq(0).text(),
+            $(".projectContent").eq(6).children("p").eq(1).text(),
+            $(".projectContent").eq(6).children("p").eq(2).text()
+        )
+    ];
+
+    // Put the arrays into a master array
+    projects = [programs, graphics, databases];
+    
+    // Remove all of the elements in the DOM that are only meant to be shown if JavaScript fails to load or run
+    $(".noJavaScript").remove();
+    
     // Keeps track of the indexes of the currently active projects. The first projects (0) are loaded initially.
     var currentProjects = [0, 0, 0];
     
@@ -271,19 +207,21 @@ $(document).ready( function()
     createArrows(false);
     
     // Loads the initial projects into the DOM
-    for (var i = 0; i < currentProjects.length; i++)
+    var numberOfProjects = currentProjects.length;
+    for (var i = 0; i < numberOfProjects; i++)
     {
         loadProject(currentProjects[i], i);
     }
     
-    // The projects are hidden when the webpage is first loaded
+    // Create the star graphics for the skills
+    createSkillRatings(true);
+    createSkillRatings(false);
+    
+    // Show the DOM elements that should only be shown if JavaScript is being used
+    showJavaScriptStuff();
+    
+    // Minimize the projects and skills
     $(".projectContent").hide();
-    
-    // Loads the skills into the DOM
-    loadSkills(true);
-    loadSkills(false);
-    
-    // The skills are hidden as well
     $(".skillContent").hide();
     
     
@@ -326,11 +264,11 @@ $(document).ready( function()
     //  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
     $(".arrowCircle, polygon").on("mousedown", function()
     {
-        $(this).parent().children("polygon").css("fill", "#FFFFFF");
+        $(this).parent().children("polygon").css("fill", "#FFF");
     });
     $(".arrowCircle, polygon").on("mouseup", function()
     {
-        $(this).parent().children("polygon").css("fill", "#119911");
+        $(this).parent().children("polygon").css("fill", "#060");
     });
     
     // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
@@ -445,11 +383,14 @@ $(document).ready( function()
             // This container must also be opac before the height can be retrieved. This line also begins the fade animation
             fadeContainer.css("opacity", "1");
             
-            // Resize the container, allowing for the shrink animation
-            adjustForShrink(shrinkContainer);
+            // Automatically resizes the container. However, if the property was left to this value, it would not perform a shrink animation.
+            shrinkContainer.css("height", "auto");
+            
+            // Set the container's height to the number of pixels of it's height. Since this property is now no longer set to "auto", the container can perform a vertically-shrinking animation.
+            shrinkContainer.css("height", shrinkContainer.height() + "px");
             
             // Switch it to a "-" button
-            $(this).text("-");
+            $(this).children("span").text("-");
             $(this).attr("alt", "Hide Content");
             
             // If this is for a project...
@@ -487,7 +428,7 @@ $(document).ready( function()
             });
             
             // Switch it to a "+" button
-            $(this).text("+");
+            $(this).children("span").text("+");
             $(this).attr("alt", "Show Content");
         }
     });
@@ -499,12 +440,12 @@ $(document).ready( function()
     //  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
     $(".showHide").hover(function()
     {
-        $(this).css("box-shadow", "3px 3px #000000");
-        $(this).css("text-shadow", "3px 3px #000000");
+        $(this).css("box-shadow", "3px 3px #000");
+        $(this).css("text-shadow", "3px 3px #000");
     },
     function()
     {
-        $(this).css("box-shadow", "5px 5px #000000");
+        $(this).css("box-shadow", "5px 5px #000");
         $(this).css("text-shadow", "0 0");
     });
     
@@ -524,7 +465,8 @@ $(document).ready( function()
         var skillRatings = $(".ratingContainer");
         
         // For each rating...
-        for (var i = 0; i < skillRatings.length; i++)
+        var numberOfSkills = skillRatings.length;
+        for (var i = 0; i < numberOfSkills; i++)
         {
             // A boolean of whether or not the animation should be reversed or not
             var reverseAnimate;
@@ -567,26 +509,6 @@ $(document).ready( function()
 // FUNCTIONS (sorted alphabetically)
 // _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
 //  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
-    
-// _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
-// 
-// Automatically adjusts a given element's height while allowing it to have a vertically shrinking transition animation.
-// Commonly used by the div containers in the webpage that can be shown/hidden.
-//
-// elmnt -> jQuery DOM Element -> The element to be automatically resized
-// _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
-//  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
-function adjustForShrink(elmnt)
-{
-    // Automatically resizes the element. However, if the property was left to this value, it would not perform a shrink animation.
-    elmnt.css("height", "auto");
-            
-    // Get the height in pixels of the automatically-sized element
-    var height = elmnt.height();
-            
-    // Set the element's height to the number of pixels of it's height. Since this property is now no longer set to "auto", the element can perform a vertically-shrinking animation.
-    elmnt.css("height", height + "px");
-}
 
 // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
 // 
@@ -599,7 +521,7 @@ function adjustForShrink(elmnt)
 //  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
 function animateStar(reverse, skillIndex, starIndex)
 {
-    // The SVG graphic containing the star with the hexagon behind it
+    // The SVG graphic containing the star with the hexagon behind it. This was not working correctly with jQuery, so it is not used here.
     var svg = document.getElementsByClassName("ratingContainer")[skillIndex].children[starIndex].children[1];
         
     // If the animation is to be reversed...
@@ -609,7 +531,8 @@ function animateStar(reverse, skillIndex, starIndex)
         svg.children[0].style.transform = "scaleX(0)";
         
         // For the star and each shadow on it...
-        for (var i = 1; i < svg.children.length; i++)
+        var numberOfPolygons = svg.children.length;
+        for (var i = 1; i < numberOfPolygons; i++)
         {
             // ...animate it out of view.
             svg.children[i].style.transform = "rotate(180deg) scale(0.5) translate(0, 0)";
@@ -702,7 +625,7 @@ function createArrows(next)
     crcl.css("cx", "5vw");
     crcl.css("cy", "5vw");
     crcl.css("r", "4.5vw");
-    crcl.css("stroke", "#119911");
+    crcl.css("stroke", "#060");
     crcl.css("stroke-width", "3");
     crcl.css("fill-opacity", "0");
     
@@ -712,13 +635,13 @@ function createArrows(next)
     circleShadow.css("cx", "5.1vw");
     circleShadow.css("cy", "5.1vw");
     circleShadow.css("r", "4.5vw");
-    circleShadow.css("stroke", "#000000");
+    circleShadow.css("stroke", "#000");
     circleShadow.css("stroke-width", "3");
     circleShadow.css("fill-opacity", "0");
     
     // Construct the arrow
     var arrow = $("<polygon/>").attr("points", arrowPoints);
-    arrow.css("fill", "#119911");
+    arrow.css("fill", "#060");
     
     // Set the size of the button
     arrows.css("width", window.innerWidth / 10);
@@ -735,6 +658,45 @@ function createArrows(next)
 
 // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
 // 
+// Creates the rating graphics for either the soft skills or the hard skills 
+//
+// hard -> Boolean -> Whether or not the graphics are being created for the hard skills
+// _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
+//  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
+function createSkillRatings(hard)
+{
+    // Reference variable to the array of skill ratings to be loaded
+    var ratings;
+    
+    // The ul element to contain the skills
+    var skillContainer;
+    
+    // If the technical skills are being loaded...
+    if (hard)
+    {
+        // ...get the ones for technical skills.
+        skillContainer = $("#skills .showButtonList").eq(0);
+        ratings = hardRatings;
+    }
+    // ...otherwise...
+    else
+    {
+        // ...get the other ones.
+        skillContainer = $("#skills .showButtonList").eq(1);
+        ratings = softRatings;
+    }
+    
+    // For each skill to be loaded...
+    var numberOfRatings = ratings.length;
+    for (var i = 0; i < numberOfRatings; i++)
+    {
+        // ...insert the graphic into the correct position in the DOM.
+        getRatingGraphic(ratings[i]).insertAfter(skillContainer.children("li").eq(i).children(".skill"));
+    }
+}
+
+// _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
+// 
 // Gets the number of stars that should appear in the rating graphic.
 // NOTE: Half stars are counted as 1 star in this function.
 //
@@ -745,15 +707,15 @@ function getAmountOfStars(index)
 {
     var numStars = 0;
     
-    // The first 5 indexes are hard skills. The rest are soft skills.
+    // The first 5 indexes are ratings for hard skills. The rest are for soft skills.
     if (index < 5)
     {
-        numStars = Math.ceil(hardSkills[index][1] / 2);
+        numStars = Math.ceil(hardRatings[index] / 2);
     }
     else
     {
         // The number of hard skills is subtracted from the index to get the index into the correct range.
-        numStars = Math.ceil(softSkills[index - 5][1] / 2);
+        numStars = Math.ceil(softRatings[index - 5] / 2);
     }
     
     return numStars;
@@ -786,7 +748,7 @@ function getHexagonGraphic(full)
     if (full === 0)
     {
         // ...only a grey hexagon is created.
-        hexagon.css("fill", "#EEEEEE");
+        hexagon.css("fill", "#CCC");
         
         hexagon.addClass("starHexagonBack");
     }
@@ -797,7 +759,7 @@ function getHexagonGraphic(full)
         hexagonPoints = hexagonPoints.replace(
             "40,5 50,25 40,45",
             "25,5 25,45");
-        hexagon.css("fill", "#119911");
+        hexagon.css("fill", "#060");
         
         hexagon.addClass("starHexagonFront");
         
@@ -809,7 +771,7 @@ function getHexagonGraphic(full)
     else
     {
         // Get a full hexagon and a star
-        hexagon.css("fill", "#119911");
+        hexagon.css("fill", "#060");
         
         hexagon.addClass("starHexagonFront");
         
@@ -828,7 +790,8 @@ function getHexagonGraphic(full)
         graphic.append(star);
         
         // For each shadow on the star...
-        for (var i = 0; i < starShading.length; i++)
+        var numberOfShadows = starShading.length;
+        for (var i = 0; i < numberOfShadows; i++)
         {
             // ...add it as well.
             graphic.append(starShading[i]);
@@ -919,7 +882,7 @@ function getStarGraphic(full)
     
     var star = $("<polygon/>");
     
-    star.css("fill", "#CCFFCC");
+    star.css("fill", "#CFC");
     
     // If the star being created is to be a half of a star...
     if (!full)
@@ -955,13 +918,14 @@ function getStarShading(full)
     var shadows = [$("<polygon/>"), $("<polygon/>"), $("<polygon/>"), $("<polygon/>")];
     
     // For each shadow...
-    for (var i = 0; i < shadows.length; i++)
+    var numberOfShadows = shadows.length;
+    for (var i = 0; i < numberOfShadows; i++)
     {
         //...a half of a star should not have the first 2 shadows, so as long as that is not the case...
         if (full || i > 1)
         {
             // ...prepare the polygon.
-            shadows[i].css("fill", "#66CC66");
+            shadows[i].css("fill", "#090");
             shadows[i].addClass("star");
             shadows[i].attr("points", starShading[i]);
         }
@@ -983,7 +947,8 @@ function getType(controlsParent)
     var type;
     
     // For each type of project...
-    for (var i = 0; i < projects.length; i++)
+    var numberOfTypes = projects.length;
+    for (var i = 0; i < numberOfTypes; i++)
     {
         // ...if the title in given container is the same title of the project of this type...
         if (controlsParent.children("h3").text() === $(".projectContent").eq(i).children("h3").text())
@@ -1007,8 +972,11 @@ function getType(controlsParent)
 //  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
 function hideEnlargedPreview(imagePreview)
 {
-    // Fade the preview image out
+    var darkBackground = $("#darkBackground");
+    
+    // Fade the preview image and dark background out
     imagePreview.css("opacity", 0);
+    darkBackground.css("opacity", 0);
     
     // After the preview has faded out...
     sleep(1000).then(() =>
@@ -1023,9 +991,12 @@ function hideEnlargedPreview(imagePreview)
         imagePreview.css("opacity", 1);
         imagePreview.css("position", "inherit");
         imagePreview.css("z-index", "0");
+    
+        // Show the navigation menu
+        $("#nav").show();
             
         // Remove the dark background and the close button
-        imagePreview.siblings("#darkBackground").remove();
+        darkBackground.remove();
         imagePreview.siblings("#close").remove();
     });
 }
@@ -1048,15 +1019,20 @@ function loadPreview(imagePreview, imageName, imageAlt)
     sleep(1000).then(() =>
     {
         // ...change the preview image.
-        imagePreview.attr("src", "previews/" + imageName);
+        imagePreview.attr("src", imageName);
         // Fade the new preview image in
         imagePreview.css("opacity", "1");
         
         // Wait a little to ensure that the new image has been completely loaded
         sleep(100).then(() =>
         {
-            // Resizes the container to fit the new image and content
-            adjustForShrink(imagePreview.parent());
+            var projectContent = imagePreview.parent();
+            
+            // Automatically resizes the container. However, if the property was left to this value, it would not perform a shrink animation.
+            projectContent.css("height", "auto");
+            
+            // Set the container's height to the number of pixels of it's height. Since this property is now no longer set to "auto", the container can perform a vertically-shrinking animation.
+            projectContent.css("height", projectContent.height() + "px");
             
             // Center the arrow buttons with the height of the project's preview image.
             centerArrow(imagePreview.siblings(".next"));
@@ -1104,7 +1080,7 @@ function loadProject(indexToLoad, type)
         // Get the button's text
         bttn.text(project.getButton);
         // Get the button's URL
-        bttn.attr("onclick", "location.href='downloads/" + project.getLink + "'");
+        bttn.attr("onclick", "location.href='" + project.getLink + "'");
         // Set up the click event listener. The reason why the listener is placed on the button's animation instead of the button itself is because the button animation always seems to be positioned on top of the button, even when its z-index is changed in CSS.
         bttn.siblings("#buttonAnimation").attr("onclick", "location.href='" + project.getLink + "'");
     }
@@ -1149,90 +1125,6 @@ function loadProject(indexToLoad, type)
 
 // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
 // 
-// Loads either hard skills or soft skills into the webpage
-//
-// Note: This function does NOT show any of the skills' content if the skills are hidden.
-//
-// hard -> Boolean -> True if technical skills are to be loaded. False for soft skills
-// _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
-//  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
-function loadSkills(hard)
-{
-    // Reference variable to the array of skills to be loaded
-    var sklls;
-    
-    // The ul element to contain the technical skills
-    var skillContainer;
-    
-    // If the technical skills are being loaded...
-    if (hard)
-    {
-        // ...get the ones for technical skills.
-        skillContainer = $("#skills .list").eq(0);
-        sklls = hardSkills;
-    }
-    // ...otherwise...
-    else
-    {
-        // ...get the other ones.
-        skillContainer = $("#skills .list").eq(1);
-        sklls = softSkills;
-    }
-    
-    // For each skill to be loaded...
-    for (var i = 0; i < sklls.length; i++)
-    {
-        // ...create a list item to store the skill's elements.
-        var listItem = $("<li></li>");
-        
-        // Button to show or hide the skill
-        var showHide = $("<button></button>").text("+");
-        showHide.attr("class", "showHide");
-        
-        // Title of the skill
-        var title = $("<h2></h2>").text(sklls[i][0]);
-        title.attr("class", "skill");
-        
-        var rating = getRatingGraphic(sklls[i][1]);
-        
-        // Container for the skill's facts
-        var content = $("<div></div>").attr("class", "skillContent");
-        
-        var facts;
-        
-        // If technical skills are being loaded...
-        if (hard)
-        {
-            // ...the facts are stored in a bulleted list.
-            facts = $("<ul></ul>").attr("class", "bulleted");
-        
-            // For each fact...
-            for (var j = 2; j < sklls[i].length; j++)
-            {
-                // ...place it inside a list item.
-                var fact = $("<li><h4></h4></li>").text(sklls[i][j]);
-        
-                facts.append(fact);
-            }
-        }
-        // ...otherwise...
-        else
-        {
-            // ...place the soft skill's facts in the form of a paragraph.
-            facts = $("<p></p>").text(sklls[i][2]);
-        }
-        
-        // Put the skill's content together
-        content.append(facts);
-        listItem.append(showHide, title, rating, content);
-        
-        // Load it into the DOM
-        skillContainer.append(listItem);
-    }
-}
-
-// _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
-// 
 // Enlarges a project's preview image to fit the viewport and fixes it to the viewport. Used to give the user a closer view of the image at the expense of covering the webpage.
 //
 // imagePreview -> jQuery DOM Element -> A project's preview image
@@ -1247,6 +1139,7 @@ function showEnlargedPreview(imagePreview)
     
     // Disable the image's fade transition
     imagePreview.css("transition", "opacity 0s linear");
+    imagePreview.css("-webkit-transition", "opacity 0s linear");
     // Make the image invisible
     imagePreview.css("opacity", 0);
     
@@ -1255,6 +1148,9 @@ function showEnlargedPreview(imagePreview)
     imagePreview.css("top", "50%");
     imagePreview.css("position", "fixed");
     imagePreview.css("z-index", "20");
+    
+    // Hide the navigation menu
+    $("#nav").hide();
             
     // If the image has less room to grow horizontally than vertically...
     if (widthIncrease < heightIncrease)
@@ -1275,17 +1171,19 @@ function showEnlargedPreview(imagePreview)
     
     // Re-enable the fading transition
     imagePreview.css("transition", "opacity 1s linear");
-    
-    // Give a little time for the transition to fully re-enable itself
-    sleep(100).then(() =>
-    {
-        // Fade the image in
-        imagePreview.css("opacity", 1);
-    });
+    imagePreview.css("-webkit-transition", "opacity 1s linear");
     
     // Create a div to darken the background behind the image to give all attention to the preview image
     var darkenBackground = $("<div></div>");
     darkenBackground.attr("id", "darkBackground");
+    
+    // Give a little time for the transition to fully re-enable itself
+    sleep(100).then(() =>
+    {
+        // Fade the image and background in
+        imagePreview.css("opacity", 1);
+        darkenBackground.css("opacity", "0.8");
+    });
     
     // Create a close button
     var closeButton = $("<button></button>");
@@ -1309,13 +1207,26 @@ function showEnlargedPreview(imagePreview)
     $("#close").hover(function()
     {
         $(this).css("border-width", 0);
-        $(this).css("background-color", "#FFFFFF");
+        $(this).css("background-color", "#FFF");
     },
     function()
     {
         $(this).css("border-width", "3px");
-        $(this).css("background-color", "#00000000");
+        $(this).css("background-color", "#0000");
     });
+}
+
+// _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
+// 
+// Shows the elements that should only be visible if JavaScript is active and running properly
+//
+// _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
+//  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
+function showJavaScriptStuff()
+{
+    $("#projects .showButtonList").css("height", "auto");
+    $("#projects .showButtonList").css("visibility", "visible");
+    $(".showHide").css("visibility", "visible");
 }
 
 // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_

@@ -13,13 +13,13 @@
 (function($)
 {
     
-//###::::::###::::::###::::::###::::::###::::::###
-//
-// GLOBAL CONSTANTS
-//
-// All of these are used in the light animation effect. To optimize performance, these are declared outside of the "lightEffect" repeated method.
-//
-//###::::::###::::::###::::::###::::::###::::::###
+    //###::::::###::::::###::::::###::::::###::::::###
+    //
+    // GLOBAL CONSTANTS
+    //
+    // All of these are used in the light animation effect. To optimize performance, these are declared outside of the "lightEffect" repeated method.
+    //
+    //###::::::###::::::###::::::###::::::###::::::###
     
     // The least and most amount of time (in milliseconds) to wait before possibly animating another light
     const MIN_LIGHT_DELAY = 2000;
@@ -58,14 +58,6 @@
 //###::::::###::::::###::::::###::::::###::::::###
 $(document).ready( function()
 {
-    // For each layer of the title text...
-    var numberOfLayers = $(".firstName").length;
-    for (var i = 0; i < numberOfLayers; i++)
-    {
-        // ...set it up correctly.
-        prepareTitleText(i);
-    }
-    
     preparePatterns();
     
     // The light effect only seems to function properly in Chrome
@@ -73,6 +65,14 @@ $(document).ready( function()
     {
         lightEffect();
     }
+    
+    adjustWindow();
+    
+    // RWD
+    $(window).resize(function()
+    {
+        adjustWindow();
+    });
 });
 
     
@@ -84,6 +84,35 @@ $(document).ready( function()
 // FUNCTIONS (sorted alphabetically)
 //
 //###::::::###::::::###::::::###::::::###::::::###
+    
+//###::::::###::::::###::::::###::::::###::::::###
+//
+// Resizes and repositions the elements relating to the website's title in response to the window's size
+//
+//###::::::###::::::###::::::###::::::###::::::###
+function adjustWindow()
+{
+    var tenthWidth = $(window).width() / 10;
+    
+    var firstName = $(".firstName");
+    var lastName = $(".lastName");
+    
+    // These are SVG elements, so vw and vh units will not work with these, which is why their position in pixels is calculated here in JavaScript
+    firstName.attr("x", (tenthWidth * 3.5) + "px");
+    lastName.attr("x", (tenthWidth * 4.5) + "px");
+    
+    // Repositions the height of the title when the window is not wide
+    if ($(window).width() < 600)
+    {
+        firstName.attr("y", (tenthWidth) + "px");
+        lastName.attr("y", (tenthWidth * 2) + "px");
+    }
+    else
+    {
+        firstName.attr("y", (tenthWidth * 2) + "px");
+        lastName.attr("y", (tenthWidth * 3) + "px");
+    }
+}
     
 //###::::::###::::::###::::::###::::::###::::::###
 //
@@ -121,6 +150,9 @@ function animateLight(light, animationLength, size)
             {
                 // ...something is wrong. End the animation. This is used to prevent the animation from running in case of incredibly high CPU usage (which can happen in some versions of FireFox), a memory leak (which can happen in older versions of Chrome) or if the computer lacks the available resources.
                 abortAnimation = true;
+                
+                // Remove the light effect elements from the DOM to clean up any excessive RAM it was using
+                $(".nameLayer2").remove();
             }
         });
     });
@@ -128,7 +160,7 @@ function animateLight(light, animationLength, size)
     
 //###::::::###::::::###::::::###::::::###::::::###
 //
-// Creates a polygon SVG element of a hexagon
+// Creates a polygon SVG element of a hexagon for the hexagon pattern
 //
 // size -> Number -> Determines the size of the hexagon
 // spacing -> Number -> The amount of space that should exist between each hexagon
@@ -139,9 +171,9 @@ function animateLight(light, animationLength, size)
 function getHexagon(size, spacing, xOffset, yOffset)
 {
     // Used as a unit of measurement in the plotting of the hexagon's points
-    var oneTenthSize = size / 10;
+    let oneTenthSize = size / 10;
     
-    var hexagonPoints = 
+    let hexagonPoints = 
         (2 * oneTenthSize + spacing)  + "," + (oneTenthSize + spacing) + " " +
         (8 * oneTenthSize + spacing)  + "," + (oneTenthSize + spacing) + " " +
         (10 * oneTenthSize + spacing) + "," + (5 * oneTenthSize + spacing) + " " +
@@ -149,7 +181,7 @@ function getHexagon(size, spacing, xOffset, yOffset)
         (2 * oneTenthSize + spacing)  + "," + (9 * oneTenthSize + spacing) + " " +
         spacing + ","                       + (5 * oneTenthSize + spacing);
     
-    var hexagon = $("<polygon>");
+    let hexagon = $("<polygon>");
     
     hexagon.attr("points", hexagonPoints);
     
@@ -292,28 +324,28 @@ function prepareLight(light, animationLength, size)
 function preparePatterns()
 {
     // The approximate size of each hexagon in pixels
-    const HEXAGON_SIZE = 25;
+    const HEXAGON_SIZE = $(window).width() / 50;
     // The spacing between each hexagon in pixels
     const SPACING = 1;
     
     // Used as a unit of measurement
-    var oneTenthSize = HEXAGON_SIZE / 10;
+    let tenthHexagon = HEXAGON_SIZE / 10;
     
     // The size of each segment of the hexagonal pattern
-    var unitWidth = (oneTenthSize * 16) + (SPACING * 2);
-    var unitHeight = (oneTenthSize * 8) + (SPACING * 2);
+    let unitWidth = (tenthHexagon * 16) + (SPACING * 2);
+    let unitHeight = (tenthHexagon * 8) + (SPACING * 2);
     
     // The x position of the hexagons on the right side of a pattern segment
-    var positiveOffsetX = (oneTenthSize * 11) + (SPACING * 2);
+    let positiveOffsetX = (tenthHexagon * 11) + (SPACING * 2);
     // The y position of the hexagons on the bottom of a pattern segment
-    var positiveOffsetY = (oneTenthSize * 3) + (SPACING * 2);
+    let positiveOffsetY = (tenthHexagon * 3) + (SPACING * 2);
     // The x position of the hexagons on the left side of a pattern segment
-    var negativeOffsetX = oneTenthSize * -5;
+    let negativeOffsetX = tenthHexagon * -5;
     // The y position of the hexagons on the top of a pattern segment
-    var negativeOffsetY = oneTenthSize * -5;
+    let negativeOffsetY = tenthHexagon * -5;
     
-    var pattern = $("#hexagonPattern");
-    var lightBox = $("#nameLights");
+    let pattern = $("#hexagonPattern");
+    let lightBox = $("#nameLights");
     
     pattern.attr("width", unitWidth);
     pattern.attr("height", unitHeight);
@@ -323,7 +355,7 @@ function preparePatterns()
     lightBox.attr("height", $(window).height() / 2);
     
     // Create the hexagons for each pattern segment. There is 1 in the middle and 4 for each corner.
-    pattern.append(getHexagon(HEXAGON_SIZE, SPACING, (oneTenthSize * 3) + SPACING, (oneTenthSize * -1) + SPACING));
+    pattern.append(getHexagon(HEXAGON_SIZE, SPACING, (tenthHexagon * 3) + SPACING, (tenthHexagon * -1) + SPACING));
     pattern.append(getHexagon(HEXAGON_SIZE, SPACING, negativeOffsetX, negativeOffsetY));
     pattern.append(getHexagon(HEXAGON_SIZE, SPACING, positiveOffsetX, negativeOffsetY));
     pattern.append(getHexagon(HEXAGON_SIZE, SPACING, negativeOffsetX, positiveOffsetY));
@@ -334,31 +366,8 @@ function preparePatterns()
 }
 
 //###::::::###::::::###::::::###::::::###::::::###
-//
-// Positions a layer of the title text correctly
-//
-// layerIndex -> Number -> The number of the layer to be positioned. The bottom layer is "0" with each layer after it incrementing sequentially.
-//
-//###::::::###::::::###::::::###::::::###::::::###
-function prepareTitleText(layerIndex)
-{
-    // One percent of the viewport's size. Used as a unit of measurement.
-    var viewportWidthPercent = $(window).width() / 100;
-    var viewportHeightPercent = $(window).height() / 100;
-    
-    var firstName = $(".firstName").eq(layerIndex);
-    var lastName = $(".lastName").eq(layerIndex);
-    
-    firstName.attr("x", 35 * viewportWidthPercent);
-    firstName.attr("y", 30 * viewportHeightPercent);
-    
-    lastName.attr("x", 45 * viewportWidthPercent);
-    lastName.attr("y", 45 * viewportHeightPercent);
-}
-
-//###::::::###::::::###::::::###::::::###::::::###
 // 
-// Javascript does not included a built in method to hault execution, so a user-defined method to do so is defined here.
+// Javascript does not included a built in method to halt execution, so a user-defined method to do so is defined here.
 //
 // time -> Number -> The number of milliseconds that execution should pause
 //

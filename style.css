@@ -24,6 +24,7 @@ Notes:
 body
 {
     margin: 0;
+    overflow-x: hidden;
 }
 
 button
@@ -92,6 +93,11 @@ h6
     position: relative;
 }
 
+html
+{
+    scroll-behavior: smooth;
+}
+
 p
 {
     position: relative;
@@ -102,10 +108,43 @@ p
 ----- CLASSES -----
 */
 
+/* The occupation text that is used when JavaScript is running */
+.animatedOccupation
+{
+    /* ANIMATION */
+    letter-spacing: 0;
+    opacity: 0;
+    transition: all 8s linear;
+    -webkit-transition: all 3s linear;
+}
+
 /* The bulleted list of facts for each skill */
 .bulleted
 {
     list-style-type: square;
+}
+
+/* The div that animates when a textButton is hovered over by the cursor */
+.buttonAnimation
+{
+    /* ANIMATION */
+    -webkit-transition: all 1s linear;
+    transition: all 1s linear;
+    
+    /* COLOR */
+    border: 0 solid #090;
+    
+    /* CURSOR */
+    cursor: pointer;
+    
+    /* POSITION */
+    position: absolute;
+    top: 0;
+    
+    /* SIZE */
+    height: 60px;
+    width: 30%;
+    width: 30vw;
 }
 
 /* The div that contains a textButton and its animated div */
@@ -120,40 +159,20 @@ p
 {
     /* SIZE */
     height: 100%;
+    height: 100vw;
     width: 100%;
-    height: 100vh;
     width: 100vw;
     
     /* POSITION */
     position: absolute;
-    top: -100%;
-    top: -100vh;
 }
 
-/* Contains the section divider element */
+/* Contains a section divider element */
 .dividerContainer
 {
     margin-bottom: -1%;
     margin-bottom: -1vh;
     position: relative;
-}
-
-/* Lists of buttons to show or hide the content of projects or skills */
-.showButtonList
-{
-    list-style-type: none;
-    padding-bottom: 15%;
-    padding-bottom: 15vh;
-}
-
-/* List item element belonging to each show/hide button */
-.showButtonList li
-{
-    /* POSITION */
-    margin: 5% 25px 0 0;
-    margin: 5vh 25px 0 0;
-    position: relative;
-    z-index: 1;
 }
 
 /* Top title text */
@@ -163,8 +182,7 @@ p
     font-size: 10%;
     font-size: 10vw;
     font-weight: 900;
-    letter-spacing: -0.5%;
-    letter-spacing: -0.5vw;
+    letter-spacing: -0.5;
 }
 
 /* The layer of the title text containing the animated lights */
@@ -183,6 +201,10 @@ p
 .next, .previous
 {
     cursor: pointer;
+    height: 10%;
+    height: 10vw;
+    width: 10%;
+    width: 10vw;
     -webkit-transition: all 1s linear;
     transition: all 1s linear;
 }
@@ -208,6 +230,22 @@ p
     height: auto;
 }
 
+/* The text below the title containing the occupation */
+.occupation
+{
+    /* FONT */
+    font-size: 24pt;
+    font-weight: 1000;
+    
+    /* POSITION */
+    margin-bottom: 15%;
+    margin-bottom: 15vh;
+    margin-top: 5%;
+    margin-top: 5vw;
+    position: relative;
+    text-align: center;
+}
+
 /* Image of the project */
 .previewImage
 {
@@ -225,8 +263,9 @@ p
     
     /* POSITION */
     display: inline-block;
-    margin: 0 5% 0 5%;
-    margin: 0 5vh 0 5vh;
+    margin: 0 1% 0 1%;
+    margin: 0 1vw 0 1vw;
+    z-index: 15;
     
     /* SIZE */
     width: 50%;
@@ -245,7 +284,7 @@ p
     width: 30vw;
 }
 
-/* Div containing project elements that may be shown or hidden by the user */
+/* Container of project elements that may be shown or hidden by the user */
 .projectContent
 {
     /* ANIMATION */
@@ -263,7 +302,8 @@ p
     /* POSITION */
     margin-left: auto;
     margin-right: auto;
-    padding: 10px 10px 10px 10px;
+    padding: 1%;
+    padding: 1vw;
     text-align: center;
     
     /* SIZE */
@@ -294,6 +334,24 @@ p
     /* SIZE */
     width: 30%;
     width: 30vw;
+}
+
+/* Lists of buttons to show or hide the content of projects or skills */
+.showButtonList
+{
+    list-style-type: none;
+    padding-bottom: 15%;
+    padding-bottom: 15vh;
+}
+
+/* List item element belonging to each show/hide button */
+.showButtonList li
+{
+    /* POSITION */
+    margin: 5% 25px 0 0;
+    margin: 5vh 25px 0 0;
+    position: relative;
+    z-index: 1;
 }
 
 /* Button used to show or hide the content of a project or skill */
@@ -333,16 +391,12 @@ p
 {
     margin: 0;
     position: absolute;
-    top: 3vh;
+    top: 20px;
 }
 
 /* The list of facts relating to a particular skill that may be shown or hidden by the user */
 .skillContent
 {
-    /* ANIMATION */
-    -webkit-transition: opacity 1s linear;
-    transition: opacity 1s linear;
-    
     /* POSITION */
     margin-left: auto;
     margin-right: auto;
@@ -351,6 +405,27 @@ p
     /* SIZE */
     width: 60%;
     width: 60vw;
+}
+
+/* Paragraphs used for describing the soft skills */
+.skillContent p
+{
+    -webkit-transition: opacity 1s linear;
+    transition: opacity 1s linear;
+}
+
+/* Lists for hard skills */
+.skillContent ul
+{
+    list-style-image: url("marker.gif");
+}
+
+/* Each list item for hard skills */
+.skillContent ul li
+{
+    margin: 10px;
+    -webkit-transition: opacity 1s linear;
+    transition: opacity 1s linear;
 }
 
 /* The star polygon used in a rating graphic (including the shading) */
@@ -399,6 +474,12 @@ p
     -webkit-transition: transform 0.5s linear;
 }
 
+/* A button that contains a word(s)*/
+.textButton
+{
+    position: absolute;
+}
+
 /* An animated light in the title text */
 .titleLight
 {
@@ -428,29 +509,6 @@ p
     padding: 10vh 5vw 15vh 5vw;
 }
 
-/* The div that animates when a textButton is hovered over by the cursor */
-#buttonAnimation
-{
-    /* ANIMATION */
-    -webkit-transition: all 1s linear;
-    transition: all 1s linear;
-    
-    /* COLOR */
-    border: 0 solid #090;
-    
-    /* CURSOR */
-    cursor: pointer;
-    
-    /* POSITION */
-    position: absolute;
-    top: 0;
-    
-    /* SIZE */
-    height: 60px;
-    width: 30%;
-    width: 30vw;
-}
-
 /* The close button that appears when an image is enlarged */
 #close
 {
@@ -472,7 +530,7 @@ p
     cursor: pointer;
     
     /* FONT */
-    font-size: 22pt;
+    font-size: 2vw;
     font-weight: 900;
     
     /* POSITION */
@@ -494,19 +552,18 @@ p
 #darkBackground
 {
     /* ANIMATION */
+    opacity: 0;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
     transition: opacity 1s linear;
     -webkit-transition: opacity 1s linear;
     
     /* COLOR */
     background-color: #000;
-    opacity: 0;
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
     
     /* POSITION */
     left: 0;
     top: 0;
     position: fixed;
-    z-index: 15;
     
     /* SIZE */
     height: 100%;
@@ -519,10 +576,20 @@ p
 #firstNameNoJS
 {
     /* POSITION */
-    left: 40%;
-    top: 5%;
-    left: 40vw;
-    top: 5vh;
+    left: 35%;
+    top: 10%;
+    left: 35vw;
+    top: 3vw;
+}
+
+/* The text of the names in the title that is rendered if JavaScript does not run */
+#firstNameNoJS, #lastNameNoJS
+{
+    /* FONT */
+    font-size: 200%;
+    font-size: 10vw;
+    
+    /* POSITION */
     position: absolute;
 }
 
@@ -539,11 +606,10 @@ p
 #lastNameNoJS
 {
     /* POSITION */
-    left: 50%;
+    left: 45%;
     top: 20%;
-    left: 50vw;
-    top: 20vh;
-    position: absolute;
+    left: 45vw;
+    top: 15vw;
 }
 
 /* The container of the text title elements (used when JavaScript does not run) */
@@ -557,9 +623,9 @@ p
 #nameGraphic
 {
     /* SIZE */
-    height: 60%;
+    height: 100%;
     width: 100%;
-    height: 60vh;
+    height: 100vh;
     width: 100vw;
 }
 
@@ -600,10 +666,7 @@ p
     
     /* POSITION */
     display: inline-block;
-    margin: 10% 0 10% 0;
-    padding: 10% 0 10% 0;
-    margin: 10px 0 10px 0;
-    padding: 10px 0 10px 0;
+    padding: 20px 0 20px 0;
 }
 
 /* The text of each option in the navigation menu */
@@ -620,28 +683,6 @@ p
     /* POSITION */
     margin: 0 10px 0 10px;
     padding: 0 10px 0 10px;
-}
-
-/* The text below the title containing the occupation */
-#occupation
-{
-    /* ANIMATION */
-    border-bottom: 3px solid #090;
-    border-width: 0;
-    -webkit-transition: border 0.5s linear;
-    transition: border 0.5s linear;
-    
-    /* FONT */
-    font-size: 24pt;
-    font-weight: 10;
-    
-    /* POSITION */
-    margin-bottom: 10%;
-    margin-bottom: 15vh;
-    margin-top: 10%;
-    margin-top: 25vh;
-    position: relative;
-    text-align: center;
 }
 
 /* The website sections containing the projects */
@@ -690,12 +731,6 @@ p
     position: relative;
 }
 
-/* A button that contains a word(s)*/
-#textButton
-{
-    position: absolute;
-}
-
 /* The background image behind the title */
 #topGraphic
 {
@@ -710,4 +745,73 @@ p
 #wrapper
 {
     font-family: "Arial", "Helvetica", "sans-serif";
+}
+
+/*
+----- RESPONSIVE ATTRIBUTES -----
+*/
+@media only screen and (max-width: 750px)
+{
+    #firstNameNoJS
+    {
+        left: 15%;
+        left: 35vw;
+        top: 300px;
+    }
+    
+    #firstNameNoJS, #lastNameNoJS
+    {
+        font-size: 150%;
+        font-size: 10vw;
+    }
+    
+    #lastNameNoJS
+    {
+        left: 25%;
+        left: 45vw;
+        top: 375px;
+    }
+    
+    #nameGraphic
+    {
+        height: 30%;
+        height: 30vh;
+    }
+    
+    #nav
+    {
+        position: static;
+    }
+    
+    #nav li
+    {
+        display: inherit;
+    }
+    
+    #occupation
+    {
+        margin-top: 20%;
+        margin-top: 20vw;
+    }
+    
+    #topGraphic
+    {
+        top: 300px;
+    }
+}
+
+@media only screen and (max-width: 1000px)
+{
+    .ratingContainer
+    {
+        display: block;
+        float: none;
+        padding: 25px 0 0 50px;
+    }
+}
+
+/* Prevents multiple titles from showing up in IE */
+:-ms-lang(x), #nameGraphic
+{
+    opacity: 0;
 }

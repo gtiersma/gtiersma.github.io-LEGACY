@@ -87,6 +87,13 @@ Changelog:
     -FireFox compatibility
     -IE compatibility (HTML & CSS)
     -minor bug fixes and improvements
+
+11/1/2019 - v0.9
+    -website is responsive
+    -major revisions to some functions to improve performance and code readability
+    -Mod Manager is removed due to its lack of professionalism
+    -preview added for the Stayton Animal Supply Excel inventory system
+    -minor bug fixes and improvements
 -->
 
 <body>
@@ -156,12 +163,14 @@ Changelog:
             <div></div>
             <img id="topGraphic" src="front.png" alt="Gazing into Cyber Space graphic"/>
     
-            <h3 id="occupation">Software Developer - Digital Artist</h3>
+            <!-- One is for if there is no JavaScript, the other is for use with JavaScript -->
+            <h3 class="occupation noJavaScript">Software Developer - Digital Artist</h3>
+            <h3 class="occupation animatedOccupation">Software Developer - Digital Artist</h3>
     
             <!-- The container is required for the button's animation. -->
             <div class="buttonContainer">
-                <button id="textButton" class="resumeButton">View Resume</button>
-                <div id="buttonAnimation" class="resumeButton"></div>
+                <button class="resumeButton textButton">View Resume</button>
+                <div class="resumeButton buttonAnimation"></div>
             </div>
             
         </div>
@@ -170,7 +179,7 @@ Changelog:
         <div id="about">
             
             <h1>ABOUT ME</h1>
-            <p>I am a new computer programmer and graphic designer who is ready to enter the tech workforce. Although I may not have much work experience, I enjoy designing software and digital artwork with my free time. I also recently graduated from Chemeketa Community College with an Associates of Computer Science. I learned a wide variety of tech skills there, however my specific focus was centered on learning computer programming. Have a look at my projects and skills below to see what I can do.</p>
+            <p>I am a recent college graduate proficient in computer programming and graphic design who is ready to enter the workforce. I have gained experience in these fields by regularly working on side projects since I was a child, as well as college education and a little work experience. I am very accommodated with independent work, but also very cooperative in teamwork. In the workplace, I always put the business's needs above my own. I will help however I can to the best of my ability.</p>
             
         </div>
         
@@ -194,26 +203,16 @@ Changelog:
                         <p>Project Scaper allows graphic designers that have no 3D modeling experience to create 3D environments. It imports images designed by the user and uses the images as maps to generate the 3D shape.</p>
                         <p>It is programmed in Java with the help of the JavaFX platform.</p>
                         <p></p>
-                        <a href="">
+                        <form action="">
                             <button class="projectButton">View on GitHub</button>
-                        </a>
+                        </form>
                     </div>
                     <div class="projectContent">
                         <h3>Stayton Animal Supply Excel Inventory Management System</h3>
-                        <img class="previewImage" src="" alt="Screenshot of an inventory management system built with Excel">
-                        <p>While working at Stayton Animal Supply, I was given the opportunity to design an inventory management system for the business to use, since the business wanted to become more computerized.</p>
-                        <p>Coded in Visual Basic, it provided the basic necessities for managing products, such as creating, deleting, editing and searching for items. It was successfully used to calculate the business's product inventory at the end of the fiscal year. It was used for 1-2 months. Management was satisfied with the inventory system, however, they decided to deprecate the project because of a better opportunity to invest in a professional, server-based inventory system.</p>
+                        <img class="previewImage" src="previews/excelSystem.jpg" alt="Screenshot of an inventory management system built with Excel">
+                        <p>While working at Stayton Animal Supply, I was given the opportunity to design an inventory management system for the business to use.</p>
+                        <p>Coded as a Visual Basic macro, it provided the basic necessities for managing products, such as creating, deleting, editing and searching for items. It was successfully used to calculate the business's product inventory at the end of the fiscal year. It was used for 1-2 months. Management was satisfied with the inventory system, however, they decided to deprecate the project because of an opportunity that arose to invest in a professional, server-based inventory system.</p>
                         <p>The code is not available online, however I can present it in person upon request.</p>
-                    </div>
-                    <div class="projectContent">
-                        <h3>Mod Manager</h3>
-                        <img class="previewImage" src="previews/modManager.png" alt="Mod Manager Screenshot">
-                        <p>Mod Manager is a file manager allowing users of mods (modified video game files) to easily switch between them. It has received positive feedback from the mod community for the video game, Mario Kart 8.</p>
-                        <p>It is programmed in Java with the help of the JavaFX platform. It also uses CSS to stylize the GUI.</p>
-                        <p></p>
-                        <a href="https://gamebanana.com/tools/6663">
-                            <button class="projectButton">View on Game Banana</button>
-                        </a>
                     </div>
                 </li>
                 
@@ -222,15 +221,15 @@ Changelog:
                     <div class="projectContent">
                         <h3>History's Role for the Future</h3>
                         <img class="previewImage" src="previews/historysRole.png" alt="Composition Preview">
-                        <p>These compositions were created to contrast the effects that knowledge has on society through time. The top image shows history being studied and a good future on the wall. The bottom image displays history being ignored and a threatening future on the wall.</p>
-                        <p>They take place during the early Renaissance, while the pictures on the wall portray the what will come of future in perspective of the Renaissance, specifically the late 1800s and early 1900s.</p>
-                        <p>The compositions were created in Photoshop. They are composed of dozens of separate layers. The photos in the background were provided by the Library of Congress. The subject's face was created in Daz 3D, while her hair was painted directly in Photoshop and the armor was created from manipulated photos of a metal pen. All other elements were created from photos I shot.</p>
+                        <p>These compositions take place during the early Renaissance period, while the pictures on the wall portray what will come of the future from that time period, specifically the late 1800s and early 1900s.</p>
+                        <p>The compositions were created to contrast the effects that knowledge has on society through time. The top image shows history being studied and a good future on the wall. The bottom image displays history being ignored and a threatening future on the wall.</p>
+                        <p>Created in Photoshop, they are composed of dozens of separate layers of content, including many lighting adjustments. The photos in the background were provided by the Library of Congress. The subject's face was created in Daz 3D, while the hair was painted directly in Photoshop. All other elements were created from photos I personally shot.</p>
                     </div>
                     <div class="projectContent">
                         <h3>Nature Rules</h3>
-                        <img class="previewImage" src="previews/natureRules.jpg" alt="Apocoliptic composition of a woman standing in a field, looking into some nearby dark, mysterious modern city ruins.">
-                        <p>This is a Photo Illustration class exercise that is a personal recreation of a composition titled, Nature Rules, created by the instructor, Bret Malley. He supplied the artwork's source photography, which consisted of a basic photo of a city, a field, a mountain and a sky. I then completed the remaining work with Photoshop. A guide to follow was given, however I did quite a bit of work outside of the guide to enhance the shading, lighting and color.</p>
-                        <p></p>
+                        <img class="previewImage" src="previews/natureRules.jpg" alt="Apocoliptic composition of a woman standing in a field, looking into the nearby dark and mysterious ruins of a modern city.">
+                        <p>This is a personal recreation of a composition titled, Nature Rules, which was originally created by the instructor of my college Photo Illustration instructor, Bret Malley. He supplied the artwork's source photography, which consisted of a basic photo of a city, a field, a mountain and a sky. I then completed the remaining work with Photoshop.</p>
+                        <p>A guide to follow was given, however I did quite a bit of work outside of the guide to enhance the shading, lighting and color.</p>
                         <p></p>
                     </div>
                 </li>
@@ -240,22 +239,22 @@ Changelog:
                     <div class="projectContent">
                         <h3>Bicycle Rental Business ER Diagram</h3>
                         <img class="previewImage" src="previews/erd.png" alt="The ER Diagram">
-                        <p>As a project for a database class, I worked in a group with two other individuals to develop a database system for a fictional bicycle rental business. Our group name was the Cyber Centurions.</p>
-                        <p>The diagram was not directly designed by me, however I played a big part in discussing how the data should be organized to optimize the business's capabilities.</p>
-                        <p>My team decided that I should be tasked with the creation of the database's SQL Data-Definition script. It was used to automate the creation of the entity tables within Access</p>
-                        <a href="downloads/bicyclyDDL.txt">
+                        <p>As a project for my college Database Management class, I worked in a group with two other individuals to develop a database system for a fictional bicycle rental business. Our group name was the Cyber Centurions.</p>
+                        <p>The diagram was not directly designed by me, however I played a big part in discussing how the data should be organized to optimize the business's technical capabilities.</p>
+                        <p>My team decided that I should be tasked with the creation of the database's SQL Data-Definition script. It was used to automate the creation of the entity tables within Access.</p>
+                        <form action="downloads/bicyclyDDL.txt">
                             <button class="projectButton">View DDL Script</button>
-                        </a>
+                        </form>
                     </div>
                     <div class="projectContent">
                         <h3>Bicycle Rental Business Access Database</h3>
                         <img class="previewImage" src="previews/databaseForm.png" alt="A screenshot of a data entry form created in Microsoft Access">
-                        <p>This is a Photo Illustration class exercise that is a personal recreation of a composition titled, Nature Rules, created by the instructor, Bret Malley. He supplied the artwork's source photography, which consisted of a basic photo of a city, a field, a mountain and a sky. I then completed the remaining work with Photoshop. A guide to follow was given, however I did quite a bit of work outside of the guide to enhance the shading, lighting and color.</p>
-                        <p></p>
-                        <p></p>
-                        <a href="downloads/bicycleDatabase.accdb">
+                        <p>As a project for a database class, I worked in a group with two other individuals to develop a database system for a fictional bicycle rental business.</p>
+                        <p>The database was implemented in Microsoft Access, complete with data-entry forms and reports that could be generated.</p>
+                        <p>It was my job to implement the database into Access. I had a tight deadline to complete it, so this form was created in a rush, but I made certain that it had all of the necessities and was operational.</p>
+                        <form action="downloads/bicycleDatabase.accdb">
                             <button class="projectButton">Download Database File</button>
-                        </a>
+                        </form>
                     </div>
                 </li>
             
@@ -266,67 +265,67 @@ Changelog:
             
                 <!-- HTML contains only the templates for the projects -->
                 <li>
-                    <button class="showHide" alt="Show Content"><span>+</span></button>
+                    <button class="showHide"><span>+</span></button>
                     <h2>Computer Programming</h2>
                     <div class="projectContent">
                         <h3></h3>
                         <svg class="previous" aria-labelledby="previousAlt" role="img">
-                            <title id="previousAlt">View Previous Project</title>
+                            <title>View Previous Project</title>
                         </svg>
                         <img class="previewImage">
                         <svg class="next" aria-labelledby="nextAlt" role="img">
-                            <title id="nextAlt">View Next Project</title>
+                            <title>View Next Project</title>
                         </svg>
                         <p></p>
                         <p></p>
                         <p></p>
                         <div class="buttonContainer">
-                            <button id="textButton" class="projectButton"></button>
-                            <div id="buttonAnimation" class="projectButton"></div>
+                            <button class="projectButton textButton"></button>
+                            <div class="projectButton buttonAnimation"></div>
                         </div>
                     </div>
                 </li>
     
                 <li>
-                    <button class="showHide" alt="Show Content"><span>+</span></button>
+                    <button class="showHide"><span>+</span></button>
                     <h2>Graphic Design</h2>
                     <div class="projectContent">
                         <h3></h3>
                         <svg class="previous" aria-labelledby="previousAlt" role="img">
-                            <title id="previousAlt">View Previous Project</title>
+                            <title>View Previous Project</title>
                         </svg>
                         <img class="previewImage">
                         <svg class="next" aria-labelledby="nextAlt" role="img">
-                            <title id="nextAlt">View Next Project</title>
+                            <title>View Next Project</title>
                         </svg>
                         <p></p>
                         <p></p>
                         <p></p>
                         <div class="buttonContainer">
-                            <button id="textButton" class="projectButton"></button>
-                            <div id="buttonAnimation" class="projectButton"></div>
+                            <button class="projectButton textButton"></button>
+                            <div class="projectButton buttonAnimation"></div>
                         </div>
                     </div>
                 </li>
     
                 <li>
-                    <button class="showHide" alt="Show Content"><span>+</span></button>
+                    <button class="showHide"><span>+</span></button>
                     <h2>Database Development</h2>
                     <div class="projectContent">
                         <h3></h3>
                         <svg class="previous" aria-labelledby="previousAlt" role="img">
-                            <title id="previousAlt">View Previous Project</title>
+                            <title>View Previous Project</title>
                         </svg>
                         <img class="previewImage">
                         <svg class="next" aria-labelledby="nextAlt" role="img">
-                            <title id="nextAlt">View Next Project</title>
+                            <title>View Next Project</title>
                         </svg>
                         <p></p>
                         <p></p>
                         <p></p>
                         <div class="buttonContainer">
-                            <button id="textButton" class="projectButton"></button>
-                            <div id="buttonAnimation" class="projectButton"></div>
+                            <button class="projectButton textButton"></button>
+                            <div class="projectButton buttonAnimation"></div>
                         </div>
                     </div>
                 </li>
@@ -351,10 +350,10 @@ Changelog:
                         <ul>
                             <li><h4>Very familiar with Adobe Photoshop</h4></li>
                             <li><h4>Very familiar with Gimp</h4></li>
-                            <li><h4>Practices non-destructive editing in image editors whenever possible</h4></li>
-                            <li><h4>Skilled in typography</h4></li>
-                            <li><h4>Skilled in logo design</h4></li>
-                            <li><h4>Skilled with user interface creation</h4></li>
+                            <li><h4>Practices non-destructive image editing whenever possible</h4></li>
+                            <li><h4>Self-taught in typography</h4></li>
+                            <li><h4>Self-taught in logo design</h4></li>
+                            <li><h4>Self-taught with user interface creation</h4></li>
                         </ul>
                     </div>
                 </li>
@@ -366,11 +365,11 @@ Changelog:
                         <ul>
                             <li><h4>Familiar with Java, JavaScript, Visual Basic and Python</h4></li>
                             <li><h4>Somewhat familiar with C++</h4></li>
-                            <li><h4>Knows how to use JavaFX with FXML</h4></li>
                             <li><h4>Understands object-oriented concepts such as inheritance and polymorphism</h4></li>
+                            <li><h4>Usually fast with learning and researching things relating to programming</h4></li>
+                            <li><h4>Knows how to use JavaFX with FXML</h4></li>
                             <li><h4>Knows how to use multiple threads</h4></li>
                             <li><h4>Strong with mental mathematics</h4></li>
-                            <li><h4>Usually fast with learning and researching code</h4></li>
                         </ul>
                     </div>
                 </li>
@@ -380,10 +379,11 @@ Changelog:
                     <h2 class="skill">Web Development</h2>
                     <div class="skillContent">
                         <ul>
-                            <li><h4>Familiar with the HTML, CSS, JavaScript and XML languages</h4></li>
-                            <li><h4>Understands the importance of progressive enhancement, responsive web design and accessibility</h4></li>
-                            <li><h4>Separates structural code into HTML, UI code into CSS and functional code into Javascript</h4></li>
+                            <li><h4>Familiar with CSS and JavaScript</h4></li>
+                            <li><h4>Familiar with markup languages, such as HTML, XML and SVG</h4></li>
                             <li><h4>Familiar with the jQuery library</h4></li>
+                            <li><h4>Understands the importance of progressive enhancement, responsive web design and accessibility</h4></li>
+                            <li><h4>Uses HTML for the website's structure, CSS for its design and Javascript when functional code is necessary</h4></li>
                         </ul>
                     </div>
                 </li>
@@ -393,10 +393,10 @@ Changelog:
                     <h2 class="skill">Database Development</h2>
                     <div class="skillContent">
                         <ul>
-                            <li><h4>Has worked in a group to create a database</h4></li>
+                            <li><h4>Knows how to read and create ER Diagrams</h4></li>
                             <li><h4>Familiar with SQL</h4></li>
                             <li><h4>Familiar with Microsoft Access</h4></li>
-                            <li><h4>Knows how to read and create ER Diagrams</h4></li>
+                            <li><h4>Has worked in a group to create a database</h4></li>
                         </ul>
                     </div>
                 </li>
@@ -422,7 +422,7 @@ Changelog:
                     <button class="showHide"><span>+</span></button>
                     <h2 class="skill">Teamwork</h2>
                     <div class="skillContent">
-                        <p>When working in a team, I make a much higher priority of completing my share of the workload. Whenever a team member needs assistance and I am available to help, I take action to help. I do not allow my convictions and beliefs to hinder the progress of the team. Avoiding conflict in a team is much more important to me than being treated fairly.</p>
+                        <p>When working in a team, I always make sure that my share of the workload gets done. Whenever a team member needs assistance and I am available to help, I take action to help. When given the opportunity, I will voice my opinion, however I never give into frustration if it is not accepted. Avoiding conflict in a team is incredibly important.</p>
                     </div>
                 </li>
                 
@@ -430,7 +430,7 @@ Changelog:
                     <button class="showHide"><span>+</span></button>
                     <h2 class="skill">Written Communication</h2>
                     <div class="skillContent">
-                        <p>When writing (or typing) instructions or information, I spend extra time re-reading everything I wrote, and I usually re-write my sentences a few times to ensure that it is easy to understand. If I was to create a manual for some software, I would prioritize step-by-step instructions and complete sentences throughout. When programming, I document and explain any code that has even a slight possibility of being misunderstood by any skilled programmer (which makes up nearly all of the code I type).</p>
+                        <p>When writing (or typing), I make a habit of double-checking the simplicity and professionalism of everything I write. When writing instructions, I often use numbered steps to communicate the process, and I do not skip any steps or information, no matter how obvious it may seem. When programming, I document and explain any code that has even a slight possibility of being misunderstood by any skilled programmer.</p>
                     </div>
                 </li>
                 
@@ -438,7 +438,7 @@ Changelog:
                     <button class="showHide"><span>+</span></button>
                     <h2 class="skill">Perseverance</h2>
                     <div class="skillContent">
-                        <p>Whenever I am given a task, I do not give up. Even if it takes hours of research, I do not stop searching for a solution. However, if it becomes apparent that a solution does not exist or that it is not worth the time required, I devise an alternative solution.</p>
+                        <p>Whenever I am given a task, I do not give up easily, even if it is work that I do not enjoy. If it ever becomes apparent that a solution does not exist or that it is not worth the time required, I then devise an alternative solution.</p>
                     </div>
                 </li>
                 
@@ -446,7 +446,7 @@ Changelog:
                     <button class="showHide"><span>+</span></button>
                     <h2 class="skill">Organization</h2>
                     <div class="skillContent">
-                        <p>Whether it is code and files on my computer or physical papers and documents, I make sure to place things where I can remember them and sort them when needed. Thanks to organization, I rarely lose anything, and I can quickly find what I need.</p>
+                        <p>Whether it is code and files on my computer or physical papers and documents, I organize my work where I can remember it or find it easily. I understand that losing work can at times cost needless hours of additional labor.</p>
                     </div>
                 </li>
                 

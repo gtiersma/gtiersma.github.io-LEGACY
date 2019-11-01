@@ -81,20 +81,6 @@ class Project
         }
     }
 
-// Arrays of project objects
-var programs;
-var graphics;
-var databases;
-
-// Array of the array of projects
-var projects;
-
-// Ratings for the technical skills
-var hardRatings = [8, 7, 7, 6, 5];
-
-// Ratings for the social skills
-var softRatings = [9, 9, 8, 7, 7];
-
 (function($)
 {
 
@@ -105,124 +91,62 @@ var softRatings = [9, 9, 8, 7, 7];
 //  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
 $(document).ready( function()
 {
-    // Gather the data of each project from the DOM and store them in the arrays
-    programs =
-    [
-        new Project
-        (
-            $(".projectContent").eq(0).children("h3").text(),
-            $(".projectContent").eq(0).children("img").attr("src"),
-            $(".projectContent").eq(0).children("a").children("button").text(),
-            $(".projectContent").eq(0).children("a").attr("href"),
-            $(".projectContent").eq(0).children("img").attr("alt"),
-            $(".projectContent").eq(0).children("p").eq(0).text(),
-            $(".projectContent").eq(0).children("p").eq(1).text(),
-            $(".projectContent").eq(0).children("p").eq(2).text()
-        ),
-        new Project
-        (
-            $(".projectContent").eq(1).children("h3").text(),
-            $(".projectContent").eq(1).children("img").attr("src"),
-            "",
-            "",
-            $(".projectContent").eq(1).children("img").attr("alt"),
-            $(".projectContent").eq(1).children("p").eq(0).text(),
-            $(".projectContent").eq(1).children("p").eq(1).text(),
-            $(".projectContent").eq(1).children("p").eq(2).text()
-        ),
-        new Project
-        (
-            $(".projectContent").eq(2).children("h3").text(),
-            $(".projectContent").eq(2).children("img").attr("src"),
-            $(".projectContent").eq(2).children("a").children("button").text(),
-            $(".projectContent").eq(2).children("a").attr("href"),
-            $(".projectContent").eq(2).children("img").attr("alt"),
-            $(".projectContent").eq(2).children("p").eq(0).text(),
-            $(".projectContent").eq(2).children("p").eq(1).text(),
-            $(".projectContent").eq(2).children("p").eq(2).text()
-        )
-    ];
-    graphics = 
-    [
-        new Project
-        (
-            $(".projectContent").eq(3).children("h3").text(),
-            $(".projectContent").eq(3).children("img").attr("src"),
-            "",
-            "",
-            $(".projectContent").eq(3).children("img").attr("alt"),
-            $(".projectContent").eq(3).children("p").eq(0).text(),
-            $(".projectContent").eq(3).children("p").eq(1).text(),
-            $(".projectContent").eq(3).children("p").eq(2).text()
-        ),
-        new Project
-        (
-            $(".projectContent").eq(4).children("h3").text(),
-            $(".projectContent").eq(4).children("img").attr("src"),
-            "",
-            "",
-            $(".projectContent").eq(4).children("img").attr("alt"),
-            $(".projectContent").eq(4).children("p").eq(0).text(),
-            $(".projectContent").eq(4).children("p").eq(1).text(),
-            $(".projectContent").eq(4).children("p").eq(2).text()
-        )
-    ];
-    databases = 
-    [
-        new Project
-        (
-            $(".projectContent").eq(5).children("h3").text(),
-            $(".projectContent").eq(5).children("img").attr("src"),
-            $(".projectContent").eq(5).children("a").children("button").text(),
-            $(".projectContent").eq(5).children("a").attr("href"),
-            $(".projectContent").eq(5).children("img").attr("alt"),
-            $(".projectContent").eq(5).children("p").eq(0).text(),
-            $(".projectContent").eq(5).children("p").eq(1).text(),
-            $(".projectContent").eq(5).children("p").eq(2).text()
-        ),
-        new Project
-        (
-            $(".projectContent").eq(6).children("h3").text(),
-            $(".projectContent").eq(6).children("img").attr("src"),
-            $(".projectContent").eq(6).children("a").children("button").text(),
-            $(".projectContent").eq(6).children("a").attr("href"),
-            $(".projectContent").eq(6).children("img").attr("alt"),
-            $(".projectContent").eq(6).children("p").eq(0).text(),
-            $(".projectContent").eq(6).children("p").eq(1).text(),
-            $(".projectContent").eq(6).children("p").eq(2).text()
-        )
-    ];
+    // The viewport width when the webpage is first launched. Used when the window is resized
+    const INITIAL_VIEWPORT_WIDTH = $(window).width();
+    
+    // Arrays of project objects
+    let programs = getProjects(0);
+    let graphics = getProjects(1);
+    let databases = getProjects(2);
 
-    // Put the arrays into a master array
-    projects = [programs, graphics, databases];
+    // Ratings for the technical skills
+    let hardRatings = [8, 7, 7, 6, 5];
+
+    // Ratings for the social skills
+    let softRatings = [9, 9, 8, 7, 7];
+
+    // Put the project arrays into a master array
+    let projects = [programs, graphics, databases];
+    
+    // Keeps track of the indexes of the currently active projects. The first projects (0) are loaded initially.
+    let currentProjects = [0, 0, 0];
     
     // Remove all of the elements in the DOM that are only meant to be shown if JavaScript fails to load or run
     $(".noJavaScript").remove();
-    
-    // Keeps track of the indexes of the currently active projects. The first projects (0) are loaded initially.
-    var currentProjects = [0, 0, 0];
     
     // Creates the arrow buttons for each project-viewer
     createArrows(true);
     createArrows(false);
     
     // Loads the initial projects into the DOM
-    var numberOfProjects = currentProjects.length;
-    for (var i = 0; i < numberOfProjects; i++)
+    var projectTypeAmount = currentProjects.length;
+    for (var i = 0; i < projectTypeAmount; i++)
     {
-        loadProject(currentProjects[i], i);
+        currentProject = currentProjects[i];
+        loadProject(i, projects[i][currentProject]);
     }
     
     // Create the star graphics for the skills
-    createSkillRatings(true);
-    createSkillRatings(false);
+    createSkillRatings(true, hardRatings);
+    createSkillRatings(false, softRatings);
     
     // Show the DOM elements that should only be shown if JavaScript is being used
     showJavaScriptStuff();
     
+    // These variables are used in the scroll event listener. If they were declared in the event listening function, they would continuously redefine themselves, needlessly consuming a large amount of resources. To prevent this, they are declared globally.
+    // Whether or not the user has scrolled down to the bottom skill or not
+    var reachedLastSkill = false;
+    // Each container for the skill ratings.
+    var ratings = $(".ratingContainer");
+    // The number of skills
+    var skillsAmount = $(".skill").length;
+    
     // Minimize the projects and skills
     $(".projectContent").hide();
     $(".skillContent").hide();
+    
+    // Adjust the elements' size based upon the window size
+    adjustWindow(INITIAL_VIEWPORT_WIDTH);
     
     
 
@@ -246,7 +170,6 @@ $(document).ready( function()
         
         svg.children(".arrowCircle").css("stroke-width", 0);
         svg.children(".arrowCircle").css("opacity", 0);
-        svg.children(".arrowShadow").css("stroke-width", 0);
     },
     function()
     {
@@ -254,7 +177,6 @@ $(document).ready( function()
         
         svg.children(".arrowCircle").css("stroke-width", 3);
         svg.children(".arrowCircle").css("opacity", 1);
-        svg.children(".arrowShadow").css("stroke-width", 3);
     });
     
     // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
@@ -273,29 +195,38 @@ $(document).ready( function()
     
     // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
     // 
-    // Displays the next project when the "next" button is clicked
+    // Displays the next or previous project when an arrow button is clicked
     // _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
     //  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
-    $(".next").click(function()
+    $(".next, .previous").click(function()
     {
-        // Get the index for the project type
-        var type = getType($(this).parent());
+        // The index for the project type
+        let type = getProjectType(projects.length, $(this).parent());
         
-        // If there is another project after the one currently in view...
-        if ((currentProjects[type] + 1) < projects[type].length)
+        // The index of the project that will be shown
+        let newIndex;
+        
+        // The index of the project currently being shown
+        let currentProject = currentProjects[type];
+        
+        let projectContainer = $(this).parent();
+        
+        if ($(this).hasClass("next"))
         {
-            // ...set the current project to the next one.
-            currentProjects[type] = currentProjects[type] + 1;
+            newIndex = getNextProjectIndex(currentProject, projects[type].length);
         }
-        // ...otherwise...
         else
         {
-            // ...set the current project to the first one.
-            currentProjects[type] = 0;
+            newIndex = getPreviousProjectIndex(currentProject, projects[type].length);
         }
         
         // Load the next project into the DOM
-        loadProject(currentProjects[type], type);
+        loadProject(type, projects[type][newIndex]);
+        
+        // Store the current project
+        currentProjects[type] = newIndex;
+        
+        growContainer(projectContainer);
     });
     
     // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
@@ -321,42 +252,15 @@ $(document).ready( function()
     
     // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
     // 
-    // Displays the previous project when the "previous" button is clicked
-    // _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
-    //  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
-    $(".previous").click(function()
-    {
-        // Get the index for the project type
-        var type = getType($(this).parent());
-        
-        // If there is a project before the one currently in view...
-        if (currentProjects[type] > 0)
-        {
-            // ...set the current project to the previous one.
-            currentProjects[type] = currentProjects[type] - 1;
-        }
-        // ...otherwise...
-        else
-        {
-            // ...set the current project to the last one.
-            currentProjects[type] = projects[type].length - 1;
-        }
-            
-        // Load the previous project into the DOM
-        loadProject(currentProjects[type], type);
-    });
-    
-    // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
-    // 
     // Shows or hides the content related to a project or skill for when the show/hide button is clicked.
     // _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
     //  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
     $(".showHide").click(function()
     {
         // The DOM container that performs a fade effect when shown or hidden
-        var fadeContainer;
+        let fadeContainer;
         // The DOM container that flattens when minimized
-        var shrinkContainer;
+        let shrinkContainer;
         
         // If this button is for a project...
         if ($(this).siblings(".projectContent").length === 1)
@@ -368,64 +272,27 @@ $(document).ready( function()
         // ...otherwise, if it's for a skill...
         else
         {
-            // ...the "skillContent" container performs the fade effect.
+            // ...the skill's container performs the fade effect.
             fadeContainer = $(this).siblings(".skillContent");
-            // The list item performs the shrink effect.
+            // The list item for this skill performs the shrink effect.
             shrinkContainer = $(this).parent();
         }
         
         // If the button clicked is a "+" button...
         if ($(this).text() == "+")
         {
-            // ...show the content.
-            fadeContainer.show();
+            // ...show it.
+            showContent(fadeContainer, shrinkContainer);
             
-            // This container must also be opac before the height can be retrieved. This line also begins the fade animation
-            fadeContainer.css("opacity", "1");
-            
-            // Automatically resizes the container. However, if the property was left to this value, it would not perform a shrink animation.
-            shrinkContainer.css("height", "auto");
-            
-            // Set the container's height to the number of pixels of it's height. Since this property is now no longer set to "auto", the container can perform a vertically-shrinking animation.
-            shrinkContainer.css("height", shrinkContainer.height() + "px");
-            
-            // Switch it to a "-" button
+            // Switch button to a "-" button
             $(this).children("span").text("-");
             $(this).attr("alt", "Hide Content");
-            
-            // If this is for a project...
-            if (fadeContainer.hasClass("projectContent"))
-            {
-                // ...ensure that the "next" and "previous" buttons are centered with the project preview image.
-                centerArrow(fadeContainer.children(".next"));
-                centerArrow(fadeContainer.children(".previous"));
-            }
         }
-        // ...otherwise, it must be a "-" button...
+        // ...otherwise, it must be a "-" button, so...
         else
         {
-            // If this is for a skill...
-            if (fadeContainer.hasClass("skillContent"))
-            {
-                // ...shrink the container's height so that the show/hide button and the skill title are still visible.
-                shrinkContainer.css("height", ($(this).height() + 10) + "px");
-            }
-            // ...otherwise, it must be for a project...
-            else
-            {
-                // Shrink the container's height completely
-                shrinkContainer.css("height", 0);
-            }
-            
-            // Fade this container out
-            fadeContainer.css("opacity", "0");
-            
-            // When the animations are approximately done...
-            sleep(1000).then(() =>
-            {
-                // ...hide the content.
-                fadeContainer.hide();
-            });
+            // ...hide it.
+            hideContent(fadeContainer, shrinkContainer);
             
             // Switch it to a "+" button
             $(this).children("span").text("+");
@@ -457,46 +324,33 @@ $(document).ready( function()
     //  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
     $(window).on("scroll", function()
     {
-        // The "y" position of the top of the viewport and the bottom of the viewport
-        var viewportTop = $(this).scrollTop();
-        var viewportBottom = $(this).scrollTop() + $(this).height();
-        
-        // Each container for the skill ratings
-        var skillRatings = $(".ratingContainer");
-        
-        // For each rating...
-        var numberOfSkills = skillRatings.length;
-        for (var i = 0; i < numberOfSkills; i++)
+        // If the user has yet to scroll to the last rating...
+        if (!reachedLastSkill)
         {
-            // A boolean of whether or not the animation should be reversed or not
-            var reverseAnimate;
+            // The "y" position of the bottom of the viewport
+            var viewportBottom = $(window).scrollTop() + $(window).height();
             
-            // The "y" position of the rating graphic
-            var skillPosition = skillRatings.eq(i).offset().top;
+            // The y position of the bottom rating
+            var lastRatingPosition = ratings.eq(skillsAmount - 1).offset().top;
             
-            // The number of stars in the rating graphic.
-            var starsAmount = getAmountOfStars(i);
-            
-            // If the skill graphic is currently in the viewport...
-            if (skillPosition > viewportTop && skillPosition < viewportBottom)
+            // If the user has now scrolled to reach the last skill...
+            if (viewportBottom > lastRatingPosition)
             {
-                // ...the animation should not be reversed.
-                reverseAnimate = false;
+                reachedLastSkill = true;
             }
-            // ...otherwise...
-            else
-            {
-                // ...it should be reversed.
-                reverseAnimate = true;
-            }
-    
-            // For each star graphic in the skill's rating...
-            for (var j = 0; j < starsAmount; j++)
-            {
-                // ...animate it.
-                animateStar(reverseAnimate, i, j);
-            }
+        
+            animateRatings(ratings, hardRatings, softRatings);
         }
+    });
+    
+    // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
+    // 
+    // RWD
+    // _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
+    //  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
+    $(window).resize(function()
+    {
+        adjustWindow(INITIAL_VIEWPORT_WIDTH);
     });
 });
     
@@ -512,49 +366,147 @@ $(document).ready( function()
 
 // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
 // 
-// Animates a star graphic either into view or out of view
+// Resizes and repositions the elements relating to projects or skills in response to the window's size
 //
-// reverse -> Boolean -> Whether or not the animation should be reversed
-// skillIndex -> Number -> The zero-based number of which skill the star being animated belongs too (ordered by position in the DOM)
-// starIndex -> Number -> The zero-based number of which star in the rating graphic should be animated (ordered by position from left to right)
+// initialWidth -> Number -> The width of the webpage (in pixels) at the time that the webpage was loaded
 // _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
 //  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
-function animateStar(reverse, skillIndex, starIndex)
+function adjustWindow(initialWidth)
 {
-    // The SVG graphic containing the star with the hexagon behind it. This was not working correctly with jQuery, so it is not used here.
-    var svg = document.getElementsByClassName("ratingContainer")[skillIndex].children[starIndex].children[1];
-        
-    // If the animation is to be reversed...
-    if (reverse)
+    // A percentage of how much the height compares to the width. Anything more than 1 means that the window is in landscape orientation. Anything less than 1 means that the window is in portrait orientation.
+    var ratio = $(window).width() / $(window).height();
+    
+    // A percentage of how wide the window currently is, compared to how wide it was when it first loaded the webpage. Anything more than 1 means that the window is wider than when the webpage was loaded. Anything less than 1 means that the window is narrower than when the webpage was loaded.
+    var widthChange = $(window).width() / initialWidth;
+    
+    $(".next, .previous").children().css("transform", "scale(" + widthChange + ")");
+    
+    // If the window is in portrait orientation...
+    if (ratio < 1)
     {
-        // ...horizontally squish the hexagon.
-        svg.children[0].style.transform = "scaleX(0)";
-        
-        // For the star and each shadow on it...
-        var numberOfPolygons = svg.children.length;
-        for (var i = 1; i < numberOfPolygons; i++)
-        {
-            // ...animate it out of view.
-            svg.children[i].style.transform = "rotate(180deg) scale(0.5) translate(0, 0)";
-        }
+        // ...abbreviate the project group titles.
+        $("#projects h2").eq(0).text("Programming");
+        $("#projects h2").eq(1).text("Graphics");
+        $("#projects h2").eq(2).text("Database");
     }
     // ...otherwise...
     else
     {
-        // ...wait a little, allowing the stars to animate into view sequentially, then...
-        sleep(500 * starIndex).then(() =>
-        {
-            // ...horizontally stretch the hexagon into shape.
-            svg.children[0].style.transform = "scaleX(1.0)";
-            
-            // For the star and each shadow on it...
-            for (var i = 1; i < svg.children.length; i++)
-            {
-                // ...animate it into view.
-                svg.children[i].style.transform = "rotate(0) scale(0.8) translate(5px, 5px)";
-            }
-        }); 
+        // ...do not.
+        $("#projects h2").eq(0).text("Computer Programming");
+        $("#projects h2").eq(1).text("Graphic Design");
+        $("#projects h2").eq(2).text("Database Development");
     }
+    
+    // If a project preview is currently enlarged...
+    if ($("#close").length > 0)
+    {
+        // ...resize it.
+        resizeEnlargedPreview($("#close").siblings(".previewImage"));
+    }
+    
+    // For each skill...
+    $(".skill").each(function()
+    {
+        // ...get whether or not it is minimized or maximized.
+        var buttonState = $(this).siblings(".showHide").children("span").text();
+        
+        // If it is minimized...
+        if (buttonState == "+")
+        {
+            // ...get its container.
+            var container = $(".skill").parent();
+            
+            // Make it the correct size
+            resizeSkill(container);
+        }
+    });
+}
+
+// _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
+// 
+// Animates the skill rating graphics that are currently in view (or above view)
+//
+// ratings -> jQuery Div Element Array -> The containers holding the rating graphics
+// hardRatings -> Number Array -> The ratings for the technical skills
+// softRatings -> Number Array -> The ratings for the soft skills
+// _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
+//  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
+function animateRatings(ratings, hardRatings, softRatings)
+{
+    // The "y" position of the bottom of the viewport
+    var viewportBottom = $(window).scrollTop() + $(window).height();
+    
+    // For each rating...
+    ratings.each(function(i)
+    {
+        // The "y" position of the rating graphic
+        var skillPosition = $(this).offset().top;
+        
+        // If the viewport has reached the graphic...
+        if (skillPosition < viewportBottom)
+        {
+            var rating;
+            // The index in the array of skills to be retrieved.
+            var index = i;
+            
+            // If the incrementing variable is within the number of ratings for hard skills...
+            if (i < hardRatings.length)
+            {
+                // ...the rating needed is a rating for a hard skill.
+                rating = hardRatings[index];
+            }
+            // ...otherwise...
+            else
+            {
+                // ...the rating needed must be for a soft skill. Since the index currently counts hard skills AND soft skills, the number of hard skills must be subtracted to get the index into the correct range for retrieving a rating for a soft skill.
+                index = index - hardRatings.length;
+                
+                rating = softRatings[index];
+            }
+            
+            // The number of stars for the skill. Since the rating is from 1-10, but there are only 5 stars, the number of stars (including half-stars) is half of the rating, rounded up.
+            var starsAmount = Math.ceil(rating / 2);
+    
+            // For each star graphic in the skill's rating...
+            for (var j = 0; j < starsAmount; j++)
+            {
+                // ...animate it.
+                animateStar(i, j);
+            }
+        }
+    });
+}
+    
+// _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
+// 
+// Animates a star graphic either into view or out of view
+//
+// skillIndex -> Number -> The zero-based number of which skill the star being animated belongs too (ordered by position in the DOM)
+// starIndex -> Number -> The zero-based number of which star in the rating graphic should be animated (ordered by position from left to right)
+// _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
+//  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
+function animateStar(skillIndex, starIndex)
+{
+    // This was not working correctly with jQuery, so it is not used here.
+    var ratingContainer = document.getElementsByClassName("ratingContainer")[skillIndex];
+    // The SVG graphic containing the star with the hexagon behind it.
+    var svg = ratingContainer.children[starIndex].children[1];
+    
+    // Wait a little, allowing the stars to animate into view sequentially, then...
+    sleep(500 * starIndex).then(() =>
+    {
+        // ...horizontally stretch the hexagon into shape.
+        svg.children[0].style.transform = "scaleX(1.0)";
+        
+        // For the star and each shadow on it...
+        var polygonAmount = svg.children.length;
+        for (var i = 1; i < polygonAmount; i++)
+        {
+            // ...animate it into view.
+            svg.children[i].style.transform = "rotate(0) scale(0.8) translate(5px, 5px)";
+        }
+    });
 }
 
 // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
@@ -566,12 +518,48 @@ function animateStar(reverse, skillIndex, starIndex)
 //  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
 function centerArrow(arrow)
 {
-    var imageHeight = arrow.siblings(".previewImage").height();
+    let imageHeight = arrow.siblings(".previewImage").height();
     
-    // In order for the button to be centered, its bottom margin must be adjusted to the result of this calculation.
-    var bottomMargin = (imageHeight / 2) - ((window.innerWidth / 10) / 2);
+    // The button must be in the middle of the top and bottom of the image. That middle point is half of the image's height.
+    let halfImageHeight = imageHeight / 2;
+    // The middle of the button graphic should approximately line up with the middle of the image, so this is used to raise the button a little so that can happen.
+    let offset = arrow.height() / 2;
     
-    arrow.css("margin-bottom", bottomMargin);
+    let marginPixels = halfImageHeight - offset;
+    
+    // Convert it from px to vh
+    let marginPercentage = marginPixels / $(window).height() * 100;
+    arrow.css("margin-bottom", marginPercentage + "vh");
+}
+
+// _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
+// 
+// Event listeners for the close button that appears when a preview image is enlarged. These event listeners must exist here in this function instead of the load method with the others. The close button does not exist when the load method is executed, therefore these event listeners would not be assigned to the button if they were placed in the load method.
+//
+// closeButton -> jQuery Button Element -> The button to close an enlarged project preview image
+// imagePreview -> jQuery Image Element -> The project preview that has been enlarged
+// _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
+//  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
+function closeButtonListeners(closeButton, imagePreview)
+{
+    // When the close button is clicked...
+    closeButton.click(function()
+    {
+        // ...return the image to it's normal state.
+        hideEnlargedPreview(imagePreview);
+    });
+    
+    // Animate the close button's colors when hovered
+    closeButton.hover(function()
+    {
+        closeButton.css("border-width", 0);
+        closeButton.css("background-color", "#FFF");
+    },
+    function()
+    {
+        closeButton.css("border-width", "3px");
+        closeButton.css("background-color", "#0000");
+    });
 }
 
 // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
@@ -584,72 +572,45 @@ function centerArrow(arrow)
 function createArrows(next)
 {
     // Array of svg elements to be used as the buttons
-    var arrows;
+    let arrows;
     
     // Array of numbers used in the arrow's coordinates that vary depending on whether the "next or "previous" buttons are being created
-    var variablePoints;
+    let varyingPoints;
     
     // If the "next" buttons are being created...
     if (next)
     {
-        // ...get the correct svg elements and varying points.
+        // ...get the correct svg elements and points.
         arrows = $(".next");
-        variablePoints = [3, 8];
+        varyingPoints = [3, 8];
     }
-    // ...otherwise, if the "previous" buttons are being created...
     else
     {         
-        // ...get these other ones.
         arrows = $(".previous");
-        variablePoints = [7, 2];
+        varyingPoints = [7, 2];
     }
     
     // 1% of the screen width. Polygons in SVG cannot be created with "%" or "vw" units for some reason, so the conversion of "px" to "%" is handled programatically.
-    var centScreenWidth = window.innerWidth / 100;
+    let centScreenWidth = window.innerWidth / 100;
     
-    // Points used to create the arrow shape
-    var arrowPoints =
-        (variablePoints[0] * centScreenWidth) + "," + (4 * centScreenWidth) + " " +
-        (5 * centScreenWidth) + "," +                 (4 * centScreenWidth) + " " +
-        (5 * centScreenWidth) + "," +                 (3 * centScreenWidth) + " " +
-        (variablePoints[1] * centScreenWidth) + "," + (5 * centScreenWidth) + " " +
-        (5 * centScreenWidth) + "," +                 (7 * centScreenWidth) + " " +
-        (5 * centScreenWidth) + "," +                 (6 * centScreenWidth) + " " +
-        (variablePoints[0] * centScreenWidth) + "," + (6 * centScreenWidth);
+    // The x and y position that the circle is placed at
+    let circlePosition = centScreenWidth * 5;
+    // The x and y position that the shadow is placed at
+    let shadowPosition = centScreenWidth * 5.2;
+    let radius = centScreenWidth * 4;
     
-    var container = $(".projectContent");
-    
-    // The circle surrounding the arrow. Unlike polygons, circles can be created with "vw" units through CSS.
-    var crcl = $("<circle/>");
-    crcl.addClass("arrowCircle");
-    crcl.css("cx", "5vw");
-    crcl.css("cy", "5vw");
-    crcl.css("r", "4.5vw");
-    crcl.css("stroke", "#060");
-    crcl.css("stroke-width", "3");
-    crcl.css("fill-opacity", "0");
-    
+    // The polygon element of the arrow shape
+    let arrow = getArrowGraphic(varyingPoints);
+    // The circle surrounding the arrow
+    let circle = getArrowCircle(circlePosition, radius, "#060");
     // The circle's shadow
-    var circleShadow = $("<circle/>");
-    circleShadow.addClass("arrowShadow");
-    circleShadow.css("cx", "5.1vw");
-    circleShadow.css("cy", "5.1vw");
-    circleShadow.css("r", "4.5vw");
-    circleShadow.css("stroke", "#000");
-    circleShadow.css("stroke-width", "3");
-    circleShadow.css("fill-opacity", "0");
+    let circleShadow = getArrowCircle(shadowPosition, radius, "#000");
     
-    // Construct the arrow
-    var arrow = $("<polygon/>").attr("points", arrowPoints);
-    arrow.css("fill", "#060");
-    
-    // Set the size of the button
-    arrows.css("width", window.innerWidth / 10);
-    arrows.css("height", window.innerWidth / 10);
+    let container = $(".projectContent");
     
     // Add the shapes to the SVG element
     arrows.append(circleShadow);
-    arrows.append(crcl);
+    arrows.append(circle);
     arrows.append(arrow);
     
     // This is necessary for the arrow buttons to be displayed correctly.
@@ -663,62 +624,139 @@ function createArrows(next)
 // hard -> Boolean -> Whether or not the graphics are being created for the hard skills
 // _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
 //  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
-function createSkillRatings(hard)
+function createSkillRatings(hard, ratings)
 {
-    // Reference variable to the array of skill ratings to be loaded
-    var ratings;
-    
     // The ul element to contain the skills
-    var skillContainer;
+    let skillContainer;
     
     // If the technical skills are being loaded...
     if (hard)
     {
         // ...get the ones for technical skills.
         skillContainer = $("#skills .showButtonList").eq(0);
-        ratings = hardRatings;
     }
     // ...otherwise...
     else
     {
         // ...get the other ones.
         skillContainer = $("#skills .showButtonList").eq(1);
-        ratings = softRatings;
     }
     
     // For each skill to be loaded...
-    var numberOfRatings = ratings.length;
-    for (var i = 0; i < numberOfRatings; i++)
+    var skillsAmount = ratings.length;
+    for (var i = 0; i < skillsAmount; i++)
     {
-        // ...insert the graphic into the correct position in the DOM.
-        getRatingGraphic(ratings[i]).insertAfter(skillContainer.children("li").eq(i).children(".skill"));
+        // ...get the skill's container.
+        let content = skillContainer.children("li").eq(i).children(".skillContent");
+        
+        // Get the graphic
+        let graphic = getRatingGraphic(ratings[i]);
+        
+        // The text describing the skill that can be shown by the user
+        let text;
+        
+        // If the skill is hard...
+        if (hard)
+        {
+            // ...the text is in the form of a list.
+            text = content.children("ul").children("li");
+        }
+        // ...otherwise, the skill must be soft, so...
+        else
+        {
+            // ...it is a paragraph.
+            text = content.children("p");
+        }
+        
+        // Insert the graphic into the correct position in the DOM
+        graphic.insertBefore(content);
+        
+        // Make the text describing the skill initially invisible, so that they can fade in when shown. This is done here instead of in CSS so that the skills will still be visible if JavaScript is disabled.
+        text.css("opacity", "0");
+    }
+    
+    // This is necessary for the rating graphic to be displayed correctly.
+    skillContainer.html(skillContainer.html());
+}
+
+// _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
+// 
+// Using CSS, fades in the given list of statements for a skill
+//
+// list -> jQuery li Element Array -> Statements belonging to a skill
+// _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
+//  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
+function fadeInList(list)
+{
+    // The scope of the incremental variable from the for loop does not pass into the sleep promise below. Therefore, a duplicate incremental variable must be created here for use within the promise.
+    var i2 = 0;
+    
+    // For each item in the skill's list...
+    var listLength = list.length;
+    for (var i = 0; i < listLength; i++)
+    {   
+        // After the previous item on the list has begun to fade in...
+        sleep(300 * (i + 1)).then(() =>
+        {
+            // ...fade in the next item.
+            list.eq(i2).css("opacity", "1");
+            
+            i2 = i2 + 1;
+        });
     }
 }
 
 // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
 // 
-// Gets the number of stars that should appear in the rating graphic.
-// NOTE: Half stars are counted as 1 star in this function.
+// Gets a circle SVG element for use with the project preview arrow buttons
 //
-// index -> Number -> The zero-based number of which skill the number of stars should be checked for (ordered by placement in the DOM)
+// position -> Number -> How many pixels the circle should be placed from the SVG element's origin.
+// radius -> Number -> The radius of the circle
+// color -> String -> The CSS-compatible color value for the circle
 // _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
 //  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
-function getAmountOfStars(index)
+function getArrowCircle(position, radius, color)
 {
-    var numStars = 0;
+    // Some of their CSS properties cause syntax errors when used within the style file, but when defined here in JS, they work as expected.
+    var circle = $("<circle/>");
+    circle.addClass("arrowCircle");
+    circle.css("cx", position + "px");
+    circle.css("cy", position + "px");
+    circle.css("r", radius + "px");
+    circle.css("stroke", color);
+    circle.css("stroke-width", "3");
+    circle.css("fill-opacity", "0");
     
-    // The first 5 indexes are ratings for hard skills. The rest are for soft skills.
-    if (index < 5)
-    {
-        numStars = Math.ceil(hardRatings[index] / 2);
-    }
-    else
-    {
-        // The number of hard skills is subtracted from the index to get the index into the correct range.
-        numStars = Math.ceil(softRatings[index - 5] / 2);
-    }
+    return circle;
+}
+
+// _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
+// 
+// Gets a polygon element of an arrow for use with the project preview's arrow buttons
+//
+// varyingPoints -> Number Array -> An array of the point coordinates that change depending on which direction the arrow is facing.
+// _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
+//  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
+function getArrowGraphic(varyingPoints)
+{
+    // 1% of the screen width. Polygons in SVG cannot be created with "%" or "vw" units for some reason, so the conversion of "px" to "%" is handled programatically.
+    let centScreenWidth = window.innerWidth / 100;
     
-    return numStars;
+    // Points used to create the arrow shape
+    let arrowPoints =
+        (varyingPoints[0] * centScreenWidth) + "," + (4 * centScreenWidth) + " " +
+        (5 * centScreenWidth) + "," +                 (4 * centScreenWidth) + " " +
+        (5 * centScreenWidth) + "," +                 (3 * centScreenWidth) + " " +
+        (varyingPoints[1] * centScreenWidth) + "," + (5 * centScreenWidth) + " " +
+        (5 * centScreenWidth) + "," +                 (7 * centScreenWidth) + " " +
+        (5 * centScreenWidth) + "," +                 (6 * centScreenWidth) + " " +
+        (varyingPoints[0] * centScreenWidth) + "," + (6 * centScreenWidth);
+    
+    // Construct the arrow
+    let arrow = $("<polygon/>").attr("points", arrowPoints);
+    arrow.css("fill", "#060");
+    
+    return arrow;
 }
 
 // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
@@ -738,7 +776,7 @@ function getHexagonGraphic(full)
         "10,45 " +
         "0,25";
     
-    // The SVG element to contain the whole graphic
+    // The SVG element to contain the entire graphic
     var graphic = $("<svg></svg>");
     
     var hexagon = $("<polygon/>");
@@ -751,47 +789,45 @@ function getHexagonGraphic(full)
         hexagon.css("fill", "#CCC");
         
         hexagon.addClass("starHexagonBack");
+        hexagon.attr("points", hexagonPoints);
+        
+        graphic.append(hexagon);
     }
-    // ...otherwise, if it should be a half of a star...
-    else if (full === 1)
+    // ...otherwise, there should be a star, so...
+    else 
     {
-        // ...modify the hexagon's points to create a half of a hexagon.
-        hexagonPoints = hexagonPoints.replace(
-            "40,5 50,25 40,45",
-            "25,5 25,45");
-        hexagon.css("fill", "#060");
+        // ...if it should be a half of a star...
+        if (full === 1)
+        {
+            // ...modify the hexagon's points to create a half of a hexagon.
+            hexagonPoints = hexagonPoints.replace(
+                "40,5 50,25 40,45",
+                "25,5 25,45");
+            hexagon.css("fill", "#060");
+        
+            // Get a half of a star
+            star = getStarGraphic(false);
+            starShading = getStarShading(false);
+        }
+        // ...otherwise, it should be a full star, so...
+        else
+        {
+            // ...get a full hexagon and a star.
+            hexagon.css("fill", "#060");
+        
+            star = getStarGraphic(true);
+            starShading = getStarShading(true);
+        }
         
         hexagon.addClass("starHexagonFront");
+        hexagon.attr("points", hexagonPoints);
         
-        // Get a half of a star
-        star = getStarGraphic(false);
-        starShading = getStarShading(false);
-    }
-    // ...otherwise, it should be a full star.
-    else
-    {
-        // Get a full hexagon and a star
-        hexagon.css("fill", "#060");
-        
-        hexagon.addClass("starHexagonFront");
-        
-        star = getStarGraphic(true);
-        starShading = getStarShading(true);
-    }
-    
-    hexagon.attr("points", hexagonPoints);
-    
-    graphic.append(hexagon);
-    
-    // If there is a star in the graphic...
-    if (full !== 0)
-    {
-        // ...add the star to the graphic.
+        graphic.append(hexagon);
         graphic.append(star);
         
         // For each shadow on the star...
-        var numberOfShadows = starShading.length;
-        for (var i = 0; i < numberOfShadows; i++)
+        var shadingAmount = starShading.length;
+        for (var i = 0; i < shadingAmount; i++)
         {
             // ...add it as well.
             graphic.append(starShading[i]);
@@ -803,6 +839,118 @@ function getHexagonGraphic(full)
 
 // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
 // 
+// Gets the index of the next project, reverting back to 0 if there is not a next index
+//
+// currentIndex -> Number -> The index of the project currently in view
+// projectAmount -> Number -> The number of projects of the same type that currentIndex belongs to
+// _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
+//  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
+function getNextProjectIndex(currentIndex, projectAmount)
+{
+    let nextIndex = currentIndex + 1;
+    
+    // If the next project index exceeds the number of indexes there are...
+    if (nextIndex === projectAmount)
+    {
+        // ...make the next index the first index.
+        nextIndex = 0;
+    }
+    
+    return nextIndex;
+}
+
+// _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
+// 
+// Gets the index of the previous project, jumping forward to the last index if the current index is the first index (0)
+//
+// currentIndex -> Number -> The index of the project currently in view
+// projectAmount -> Number -> The number of projects of the same type that currentIndex belongs to
+// _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
+//  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
+function getPreviousProjectIndex(currentIndex, projectAmount)
+{
+    let previousIndex = currentIndex - 1;
+    
+    // If there is not a previous index...
+    if (previousIndex < 0)
+    {
+        // ...set the previous index to the last one.
+        previousIndex = projectAmount - 1;
+    }
+    
+    return previousIndex;
+}
+
+// _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
+// 
+// Gets the data of projects of a specific type from the DOM. This data is stored in an array of project objects.
+//
+// index -> Number -> The 0-based index of which type of project (programming, art, etc) should data be returned for. They are ordered the same as in the DOM.
+// _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
+//  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
+function getProjects(index)
+{
+    var projects = [];
+    
+    var projectContainer = $("#projects").children(".noJavaScript").children("li").eq(index).children(".projectContent");
+    
+    var projectAmount = projectContainer.length;
+    for (var i = 0; i < projectAmount; i++)
+    {
+        var project = new Project
+        (
+            projectContainer.eq(i).children("h3").text(),
+            projectContainer.eq(i).children("img").attr("src"),
+            projectContainer.eq(i).children("form").children("button").text(),
+            projectContainer.eq(i).children("form").attr("action"),
+            projectContainer.eq(i).children("img").attr("alt"),
+            projectContainer.eq(i).children("p").eq(0).text(),
+            projectContainer.eq(i).children("p").eq(1).text(),
+            projectContainer.eq(i).children("p").eq(2).text()
+        );
+        
+        projects.push(project);
+    }
+    
+    return projects;
+}
+    
+// _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
+// 
+// Returns the index of the projects array of the type of project that the given container element of a project's content belongs to.
+//
+// typesAmount -> Number -> The number of different project types
+// container -> jQuery Div Element -> Container of elements of which the index is being returned for.
+// _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
+//  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
+function getProjectType(typesAmount, container)
+{
+    // Index of the project type that the container element belongs to
+    var type;
+    // The title text of the given container
+    var containerTitle = container.children("h3").text();
+    
+    // For each type of project...
+    for (var i = 0; i < typesAmount; i++)
+    {
+        // ...get that type's title text.
+        var projectTypeTitle = $(".projectContent").eq(i).children("h3").text();
+        
+        // ...if the title texts match...
+        if (containerTitle == projectTypeTitle)
+        {
+            // ...the correct type has been found.
+            type = i;
+            // Exit the loop
+            i = projects.length;
+        }
+    }
+    
+    return type;
+}
+
+// _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
+// 
 // Creates and returns a container of the graphics for a skill's rating
 //
 // rating -> Number -> A number that must be 0-10 that represents how strong the skill is
@@ -810,6 +958,11 @@ function getHexagonGraphic(full)
 //  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
 function getRatingGraphic(rating)
 {
+    // The highest star rating that a skill could have
+    const MAX_STARS = 5;
+    // How much of a numerical rating that a full star is worth
+    const FULL_STAR_WORTH = 2;
+    
     // A decrementing counter for the rating
     var rtng = rating;
     
@@ -819,7 +972,7 @@ function getRatingGraphic(rating)
     container.attr("alt", "Self-Evaluated Rating: " + rating);
     
     // For each spot a star could be placed...
-    for (var i = 0; i < 5; i++)
+    for (var i = 0; i < MAX_STARS; i++)
     {
         // Div to contain a single star's graphic
         var singleStarContainer = $("<div></div>");
@@ -850,11 +1003,8 @@ function getRatingGraphic(rating)
         container.append(singleStarContainer);
         
         // Decrement rating for next star. 1 is a half of a star. 2 is a full star, so 2 is decremented.
-        rtng = rtng - 2;
+        rtng = rtng - FULL_STAR_WORTH;
     }
-    
-    // This is necessary for the rating graphic to be displayed correctly.
-    container.html(container.html());
     
     return container;
 }
@@ -915,11 +1065,12 @@ function getStarShading(full)
         "25,40 25,25 10,50",
         "13,30 25,25 0,20"];
     
+    // The polygons to make up the 4 shadows on the star
     var shadows = [$("<polygon/>"), $("<polygon/>"), $("<polygon/>"), $("<polygon/>")];
     
     // For each shadow...
-    var numberOfShadows = shadows.length;
-    for (var i = 0; i < numberOfShadows; i++)
+    var shadowsAmount = shadows.length;
+    for (var i = 0; i < shadowsAmount; i++)
     {
         //...a half of a star should not have the first 2 shadows, so as long as that is not the case...
         if (full || i > 1)
@@ -936,43 +1087,93 @@ function getStarShading(full)
     
 // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
 // 
-// Returns the index of the projects array of the type of project that the given container element of a project's content belongs to.
+// Grows (as an animation) the provided container to the correct height to show all of its content
 //
-// controlsParent -> jQuery DOM Element -> Container of elements of which the index is being returned for.
+// container -> jQuery Div Element -> Container of elements to resize
 // _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
 //  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
-function getType(controlsParent)
+function growContainer(container)
 {
-    // Index of projects array that the container element belongs to
-    var type;
+    let initialHeight = container.height();
     
-    // For each type of project...
-    var numberOfTypes = projects.length;
-    for (var i = 0; i < numberOfTypes; i++)
+    // Make the container the correct height to show the content. Since this is being set to auto, it will not animate.
+    container.css("height", "auto");
+    
+    // After the DOM resizes the container...
+    sleep(10).then(() =>
     {
-        // ...if the title in given container is the same title of the project of this type...
-        if (controlsParent.children("h3").text() === $(".projectContent").eq(i).children("h3").text())
+        // ...get the number of pixels high the container is.
+        let heightToGrow = container.height();
+        
+        // Set the container back to its original height
+        if (container.hasClass("projectContent"))
         {
-            // ...the correct type has been found.
-            type = i;
-            // Exit the loop
-            i = projects.length;
+            container.css("height", initialHeight);
         }
-    }
+        else
+        {
+            resizeSkill(container);
+        }
+                
+        // After it is minimized...
+        sleep(10).then(() =>
+        {
+            // ...set the container's height to the number of pixels it should grow. Since it is not being set to "auto", it will animate.
+            container.css("height", heightToGrow + "px");
+        });
+    });
+}
     
-    return type;
+// _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
+// 
+// Hides content belonging to a project or skill
+//
+// fadeContainer -> jQuery Element -> The elements to be faded out
+// shrinkContainer -> jQuery Div Element -> The container that is to use a shrinking animation
+// _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
+//  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
+function hideContent(fadeContainer, shrinkContainer)
+{
+    // If this is for a skill...
+    if (fadeContainer.hasClass("skillContent"))
+    {
+        // ...fade the list out
+        fadeContainer.children("ul").children("li").css("opacity", "0");
+        // Unless the skill has a paragraph, then fade that out
+        fadeContainer.children("p").css("opacity", "0");
+        
+        // Shrink the skill content to its minimized size
+        resizeSkill(shrinkContainer);
+    }
+    // ...otherwise, it must be for a project...
+    else
+    {
+        // ...shrink the container's height completely.
+        shrinkContainer.css("height", "0");
+            
+        // Fade the container out
+        fadeContainer.css("opacity", "0");
+    }
+            
+    // When the animations are approximately done...
+    sleep(1000).then(() =>
+    {
+        // ...hide the content.
+        fadeContainer.hide();
+    });
 }
     
 // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
 // 
 // Repositions and resizes a project's preview image to its original state. Executed when the user chose to enlarge the image by clicking it and now wishes to revert it back.
 //
-// controlsParent -> jQuery DOM Element -> Container of elements of which the index is being returned for.
+// imagePreview -> jQuery Image Element -> The project's preview image
 // _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
 //  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
 function hideEnlargedPreview(imagePreview)
 {
-    var darkBackground = $("#darkBackground");
+    // Darkens the background behind the preview image
+    let darkBackground = $("#darkBackground");
     
     // Fade the preview image and dark background out
     imagePreview.css("opacity", 0);
@@ -987,11 +1188,12 @@ function hideEnlargedPreview(imagePreview)
         imagePreview.css("top", "0");
         imagePreview.css("height", "auto");
         imagePreview.css("width", "50vw");
-        imagePreview.css("margin", "0 5vh 0 5vh");
+        imagePreview.css("margin", "0 1vh 0 1vh");
         imagePreview.css("opacity", 1);
         imagePreview.css("position", "inherit");
-        imagePreview.css("z-index", "0");
     
+        $("body").css("overflow-y", "visible");
+        
         // Show the navigation menu
         $("#nav").show();
             
@@ -1010,7 +1212,7 @@ function hideEnlargedPreview(imagePreview)
 // imageAlt -> String -> Alternate text for image
 // _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
 //  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
-function loadPreview(imagePreview, imageName, imageAlt)
+function loadImagePreview(imagePreview, imageName, imageAlt)
 {
     // Make the current preview image fade out
     imagePreview.css("opacity", "0");
@@ -1026,7 +1228,7 @@ function loadPreview(imagePreview, imageName, imageAlt)
         // Wait a little to ensure that the new image has been completely loaded
         sleep(100).then(() =>
         {
-            var projectContent = imagePreview.parent();
+            let projectContent = imagePreview.parent();
             
             // Automatically resizes the container. However, if the property was left to this value, it would not perform a shrink animation.
             projectContent.css("height", "auto");
@@ -1045,51 +1247,53 @@ function loadPreview(imagePreview, imageName, imageAlt)
 
 // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
 // 
-// Loads a project into the webpage
+// Loads a project's data into the webpage
 //
 // Note: This function does NOT show the project content if the project is hidden.
 //
-// indexToLoad -> Number -> The index of the project to be loaded
-// type  -> Number -> The index of the type of project to be loaded
+// type -> Number -> The index of the type of project to be loaded
+// project -> Project -> The project to be loaded into the DOM
 // _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
 //  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
-function loadProject(indexToLoad, type)
+function loadProject(type, project)
 {
-    // Get the project to be loaded from the projects array
-    var project = projects[type][indexToLoad];
-    
     // Get the correct container to hold the projects array
-    var projectContainer = $(".projectContent").eq(type);
+    let projectContainer = $(".projectContent").eq(type);
+    
+    let preview = projectContainer.children(".previewImage");
     
     // Load the project title
     projectContainer.children("h3").text(project.getName);
     
     // Load the project image
-    loadPreview(projectContainer.children(".previewImage"), project.getImage, project.getAlt);
+    loadImagePreview(preview, project.getImage, project.getAlt);
     
     // Get the view project button
-    var bttn = projectContainer.children(".buttonContainer").children("button");
+    let button = projectContainer.children(".buttonContainer").children("button");
     
     // If the project should have a button...
     if (project.getButton !== "")
     {
+        // The text used in the button's "onclick" attribute
+        let linkHref = "location.href='" + project.getLink + "'";
+        
         // ...show the button if it is hidden.
-        bttn.show();
+        button.show();
         // Show the button's animation div. Even though it is "shown", it remains hidden on the button and doesn't show itself until the mouse is hovered over it.
-        bttn.siblings("#buttonAnimation").show();
+        button.siblings("#buttonAnimation").show();
         // Get the button's text
-        bttn.text(project.getButton);
+        button.text(project.getButton);
         // Get the button's URL
-        bttn.attr("onclick", "location.href='" + project.getLink + "'");
+        button.attr("onclick", linkHref);
         // Set up the click event listener. The reason why the listener is placed on the button's animation instead of the button itself is because the button animation always seems to be positioned on top of the button, even when its z-index is changed in CSS.
-        bttn.siblings("#buttonAnimation").attr("onclick", "location.href='" + project.getLink + "'");
+        button.siblings("#buttonAnimation").attr("onclick", linkHref);
     }
     // ...otherwise...
     else
     {
         // ...hide the button and the animation if it is not already hidden.
-        bttn.hide();
-        bttn.siblings("#buttonAnimation").hide();
+        button.hide();
+        button.siblings("#buttonAnimation").hide();
     }
     
     // Get the first description paragraph
@@ -1125,32 +1329,17 @@ function loadProject(indexToLoad, type)
 
 // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
 // 
-// Enlarges a project's preview image to fit the viewport and fixes it to the viewport. Used to give the user a closer view of the image at the expense of covering the webpage.
+// Resizes an image preview (that has been enlarged) to fit the window size
 //
-// imagePreview -> jQuery DOM Element -> A project's preview image
+// imagePreview -> jQuery Image Element -> The image preview
 // _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
 //  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
-function showEnlargedPreview(imagePreview)
+function resizeEnlargedPreview(imagePreview)
 {
     // Percentage that the image must grow to fit the viewport horizontally
     var widthIncrease = 0.9 - (imagePreview.width() / $(window).width());
     // Percentage that the image must grow to fit the viewport vertically
     var heightIncrease = 0.9 - (imagePreview.height() / $(window).height());
-    
-    // Disable the image's fade transition
-    imagePreview.css("transition", "opacity 0s linear");
-    imagePreview.css("-webkit-transition", "opacity 0s linear");
-    // Make the image invisible
-    imagePreview.css("opacity", 0);
-    
-    imagePreview.css("display", "initial");
-    imagePreview.css("left", "50%");
-    imagePreview.css("top", "50%");
-    imagePreview.css("position", "fixed");
-    imagePreview.css("z-index", "20");
-    
-    // Hide the navigation menu
-    $("#nav").hide();
             
     // If the image has less room to grow horizontally than vertically...
     if (widthIncrease < heightIncrease)
@@ -1158,7 +1347,14 @@ function showEnlargedPreview(imagePreview)
         // ...fit the image to the left and right sides of the viewport.
         imagePreview.css("height", "auto");
         imagePreview.css("width", "90vw");
-        imagePreview.css("margin", "-" + (imagePreview.height() / 2) + "px 0 0 -45vw");
+        imagePreview.css("left", "2vw");
+        
+        // After the image has been resized...
+        sleep(100).then(() =>
+        {
+            // ...center it.
+            imagePreview.css("top", (($(window).height() - imagePreview.height()) / 2) + "px");
+        });
     }
     // ...otherwise...
     else
@@ -1166,22 +1362,111 @@ function showEnlargedPreview(imagePreview)
         // ...fit the image to the top and bottom sides of the viewport.
         imagePreview.css("height", "90vh");
         imagePreview.css("width", "auto");
-        imagePreview.css("margin", "-45vh 0 0 -" + (imagePreview.width() / 2) + "px");
+        imagePreview.css("top", "5vh");
+        
+        sleep(100).then(() =>
+        {
+            imagePreview.css("left", (($(window).width() - imagePreview.width()) / 2) + "px");
+        });
     }
+}
+
+// _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
+// 
+// Resizes a skill's container to what it should be if it is minimized
+//
+// container -> jQuery List Item Element -> The container of elements belonging to a skill
+// _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
+//  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
+function resizeSkill(container)
+{
+    const SCREEN_WIDTH = $(window).width();
+    const SINGLE_LINE_MIN_WIDTH = 1000;
+    
+    if (SCREEN_WIDTH < SINGLE_LINE_MIN_WIDTH)
+    {
+        container.css("height", "150px");
+    }
+    else
+    {
+        container.css("height", "70px");
+    }
+}
+
+// _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
+// 
+// Shows the content of the provided fadeContainer, animating it into view
+//
+// fadeContainer -> jQuery Element -> The parent element to be shown. It will be faded in.
+// shrinkContainer -> jQuery Div Element -> An element that contains some (or all) of the content. It will grow vertically into place.
+// _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
+//  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
+function showContent(fadeContainer, shrinkContainer)
+{
+    // Show it
+    fadeContainer.show();
+     
+    // Have the container grow into place
+    growContainer(shrinkContainer);
+    
+    // Fade the container in
+    fadeContainer.css("opacity", "1");
+            
+    // If this is for a project...
+    if (fadeContainer.hasClass("projectContent"))
+    {
+        // ...ensure that the "next" and "previous" buttons are centered with the project preview image.
+        centerArrow(fadeContainer.children(".next"));
+        centerArrow(fadeContainer.children(".previous"));
+    }
+    // ...otherwise, it must be for a skill, so...
+    else
+    {
+        // ...fade the skill's list in as well.
+        fadeInList(fadeContainer.children("ul").children("li"));
+        // Unless the skill has a paragraph instead, then fade that in
+        fadeContainer.children("p").css("opacity", "1");
+    }
+}
+
+// _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
+// 
+// Enlarges a project's preview image to fit the viewport and fixes it to the viewport. Used to give the user a closer view of the image at the expense of covering the webpage.
+//
+// imagePreview -> jQuery DOM Element -> A project's preview image
+// _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
+//  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
+function showEnlargedPreview(imagePreview)
+{
+    // Disable the image's fade transition
+    imagePreview.css("transition", "opacity 0s linear");
+    imagePreview.css("-webkit-transition", "opacity 0s linear");
+    
+    // Make the image invisible
+    imagePreview.css("opacity", 0);
+    
+    imagePreview.css("display", "initial");
+    imagePreview.css("position", "fixed");
+    
+    // Hide the navigation menu
+    $("#nav").hide();
+    
+    // Set it to the correct size
+    resizeEnlargedPreview(imagePreview);
     
     // Re-enable the fading transition
     imagePreview.css("transition", "opacity 1s linear");
     imagePreview.css("-webkit-transition", "opacity 1s linear");
     
     // Create a div to darken the background behind the image to give all attention to the preview image
-    var darkenBackground = $("<div></div>");
+    let darkenBackground = $("<div></div>");
     darkenBackground.attr("id", "darkBackground");
     
     // Give a little time for the transition to fully re-enable itself
     sleep(100).then(() =>
     {
         // Fade the image and background in
-        imagePreview.css("opacity", 1);
+        imagePreview.css("opacity", "1");
         darkenBackground.css("opacity", "0.8");
     });
     
@@ -1194,32 +1479,15 @@ function showEnlargedPreview(imagePreview)
     // Add these elements to the DOM
     imagePreview.parent().append(darkenBackground, closeButton);
     
-    // These event listeners must exist here instead of the load method with the others. The close button does not exist when the load method is executed, therefore these event listeners would not be assigned to the button if they were placed in the load method.
+    // Hide the vertical scroll bar
+    $("body").css("overflow-y", "hidden");
     
-    // When the close button is clicked...
-    $("#close").click(function()
-    {
-        // ...return the image to it's normal state.
-        hideEnlargedPreview($(this).siblings(".previewImage"));
-    });
-    
-    // Animate the close button's colors when hovered
-    $("#close").hover(function()
-    {
-        $(this).css("border-width", 0);
-        $(this).css("background-color", "#FFF");
-    },
-    function()
-    {
-        $(this).css("border-width", "3px");
-        $(this).css("background-color", "#0000");
-    });
+    closeButtonListeners(closeButton, imagePreview);
 }
 
 // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
 // 
 // Shows the elements that should only be visible if JavaScript is active and running properly
-//
 // _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
 //  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
 function showJavaScriptStuff()
@@ -1231,7 +1499,7 @@ function showJavaScriptStuff()
 
 // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
 // 
-// Javascript does not included a built in method to hault execution, so a user-defined method to do so is defined here.
+// Javascript does not included a built in method to halt execution, so a user-defined method to do so is defined here.
 //
 // time -> Number -> The number of milliseconds that execution should pause
 // _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _

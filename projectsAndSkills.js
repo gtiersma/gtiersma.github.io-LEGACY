@@ -3,8 +3,6 @@
 // George Tiersma's portfolio website - projectsAndSkills.js
 //
 // Controls the functionality of the projects and skills sections of the website
-//
-// This document is property of George Tiersma.
 // _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
 //  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
 
@@ -1492,6 +1490,7 @@ function showEnlargedPreview(imagePreview)
 //  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
 function showJavaScriptStuff()
 {
+    $(".buttonContainer").css("visibility", "visible");
     $("#projects .showButtonList").css("height", "auto");
     $("#projects .showButtonList").css("visibility", "visible");
     $(".showHide").css("visibility", "visible");

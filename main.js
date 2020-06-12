@@ -4,8 +4,6 @@
 //
 // Performs the website's general functionality
 //
-// This document is property of George Tiersma.
-//
 // |#| |#| |#| |#| |#| |#| |#| |#| |#| |#| |#| |#|
 
 

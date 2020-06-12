@@ -4,8 +4,6 @@
 //
 // Constructs and animates the website's title
 //
-// This document is property of George Tiersma.
-//
 //###::::::###::::::###::::::###::::::###::::::###
 
 

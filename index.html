@@ -17,8 +17,6 @@
 <!--
 George Tiersma's Portfolio Website - HTML
 
-This document is property of George Tiersma.
-
 Changelog:
 
 7/10/2019 - v0.1
@@ -168,10 +166,14 @@ Changelog:
             <h3 class="occupation animatedOccupation">Software Developer - Digital Artist</h3>
     
             <!-- The container is required for the button's animation. -->
-            <div class="buttonContainer">
+            <div class="buttonContainer" onclick="location.href='downloads/resume.pdf'">
                 <button class="resumeButton textButton">View Resume</button>
                 <div class="resumeButton buttonAnimation"></div>
             </div>
+            
+            <form class="noJavaScript" action="downloads/resume.pdf">
+                <button class="resumeButton textButton">View Resume</button>
+            </form>
             
         </div>
     

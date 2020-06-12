@@ -1,7 +1,5 @@
 /*
 George Tiersma's Portfolio Website - CSS
-
-This document is property of George Tiersma.
 */
 
 /*
@@ -152,6 +150,7 @@ p
 {
     margin-bottom: 100px;
     position: relative;
+    visibility: hidden;
 }
 
 /* The SVG graphic that is used to divide sections of the website */

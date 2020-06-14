@@ -890,11 +890,14 @@ function getProjects(index)
 {
     var projects = [];
     
+    // Get the div for each project from the DOM
     var projectContainer = $("#projects").children(".noJavaScript").children("li").eq(index).children(".projectContent");
     
+    // For each project of the given type...
     var projectAmount = projectContainer.length;
     for (var i = 0; i < projectAmount; i++)
     {
+        // ...create a new project object.
         var project = new Project
         (
             projectContainer.eq(i).children("h3").text(),
@@ -907,6 +910,7 @@ function getProjects(index)
             projectContainer.eq(i).children("p").eq(2).text()
         );
         
+        // Add it to the array
         projects.push(project);
     }
     
@@ -1278,13 +1282,13 @@ function loadProject(type, project)
         // ...show the button if it is hidden.
         button.show();
         // Show the button's animation div. Even though it is "shown", it remains hidden on the button and doesn't show itself until the mouse is hovered over it.
-        button.siblings("#buttonAnimation").show();
+        button.siblings(".buttonAnimation").show();
         // Get the button's text
         button.text(project.getButton);
         // Get the button's URL
         button.attr("onclick", linkHref);
         // Set up the click event listener. The reason why the listener is placed on the button's animation instead of the button itself is because the button animation always seems to be positioned on top of the button, even when its z-index is changed in CSS.
-        button.siblings("#buttonAnimation").attr("onclick", linkHref);
+        button.siblings(".buttonAnimation").attr("onclick", linkHref);
     }
     // ...otherwise...
     else
@@ -1494,6 +1498,7 @@ function showJavaScriptStuff()
     $("#projects .showButtonList").css("height", "auto");
     $("#projects .showButtonList").css("visibility", "visible");
     $(".showHide").css("visibility", "visible");
+    $(".divider").css("visibility", "visible");
 }
 
 // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_

@@ -164,6 +164,9 @@ p
     
     /* POSITION */
     position: absolute;
+    
+    /* VISIBILITY */
+    visibility: hidden;
 }
 
 /* Contains a section divider element */

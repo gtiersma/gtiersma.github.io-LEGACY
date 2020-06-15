@@ -10,6 +10,9 @@
 
 (function($)
 {
+    // As long as IE and Edge is not being used...
+    if (!(document.documentMode || /Edge/.test(navigator.userAgent) || /Edg/.test(navigator.userAgent)))
+    {
 
 // |#| |#| |#| |#| |#| |#| |#| |#| |#| |#| |#| |#|
 //
@@ -812,4 +815,4 @@ function resizeBottomDivider()
     $(".divider").eq(3).css("height", lastDividerNewHeight + "px");
 }
 
-})(jQuery);
+}})(jQuery);

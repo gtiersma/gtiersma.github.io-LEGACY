@@ -10,6 +10,9 @@
 
 (function($)
 {
+    // As long as IE and Edge is not being used...
+    if (!(document.documentMode || /Edge/.test(navigator.userAgent) || /Edg/.test(navigator.userAgent)))
+    {
     
     //###::::::###::::::###::::::###::::::###::::::###
     //
@@ -375,4 +378,4 @@ function sleep (time)
     return new Promise((resolve) => setTimeout(resolve, time));
 }
                   
-})(jQuery);
+}})(jQuery);

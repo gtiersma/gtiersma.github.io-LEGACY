@@ -81,6 +81,9 @@ class Project
 
 (function($)
 {
+    // As long as IE and Edge is not being used...
+    if (!(document.documentMode || /Edge/.test(navigator.userAgent) || /Edg/.test(navigator.userAgent)))
+    {
 
 // _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_ _||_
 // 
@@ -1512,5 +1515,5 @@ function sleep (time)
 {
     return new Promise((resolve) => setTimeout(resolve, time));
 }
-
-})(jQuery);
+        
+}})(jQuery);

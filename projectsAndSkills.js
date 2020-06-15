@@ -1302,7 +1302,7 @@ function loadProject(type, project)
     {
         // ...hide the button and the animation if it is not already hidden.
         button.hide();
-        button.siblings("#buttonAnimation").hide();
+        button.siblings(".buttonAnimation").hide();
     }
     
     // Get the first description paragraph

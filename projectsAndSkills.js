@@ -420,7 +420,7 @@ function adjustWindow(initialWidth)
         if (buttonState == "+")
         {
             // ...get its container.
-            var container = $(".skill").parent();
+            var container = $(this).parent();
             
             // Make it the correct size
             resizeSkill(container);

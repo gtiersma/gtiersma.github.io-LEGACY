@@ -103,7 +103,7 @@ function adjustWindow()
     lastName.attr("x", (tenthWidth * 4.5) + "px");
     
     // Repositions the height of the title when the window is not wide
-    if ($(window).width() < 600)
+    if ($(window).width() < 750)
     {
         firstName.attr("y", (tenthWidth) + "px");
         lastName.attr("y", (tenthWidth * 2) + "px");

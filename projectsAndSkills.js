@@ -212,12 +212,16 @@ $(document).ready( function()
         
         let projectContainer = $(this).parent();
         
+        // If the clicked button is for the next project...
         if ($(this).hasClass("next"))
         {
+            // ...get the index of the next project.
             newIndex = getNextProjectIndex(currentProject, projects[type].length);
         }
+        // ...otherwise, the clicked button must be for the previous project, so...
         else
         {
+            // ...get the index for the previous project.
             newIndex = getPreviousProjectIndex(currentProject, projects[type].length);
         }
         

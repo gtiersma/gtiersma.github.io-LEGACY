@@ -1531,6 +1531,7 @@ function showJavaScriptStuff()
     $("#projects .showButtonList").css("height", "auto");
     $("#projects .showButtonList").css("visibility", "visible");
     $(".showHide").css("visibility", "visible");
+    $(".divider").css("height", "100vw");
     $(".divider").css("visibility", "visible");
 }
 

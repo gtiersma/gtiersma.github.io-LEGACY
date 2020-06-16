@@ -1219,6 +1219,12 @@ function hideEnlargedPreview(imagePreview)
         
         // Show the navigation menu
         $("#nav").show();
+    
+        // Show the other elements that were hidden
+        $("h2").show();
+        $(".projectContent p").show();
+        $(".showHide").show();
+        $("#skills").show();
             
         // Remove the dark background and the close button
         darkBackground.remove();
@@ -1473,6 +1479,12 @@ function showEnlargedPreview(imagePreview)
     
     // Hide the navigation menu
     $("#nav").hide();
+    
+    // Hide the elements that can sometimes sneak in front of the enlarged preview when shown
+    $("h2").hide();
+    $(".projectContent p").hide();
+    $(".showHide").hide();
+    $("#skills").hide();
     
     // Set it to the correct size
     resizeEnlargedPreview(imagePreview);

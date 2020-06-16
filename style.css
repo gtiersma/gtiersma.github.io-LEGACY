@@ -241,8 +241,8 @@ p
     /* POSITION */
     margin-bottom: 15%;
     margin-bottom: 15vh;
-    margin-top: 5%;
-    margin-top: 5vw;
+    margin-top: -10%;
+    margin-top: -10vw;
     position: relative;
     text-align: center;
 }
@@ -789,15 +789,15 @@ p
         display: inherit;
     }
     
-    #occupation
-    {
-        margin-top: 20%;
-        margin-top: 20vw;
-    }
-    
     #topGraphic
     {
         top: 300px;
+    }
+    
+    .occupation
+    {
+        margin-top: 15%;
+        margin-top: 15vw;
     }
 }
 
@@ -808,6 +808,14 @@ p
         display: block;
         float: none;
         padding: 25px 0 0 50px;
+    }
+}
+
+@media only screen and (min-width: 1000px)
+{
+    .occupation
+    {
+        margin-top: 0;
     }
 }
 

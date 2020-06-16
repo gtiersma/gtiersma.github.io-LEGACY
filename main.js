@@ -37,8 +37,8 @@ $(document).ready( function()
     removeNavHref();
     
     // Animate occupation title
-    $("#occupation").css("letter-spacing", "8px");
-    $("#occupation").css("opacity", "1");
+    $(".animatedOccupation").css("letter-spacing", "8px");
+    $(".animatedOccupation").css("opacity", "1");
     
     var dividers = $(".divider");
     // Each polygon used in each divider

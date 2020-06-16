@@ -410,6 +410,20 @@ function adjustWindow(initialWidth)
         resizeEnlargedPreview($("#close").siblings(".previewImage"));
     }
     
+    // For each project display area...
+    $(".projectContent").each(function()
+    {
+        // ...get whether or not it is minimized or maximized.
+        var buttonState = $(this).siblings(".showHide").children("span").text();
+        
+        // If it is maximized...
+        if (buttonState == "-")
+        {
+            // ...resize it to fit its content.
+            $(this).css("height", "auto");
+        }
+    });
+    
     // For each skill...
     $(".skill").each(function()
     {

@@ -149,7 +149,6 @@ $(document).ready( function()
     // Adjust the elements' size based upon the window size
     adjustWindow(INITIAL_VIEWPORT_WIDTH);
     
-    
 
     
     
@@ -800,6 +799,9 @@ function getHexagonGraphic(full)
     
     var hexagon = $("<polygon/>");
     var star = $("<polygon/>");
+    
+    // Fixes an issue with the entire website having a right-side margin on smart devices in landscape orientation.
+    graphic.css("width", "50px");
     
     // If there should be no star...
     if (full === 0)

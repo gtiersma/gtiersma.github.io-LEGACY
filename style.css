@@ -429,6 +429,12 @@ p
     transition: opacity 1s linear;
 }
 
+/* Fixes an issue with a margin appearing on the right side of the webpage on smart devices in landscape orientation */
+.star, .starBack, .starContainer, .starFront
+{
+    width: 50px;
+}
+
 /* The star polygon used in a rating graphic (including the shading) */
 .star
 {

@@ -241,6 +241,8 @@ p
     /* POSITION */
     margin-bottom: 15%;
     margin-bottom: 15vh;
+    margin-top: 5%;
+    margin-top: 5vh;
     position: relative;
     text-align: center;
 }
@@ -755,6 +757,25 @@ p
 /*
 ----- RESPONSIVE ATTRIBUTES -----
 */
+@media only screen and (max-width: 1000px)
+{
+    .ratingContainer
+    {
+        display: block;
+        float: none;
+        padding: 25px 0 0 50px;
+    }
+}
+
+@media only screen and (max-width: 750px)
+{
+    .occupation
+    {
+        margin-top: -20%;
+        margin-top: -20vh;
+    }
+}
+
 @media only screen and (max-width: 500px)
 {
     #firstNameNoJS
@@ -805,18 +826,8 @@ p
     
     .occupation
     {
-        margin-top: 15%;
-        margin-top: 15vw;
-    }
-}
-
-@media only screen and (max-width: 1000px)
-{
-    .ratingContainer
-    {
-        display: block;
-        float: none;
-        padding: 25px 0 0 50px;
+        margin-top: 10%;
+        margin-top: 10vh;
     }
 }
 

@@ -241,8 +241,6 @@ p
     /* POSITION */
     margin-bottom: 15%;
     margin-bottom: 15vh;
-    margin-top: -10%;
-    margin-top: -10vw;
     position: relative;
     text-align: center;
 }
@@ -809,11 +807,6 @@ p
 
 @media only screen and (max-width: 1000px)
 {
-    .occupation
-    {
-        margin-top: 0;
-    }
-    
     .ratingContainer
     {
         display: block;

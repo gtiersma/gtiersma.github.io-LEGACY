@@ -510,6 +510,7 @@ p
     
     /* POSITION */
     line-height: 150%;
+    margin-top: 20vh;
     padding: 10% 5% 15% 5%;
     padding: 10vh 5vw 15vh 5vw;
 }
@@ -603,8 +604,8 @@ p
 {
     /* POSITION */
     opacity: 0.99;
-    padding: 0 0 15% 0;
-    padding: 0 0 15vw 0;
+    padding-bottom: 15%;
+    padding-bottom: 15vh;
 }
 
 /* The text of the last name in the title that is rendered if JavaScript does not run */
@@ -755,6 +756,27 @@ p
 /*
 ----- RESPONSIVE ATTRIBUTES -----
 */
+@media only screen and (max-height: 500px)
+{
+    #about h1
+    {
+        padding-top: 20%;
+        padding-top: 20vh;
+    }
+    
+    #home
+    {
+        padding-bottom: 0;
+    }
+    
+    .occupation
+    {
+        margin-top: 15%;
+        margin-top: 10vw;
+        padding-top: 20vh;
+    }
+}
+
 @media only screen and (max-width: 1000px)
 {
     .ratingContainer
@@ -762,15 +784,6 @@ p
         display: block;
         float: none;
         padding: 25px 0 0 50px;
-    }
-}
-
-@media only screen and (max-width: 750px)
-{
-    .occupation
-    {
-        margin-top: 0;
-        margin-top: 0;
     }
 }
 
@@ -825,7 +838,8 @@ p
     .occupation
     {
         margin-top: 10%;
-        margin-top: 10vw;
+        margin-top: 5vw;
+        padding-top: 10vh;
     }
 }
 

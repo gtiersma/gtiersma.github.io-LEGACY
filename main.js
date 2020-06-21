@@ -248,7 +248,7 @@ function createDivider1()
     let svg = $(".divider").eq(0);
     
     // This divider must have a greater height than normal to ensure that the bottom of the graphic will almost always at least reach the "about" section. Other dividers do not have this issue.
-    svg.css("height", "150vh");
+    svg.css("height", "160vh");
     
     // Covers the SVG element with a background color
     let background = getDividerBackground(svg.width(), svg.height(), TOP_COLOR);

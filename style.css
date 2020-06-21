@@ -241,8 +241,6 @@ p
     /* POSITION */
     margin-bottom: 15%;
     margin-bottom: 15vh;
-    margin-top: 5%;
-    margin-top: 5vh;
     position: relative;
     text-align: center;
 }
@@ -771,8 +769,8 @@ p
 {
     .occupation
     {
-        margin-top: -15%;
-        margin-top: -15vh;
+        margin-top: 0;
+        margin-top: 0;
     }
 }
 
@@ -827,7 +825,7 @@ p
     .occupation
     {
         margin-top: 10%;
-        margin-top: 10vh;
+        margin-top: 10vw;
     }
 }
 

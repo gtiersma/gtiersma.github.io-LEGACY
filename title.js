@@ -108,13 +108,13 @@ function adjustWindow()
     // Repositions the height of the title when the window is not wide
     if ($(window).width() < 500)
     {
-        firstName.attr("y", (tenthAverage) + "px");
-        lastName.attr("y", (tenthAverage * 2.2) + "px");
+        firstName.attr("y", (tenthAverage * 1.3) + "px");
+        lastName.attr("y", (tenthAverage * 2.5) + "px");
     }
     else
     {
-        firstName.attr("y", (tenthAverage * 2.5) + "px");
-        lastName.attr("y", (tenthAverage * 3.7) + "px");
+        firstName.attr("y", (tenthAverage * 2.8) + "px");
+        lastName.attr("y", (tenthAverage * 4) + "px");
     }
 }
     

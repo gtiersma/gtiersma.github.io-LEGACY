@@ -98,21 +98,22 @@ function adjustWindow()
     
     var tenthAverage = (tenthWidth + tenthHeight) / 2;
     
+    // These are SVG elements, so vw and vh units will not work with these, which is why their position in pixels is calculated here in JavaScript
     var firstName = $(".firstName");
     var lastName = $(".lastName");
-    
-    // These are SVG elements, so vw and vh units will not work with these, which is why their position in pixels is calculated here in JavaScript
-    firstName.attr("x", (tenthWidth * 3.5) + "px");
-    lastName.attr("x", (tenthWidth * 4.5) + "px");
     
     // Repositions the height of the title when the window is not wide
     if ($(window).width() < 500)
     {
+        firstName.attr("x", (tenthWidth * 1.5) + "px");
+        lastName.attr("x", (tenthWidth * 2) + "px");
         firstName.attr("y", (tenthAverage * 1.3) + "px");
         lastName.attr("y", (tenthAverage * 2.5) + "px");
     }
     else
     {
+        firstName.attr("x", (tenthWidth * 3.5) + "px");
+        lastName.attr("x", (tenthWidth * 4.5) + "px");
         firstName.attr("y", (tenthAverage * 2.8) + "px");
         lastName.attr("y", (tenthAverage * 4) + "px");
     }

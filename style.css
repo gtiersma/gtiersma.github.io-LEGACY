@@ -798,6 +798,11 @@ p
         top: 300px;
     }
     
+    .name
+    {
+        font-size: 15vw;
+    }
+    
     .occupation
     {
         margin-top: 15%;

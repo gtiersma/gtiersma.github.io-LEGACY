@@ -755,7 +755,7 @@ p
 /*
 ----- RESPONSIVE ATTRIBUTES -----
 */
-@media only screen and (max-width: 750px)
+@media only screen and (max-width: 500px)
 {
     #firstNameNoJS
     {

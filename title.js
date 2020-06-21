@@ -94,6 +94,9 @@ $(document).ready( function()
 function adjustWindow()
 {
     var tenthWidth = $(window).width() / 10;
+    var tenthHeight = $(window).height() / 10;
+    
+    var tenthAverage = (tenthWidth + tenthHeight) / 2;
     
     var firstName = $(".firstName");
     var lastName = $(".lastName");
@@ -103,15 +106,15 @@ function adjustWindow()
     lastName.attr("x", (tenthWidth * 4.5) + "px");
     
     // Repositions the height of the title when the window is not wide
-    if ($(window).width() < 750)
+    if ($(window).width() < 500)
     {
-        firstName.attr("y", (tenthWidth) + "px");
-        lastName.attr("y", (tenthWidth * 2) + "px");
+        firstName.attr("y", (tenthAverage) + "px");
+        lastName.attr("y", (tenthAverage * 2.2) + "px");
     }
     else
     {
-        firstName.attr("y", (tenthWidth * 2) + "px");
-        lastName.attr("y", (tenthWidth * 3) + "px");
+        firstName.attr("y", (tenthAverage * 2.5) + "px");
+        lastName.attr("y", (tenthAverage * 3.7) + "px");
     }
 }
     

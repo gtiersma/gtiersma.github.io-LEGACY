@@ -377,11 +377,13 @@ $(document).ready( function()
 //  ||   ||   ||   ||   ||   ||   ||   ||   ||   ||
 function adjustWindow(initialWidth)
 {
+    var windowWidth = $(window).width();
+    
     // A percentage of how much the height compares to the width. Anything more than 1 means that the window is in landscape orientation. Anything less than 1 means that the window is in portrait orientation.
-    var ratio = $(window).width() / $(window).height();
+    var ratio = windowWidth / $(window).height();
     
     // A percentage of how wide the window currently is, compared to how wide it was when it first loaded the webpage. Anything more than 1 means that the window is wider than when the webpage was loaded. Anything less than 1 means that the window is narrower than when the webpage was loaded.
-    var widthChange = $(window).width() / initialWidth;
+    var widthChange = windowWidth / initialWidth;
     
     $(".next, .previous").children().css("transform", "scale(" + widthChange + ")");
     

@@ -808,6 +808,11 @@ p
         left: 25vw;
     }
     
+    .showButtonList
+    {
+        padding-left: 0;
+    }
+    
     #firstNameNoJS
     {
         left: 15%;

@@ -41,8 +41,8 @@ button
     /* SIZE */
     font-size: 18pt;
     height: 60px;
-    width: 25%;
-    width: 25vw;
+    width: 30%;
+    width: 30vw;
 }
 
 circle
@@ -326,13 +326,8 @@ p
 /* The button for viewing the resume */
 .resumeButton
 {
-    /* POSITION */
     left: 35%;
     left: 35vw;
-    
-    /* SIZE */
-    width: 30%;
-    width: 30vw;
 }
 
 /* Lists of buttons to show or hide the content of projects or skills */
@@ -758,6 +753,13 @@ p
 */
 @media only screen and (max-height: 500px)
 {
+    .occupation
+    {
+        margin-top: 15%;
+        margin-top: 10vw;
+        padding-top: 20vh;
+    }
+    
     #about h1
     {
         padding-top: 20%;
@@ -767,13 +769,6 @@ p
     #home
     {
         padding-bottom: 0;
-    }
-    
-    .occupation
-    {
-        margin-top: 15%;
-        margin-top: 10vw;
-        padding-top: 20vh;
     }
 }
 
@@ -789,6 +784,30 @@ p
 
 @media only screen and (max-width: 500px)
 {
+    button
+    {
+        width: 50%;
+        width: 50vw;
+    }
+    
+    .name
+    {
+        font-size: 15vw;
+    }
+    
+    .occupation
+    {
+        margin-top: 10%;
+        margin-top: 5vw;
+        padding-top: 10vh;
+    }
+
+    .resumeButton
+    {
+        left: 25%;
+        left: 25vw;
+    }
+    
     #firstNameNoJS
     {
         left: 15%;
@@ -828,18 +847,6 @@ p
     #topGraphic
     {
         top: 350px;
-    }
-    
-    .name
-    {
-        font-size: 15vw;
-    }
-    
-    .occupation
-    {
-        margin-top: 10%;
-        margin-top: 5vw;
-        padding-top: 10vh;
     }
 }
 

@@ -148,7 +148,7 @@ p
 /* The div that contains a textButton and its animated div */
 .buttonContainer
 {
-    margin-bottom: 100px;
+    margin-bottom: 70px;
     position: relative;
     visibility: hidden;
 }
@@ -505,9 +505,9 @@ p
     
     /* POSITION */
     line-height: 150%;
-    margin-top: 20vh;
-    padding: 10% 5% 15% 5%;
-    padding: 10vh 5vw 15vh 5vw;
+    margin-top: 30vh;
+    padding: 0 5% 15% 5%;
+    padding: 0 5vw 15vh 5vw;
 }
 
 /* The close button that appears when an image is enlarged */

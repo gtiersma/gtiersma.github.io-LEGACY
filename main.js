@@ -63,41 +63,48 @@ $(document).ready( function()
     // |#| |#| |#| |#| |#| |#| |#| |#| |#| |#| |#| |#|
     $(".buttonAnimation, .textButton").hover( function()
     {
-        $(this).siblings("button").css("background-color", "#CFC");
-        
-        $(this).css("border-width", "5px");
-        $(this).css("height", "100px");
-        $(this).css("opacity", "0");
-        $(this).css("top", "-20px");
-        $(this).css("width", "60vw");
-        
-        // The resume button's animated div needs to transition to a slightly different relative position than the other buttons in order to be centered.
-        if ($(this).hasClass("resumeButton"))
+        // Because the button size changes when the width is low to accomodate smartphones, the animation does not work correctly. This disables it.
+        if ($(window).width() > 500)
         {
-            $(this).css("left", "20vw");
-        }
-        else
-        {
-            $(this).css("left", "10vw");
+            $(this).siblings("button").css("background-color", "#CFC");
+        
+            $(this).css("border-width", "5px");
+            $(this).css("height", "100px");
+            $(this).css("opacity", "0");
+            $(this).css("top", "-20px");
+            $(this).css("width", "60vw");
+        
+            // The resume button's animated div needs to transition to a slightly different relative position than the other buttons in order to be centered.
+            if ($(this).hasClass("resumeButton"))
+            {
+                $(this).css("left", "20vw");
+            }
+            else
+            {
+                $(this).css("left", "10vw");
+            }
         }
     },
     function()
     {
-        $(this).siblings("button").css("background-color", "#FFF");
-        
-        $(this).css("border-width", "0");
-        $(this).css("height", "60px");
-        $(this).css("opacity", "1");
-        $(this).css("top", "0");
-        $(this).css("width", "30vw");
-        
-        if ($(this).hasClass("resumeButton"))
+        if ($(window).width() <= 500)
         {
-            $(this).css("left", "35vw");
-        }
-        else
-        {
-            $(this).css("left", "25vw");
+            $(this).siblings("button").css("background-color", "#FFF");
+        
+            $(this).css("border-width", "0");
+            $(this).css("height", "60px");
+            $(this).css("opacity", "1");
+            $(this).css("top", "0");
+            $(this).css("width", "30vw");
+        
+            if ($(this).hasClass("resumeButton"))
+            {
+                $(this).css("left", "35vw");
+            }
+            else
+            {
+                $(this).css("left", "25vw");
+            }
         }
     });
     

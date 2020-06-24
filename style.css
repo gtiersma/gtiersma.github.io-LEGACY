@@ -302,7 +302,7 @@ p
     margin-left: auto;
     margin-right: auto;
     padding: 1%;
-    padding: 1vw;
+    padding: 1vh 1vw 5vh 1vw;
     text-align: center;
     
     /* SIZE */
@@ -784,7 +784,7 @@ p
 
 @media only screen and (max-width: 500px)
 {
-    button
+    button, .projectButton
     {
         width: 50%;
         width: 50vw;
@@ -800,6 +800,12 @@ p
         margin-top: 10%;
         margin-top: 5vw;
         padding-top: 10vh;
+    }
+    
+    .projectButton
+    {
+        left: 15%;
+        left: 15vw;
     }
 
     .resumeButton

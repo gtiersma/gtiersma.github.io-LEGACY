@@ -795,6 +795,11 @@ p
         font-size: 15vw;
     }
     
+    .noJavaScript
+    {
+        padding: 0;
+    }
+    
     .occupation
     {
         margin-top: 10%;

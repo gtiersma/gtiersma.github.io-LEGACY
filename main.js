@@ -87,7 +87,7 @@ $(document).ready( function()
     },
     function()
     {
-        if ($(window).width() <= 500)
+        if ($(window).width() > 500)
         {
             $(this).siblings("button").css("background-color", "#FFF");
         

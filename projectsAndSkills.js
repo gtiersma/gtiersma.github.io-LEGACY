@@ -1304,19 +1304,16 @@ function loadProject(type, project)
     // If the project should have a button...
     if (project.getButton !== "")
     {
-        // The text used in the button's "onclick" attribute
-        let linkHref = "location.href='" + project.getLink + "'";
-        
         // ...show the button if it is hidden.
         button.show();
         // Show the button's animation div. Even though it is "shown", it remains hidden on the button and doesn't show itself until the mouse is hovered over it.
         button.siblings(".buttonAnimation").show();
         // Get the button's text
-        button.text(project.getButton);
+        button.children().text(project.getButton);
         // Get the button's URL
-        button.attr("onclick", linkHref);
+        button.children().attr("href", project.getLink);
         // Set up the click event listener. The reason why the listener is placed on the button's animation instead of the button itself is because the button animation always seems to be positioned on top of the button, even when its z-index is changed in CSS.
-        button.siblings(".buttonAnimation").attr("onclick", linkHref);
+        button.siblings(".buttonAnimation").attr("href", project.getLink);
     }
     // ...otherwise...
     else

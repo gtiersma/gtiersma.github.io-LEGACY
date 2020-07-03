@@ -60,7 +60,13 @@ footer
     /* POSITION */
     padding: 1% 0 1% 0;
     padding: 1vw 0 1vw 0;
+    position: relative;
     text-align: center;
+}
+
+footer a
+{
+    color: #FFF;
 }
 
 h1
@@ -84,11 +90,6 @@ h4
 {
     margin: 1%;
     margin: 1vw;
-}
-
-h6
-{
-    position: relative;
 }
 
 html

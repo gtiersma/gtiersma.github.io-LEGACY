@@ -19,6 +19,12 @@ Notes:
 ----- GENERAL ELEMENT TYPES -----
 */
 
+a
+{
+    color: #000;
+    text-decoration: none;
+}
+
 body
 {
     margin: 0;
